@@ -39,7 +39,7 @@
 						<span class="txt">사용자 유형</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="직원" readonly>
+						<input class="tbox" value="직원" readonly id="custAthrNm">
 					</div>
 				</li>
 
@@ -48,7 +48,7 @@
 						<span class="txt">성명(업체명)</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="김도공(아와소프트)" readonly>
+						<input class="tbox" value="김도공(아와소프트)" readonly id=custNm>
 					</div>
 				</li>
 
@@ -66,7 +66,7 @@
 						<span class="txt">사용자 ID</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="awa0001" readonly>
+						<input class="tbox" value="awa0001" readonly id="mtriCustNo">
 					</div>
 				</li>
 
@@ -76,7 +76,7 @@
 						<span class="txt">비밀번호</span>
 					</div>
 					<div class="con">
-						<input class="tbox" type="password">
+						<input class="tbox" type="password" id="custPswd">
 					</div>
 				</li>
 				<li>
@@ -84,7 +84,7 @@
 						<span class="txt">비밀번호 확인</span>
 					</div>
 					<div class="con">
-						<input class="tbox" type="password">
+						<input class="tbox" type="password" id="custPswdCnfm">
 					</div>
 				</li>
 
@@ -93,7 +93,7 @@
 						<span class="txt">이메일</span>
 					</div>
 					<div class="con">
-						<input class="tbox">
+						<input class="tbox" id="custEmailAddr">
 					</div>
 				</li>
 
@@ -102,7 +102,7 @@
 						<span class="txt">연락처</span>
 					</div>
 					<div class="con">
-						<input class="tbox">
+						<input class="tbox" id="custTelno">
 					</div>
 				</li>
 
@@ -111,7 +111,7 @@
 						<span class="txt">가입일자</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="2020-01-03" readonly>
+						<input class="tbox" value="2020-01-03" readonly id="fsttmRgstDttm">
 					</div>
 				</li>
 			</ul>
@@ -121,7 +121,7 @@
 				<!-- <a href="#none" class="removeBtn">삭제</a> -->
 
 				<div class="menuBox">
-					<a href="javascript:history.go(-1);" class="menuBtn">수정</a>
+					<a href="javascript:UpdateMyPage();" class="menuBtn">수정</a>
 					<!-- <a href="#none" class="menuBtn">취소</a> -->
 				</div>
 
