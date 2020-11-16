@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	  content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<head>
+	<meta charset="UTF-8">
+	<title>자재·장비대금 지킴이</title>
+	<link type="text/css" rel="stylesheet" href="../assets/css/reset.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/datepicker.min.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/ui.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/style.css"/>
+</head>
+<body>
+<div class="container bg">
+	<header class="">
+		<div class="headerWrap">
+
+			<a href="javascript:history.go(-1);" class="backBtn"></a>
+
+			<div class="pageTitBox">제목을 넣어주세요.</div>
+
+			<!-- GNB -->
+			<a href="javascript:f_goMenu();" class="gnbBox">
+				<i class="ic ic_gnb"></i>
+			</a>
+		</div>
+	</header>
+	<div class="wrapper">
+
+		<section class="materialPriceList">
+
+
+			<div class="searchFormBox">
+				<div class="titBox"><span class="txt">청구기간</span></div>
+				<div class="dateGroup">
+					<div class="dateBox">
+						<label>
+							<input class="date-picker" id="sDate" data-language="ko" data-position="bottom left" value="2020-09-16">
+							<span class="calendar"></span>
+						</label>
+					</div>
+					<div class="unit">~</div>
+					<div class="dateBox">
+						<label>
+							<input class="date-picker" id="eDate" data-language="ko" data-position="bottom right" value="2020-09-16">
+							<span class="calendar"></span>
+						</label>
+					</div>
+				</div>
+				<a href="#none" class="searchBtn">조회</a>
+			</div>
+
+			<div class="listFormBox">
+
+				<div class="listGroup">
+					<div class="titBox">2020. 10</div>
+					<ul class="itemList">
+						<li>
+							<div class="topBox">
+								<div class="nameTxt">현장명입니다.</div>
+								<div class="priceBox">
+									<span class="priceTxt">1,123,456,789</span>
+									<span class="unit">원</span>
+								</div>
+							</div>
+							<div class="bottomBox">
+								<div class="cellBox">
+									<div class="subject">계약업체</div>
+									<div class="con">계약업체명</div>
+								</div>
+								<div class="cellBox">
+									<div class="subject">자재업체</div>
+									<div class="con">자재업체명이름이름</div>
+								</div>
+								<div class="cellBox">
+									<div class="subject">자재명</div>
+									<div class="con">건축자재이름</div>
+								</div>
+								<div class="cellBox">
+									<div class="subject">예금주</div>
+									<div class="con">홍길동</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+				<div class="listGroup">
+					<div class="titBox">2020. 09</div>
+					<ul class="itemList">
+						<li>
+							<div class="topBox">
+								<div class="nameTxt">현장명입니다.</div>
+								<div class="priceBox">
+									<span class="priceTxt">1,123,456,789</span>
+									<span class="unit">원</span>
+								</div>
+							</div>
+							<div class="bottomBox">
+								<div class="cellBox">
+									<div class="subject">계약업체</div>
+									<div class="con">계약업체명</div>
+								</div>
+								<div class="cellBox">
+									<div class="subject">자재업체</div>
+									<div class="con">자재업체명이름이름</div>
+								</div>
+								<div class="cellBox">
+									<div class="subject">자재명</div>
+									<div class="con">건축자재이름</div>
+								</div>
+								<div class="cellBox">
+									<div class="subject">예금주</div>
+									<div class="con">홍길동</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="topBox">
+								<div class="nameTxt">현장명입니다.</div>
+								<div class="priceBox">
+									<span class="priceTxt">1,123,456,789</span>
+									<span class="unit">원</span>
+								</div>
+							</div>
+							<div class="bottomBox">
+								<div class="cellBox">
+									<div class="subject">계약업체</div>
+									<div class="con">계약업체명</div>
+								</div>
+								<div class="cellBox">
+									<div class="subject">자재업체</div>
+									<div class="con">자재업체명이름이름</div>
+								</div>
+								<div class="cellBox">
+									<div class="subject">자재명</div>
+									<div class="con">건축자재이름</div>
+								</div>
+								<div class="cellBox">
+									<div class="subject">예금주</div>
+									<div class="con">홍길동</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+				<div class="listGroup">
+					<div class="titBox">2020. 08</div>
+					<ul class="itemList">
+						<li>
+							<div class="topBox">
+								<div class="nameTxt">현장명입니다.</div>
+								<div class="priceBox">
+									<span class="priceTxt">1,123,456,789</span>
+									<span class="unit">원</span>
+								</div>
+							</div>
+							<div class="bottomBox">
+								<div class="cellBox">
+									<div class="subject">계약업체</div>
+									<div class="con">계약업체명</div>
+								</div>
+								<div class="cellBox">
+									<div class="subject">자재업체</div>
+									<div class="con">자재업체명이름이름</div>
+								</div>
+								<div class="cellBox">
+									<div class="subject">자재명</div>
+									<div class="con">건축자재이름</div>
+								</div>
+								<div class="cellBox">
+									<div class="subject">예금주</div>
+									<div class="con">홍길동</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+
+			</div>
+
+
+		</section>
+
+	</div>
+</div>
+<div id="menuDiv" style="display:none;"></div>
+<div class = "progressDiv" style="display:none;">
+	<img src="../assets/img/progress.gif"/>
+</div>
+
+<script src="../assets/js/jquery-3.1.1.min.js"></script>
+<script src="../assets/js/jquery-ui-1.12.1.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/datepicker.min.js"></script>
+<script src="../assets/js/datepicker.ko.js"></script>
+<script src="../assets/js/core.js"></script>
+</body>
+</html>

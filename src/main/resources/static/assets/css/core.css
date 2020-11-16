@@ -1,0 +1,91 @@
+    #menuDiv {display : none; width : 100%; height : 100%; top : 0; left : 0; position : absolute; z-index:1000; background-color:#ffe346;}
+    
+	.cb-btnwrap{text-align: center;padding:18px 0 15px}
+	.cb-btnwrap button{width:116px;height:40px;font-size: 19px;font-weight: 500;border-radius: 4px;}
+	.cb-btnwrap .btn-cancel{border:1px solid #ddd; background-color: #fff;color:#333;}
+	.cb-btnwrap .btn-confirm{border:1px solid #ddd; background-color: #00217e;color:#fff;}
+	.cb-btnwrap .btn-search{width: 70px; height: 32px; border:1px solid #ddd; background-color: #437ed1;color:#fff;}
+		
+    header .headerWrap .myBox .fa-times {
+    	background-color:white;
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%); }
+	
+	.mn-wrap{padding:0 17px 16px; margin-top:50px;}
+	
+	.mn-btnwrap{}
+	.mn-btnwrap .mn-btnrow{padding:0 0 40px 0; color:black;}
+	.mn-btnwrap .mn-btnrow  .mn-btn-tit{font-size: 20px;font-weight: 400;color:black;position: absolute;left:30px;right: 0;letter-spacing: -1px;}
+	.mn-btnrow span{font-size: 20px;font-weight: 400;color:#fff ;}
+
+	
+	.ct-wrap .cm-qbox .qbox-datep{padding:15px 0 0;}
+	.ct-wrap .cm-qbox .qbox-datep input{background-color: #eee;border: 1px solid #e5e5e5;width:calc(100% - 200px);height:31px;box-sizing: border-box;outline: none;padding-left: 5px;vertical-align: top;;}
+	.ct-wrap .cm-qbox .qbox-datep button{background-color: #5d5d5d;border:0;height: 31px;vertical-align: top;outline: none;;}
+	.ct-wrap .cm-qbox .qbox-datep button img{max-height: 23px;}
+	
+	.progressDiv{position: absolute; left: 50%; top: 50%; z-index:10000;}
+
+	
+	header .headerWrap .myclose {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35px;
+    height: 35px;
+    text-align: center;
+	}
+	header .headerWrap .myclose .fa-times {
+        width: 21px;
+        height: 22px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%); }
+        
+    .searchTbox{
+    margin-left: 15px;
+    width: 220px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 3px;
+    border: solid 1px #dadada;
+    padding: 0 10px;
+    height: 34px;
+    font-size: 15px;
+    color: #000;
+    outline: none;
+    letter-spacing: -0.15px;}
+        
+	.searchFormBox .tableBox article.listTable table tr {
+	  border-bottom: 1px solid #e5e5e5; }
+	
+	.searchFormBox .tableBox article.listTable table thead th {
+	  text-align: center;
+	  font-size: 14px;
+	  color: #828282;
+	  padding: 8px 0; }
+	
+	.searchFormBox .tableBox article.listTable table tbody td {
+	  text-align: center;
+	  font-size: 15px;
+	  height: 35px; }
+	
+	.searchFormBox .tableBox article.listTable table tfoot.sum tr {
+	  border: none; }
+	
+	.searchFormBox .tableBox article.listTable table tfoot.sum td {
+	  text-align: center;
+	  font-size: 15px;
+	  height: 33px;
+	  font-weight: 700;
+	  color: #008fff; }
+	.searchFormBox .tableBox article.listTable table tfoot.sum td.sumTxt {
+	    text-align: right; }
+	#noticeTb th{font-size:14px;}
+	#noticeTb td{font-size:13px; height:30px;}
