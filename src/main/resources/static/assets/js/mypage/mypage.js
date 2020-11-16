@@ -9,3 +9,4 @@ $(document).ready(function(){
 	
 	$("#menuDiv").load('/mater/main/load-page?pageName=menu');
 })
+
