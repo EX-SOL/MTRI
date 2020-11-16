@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	  content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<head>
+	<meta charset="UTF-8">
+	<title>자재·장비대금 지킴이</title>
+	<link type="text/css" rel="stylesheet" href="assets/css/reset.css"/>
+	<link type="text/css" rel="stylesheet" href="assets/css/ui.css"/>
+	<link type="text/css" rel="stylesheet" href="assets/css/style.css"/>
+</head>
+<body>
+<div class="container full">
+	<section class="login">
+
+		<div class="loginTopBox">
+			<div class="introImg">
+				<img src="assets/img/img_logo.png" alt="로고">
+			</div>
+			<div class="introTxt">
+				자재·장비대금 지킴이
+			</div>
+		</div>
+
+		<div class="loginInputBox">
+
+			<div class="row">
+				<div class="subject">아이디</div>
+				<div class="con">
+					<input type="text">
+				</div>
+			</div>
+			<div class="row">
+				<div class="subject">비밀번호</div>
+				<div class="con">
+					<input type="password">
+				</div>
+			</div>
+
+			<a href="javascript:f_goLogin();" class="loginBtnBox">
+				<span class="loginBtn">로그인</span>
+			</a>
+
+		</div>
+
+		<div class="loginMenuBox">
+			<a href="#none" class="findBtn id"><span class="txt">아이디 찾기</span></a>
+			<a href="#none" class="findBtn pw"><span class="txt">비밀번호 찾기</span></a>
+		</div>
+
+
+		<div class="loginFooterBox">
+			Korea Expressway Corporation.<br/>
+			All Rights reserved.
+		</div>
+
+
+
+
+	</section>
+</div>
+
+<script src="assets/js/jquery-3.1.1.min.js"></script>
+<script src="assets/js/jquery-ui-1.12.1.js"></script>
+<script src="assets/js/slick.min.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/login/login.js"></script>
+<script>
+
+	$(function () {
+
+		$(".login").css('height',window.innerHeight);
+
+	});
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ex.mater.mypage.MypageMapper">
+
+	<resultMap id="Mypage" type="com.ex.mater.mypage.Mypage">
+		<result column="MTRI_CUST_NO" property="mtriCustNo"/>
+		<result column="CUST_ATHR_CD" property="custAthrCd"/>
+		<result column="CUST_ATHR_NM" property="custAthrNm"/>
+		<result column="CUST_NM" property="custNm"/>
+		<result column="PRSN_CORP_CLSS_CD" property="prsnCorpClssCd"/>
+		<result column="RPPR_NM" property="rpprNm"/>
+		<result column="FILD_CLSS_CD" property="fildClssCd"/>
+		<result column="CNTC_WKSC_CD" property="cntcWkscCd"/>
+		<result column="ACNT_BANK_CD" property="acntBankCd"/>
+		<result column="TR_BANK_NM" property="trBankNm"/>
+		<result column="DEPR_NM" property="deprNm"/>
+		<result column="BANK_ACTNO" property="bankActno"/>
+		<result column="ATTFL_SEQ" property="attflSeq"/>
+		<result column="CUST_EMAIL_ADDR" property="custEmailAddr"/>
+		<result column="CUST_TELNO" property="custTelno"/>
+		<result column="CUST_PSWD" property="custPswd"/>
+		<result column="ACIT_LOCK_YN" property="acitLockYN"/>
+		<result column="FSTTM_RGSR_ID" property="fsttmRgsrId"/>
+		<result column="FSTTM_RGST_DTTM" property="fsttmRgstDttm"/>
+		<result column="LSTTM_MODFR_ID" property="lsttmModfrId"/> 
+		<result column="LSTTM_ALTR_DTTM" property="lsttmAltrDttm"/>
+		<result column="ETC_RMRK" property="etcRmrk"/>
+	</resultMap>
+
+    <select id="selectMypage" parameterType="map" resultMap="Mypage">
+		SELECT 	MTRI_CUST_NO
+                ,CUST_ATHR_CD
+				,CASE	WHEN CUST_ATHR_CD = 'A' THEN '관리자'
+						WHEN CUST_ATHR_CD = 'B' THEN '원도급사'
+						WHEN CUST_ATHR_CD = 'C' THEN '하도급사'
+						WHEN CUST_ATHR_CD = 'D' THEN '일반'
+				 END AS CUST_ATHR_NM
+                ,CUST_NM
+                ,PRSN_CORP_CLSS_CD
+                ,RPPR_NM
+                ,FILD_CLSS_CD
+                ,CNTC_WKSC_CD
+                ,ACNT_BANK_CD
+                ,TR_BANK_NM
+                ,DEPR_NM
+                ,BANK_ACTNO
+                ,ATTFL_SEQ
+                ,CUST_EMAIL_ADDR
+                ,CUST_TELNO
+                ,CUST_PSWD
+                ,ACIT_LOCK_YN
+                ,FSTTM_RGSR_ID
+                ,FSTTM_RGST_DTTM
+                ,LSTTM_MODFR_ID
+                ,LSTTM_ALTR_DTTM
+                ,ETC_RMRK
+		FROM T_MTRI_CUST01M1
+		WHERE MTRI_CUST_NO = #{mtriCustNo}
+    </select>
+    
+    <update id="updateMypage" parameterType="com.ex.mater.mypage.Mypage">
+    	UPDATE	T_MTRI_CUST01M1
+   		SET		 CUST_PSWD = #{custPswd}
+   				,CUST_EMAIL_ADDR = #{custEmailAddr}
+   				,CUST_TELNO = #{custTelno}
+   				,LSTTM_MODFR_ID = #{mtriCustNo}
+   				,LSTTM_ALTR_DTTM = SYSDATE
+   		WHERE	MTRI_CUST_NO = #{mtriCustNo}
+    </update>
+</mapper>

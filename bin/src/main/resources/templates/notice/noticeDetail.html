@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	  content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<head>
+	<meta charset="UTF-8">
+	<title>자재·장비대금 지킴이</title>
+	<link type="text/css" rel="stylesheet" href="../assets/css/reset.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/datepicker.min.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/ui.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/style.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/core.css"/>
+	<style type="text/css">
+		section.edit ul.editList li .con .tbox { font-size: 15px; }
+	</style>
+</head>
+<body>
+<div class="container">
+	<header class="">
+		<div class="headerWrap">
+
+			<a href="javascript:history.go(-1);" class="backBtn"></a>
+
+			<div class="pageTitBox">공지사항 수정</div>
+
+			<!-- GNB -->
+			<a href="javascript:f_goMenu();" class="gnbBox">
+				<i class="ic ic_gnb"></i>
+			</a>
+		</div>
+	</header>
+	<div class="wrapper">
+
+		<section class="edit">
+
+			<ul class="editList">
+				<li>
+					<div class="subject">
+						<i class="ic ic_spot"></i>
+						<span class="txt">제목</span>
+					</div>
+					<div class="con">
+						<input class="tbox" value="자재관리 관련 공지사항" readonly>
+					</div>
+				</li>
+
+				<li>
+					<div class="subject">
+						<i class="ic ic_device"></i>
+						<span class="txt">게시일</span>
+					</div>
+					<div class="con">
+						<input class="tbox" value="2020-10-01 ~ 2020-11-30" readonly>
+					</div>
+				</li>
+
+				<li>
+					<div class="subject">
+						<i class="ic ic_corp"></i>
+						<span class="txt">등록자</span>
+					</div>
+					<div class="con">
+						<input class="tbox" value="관리자" readonly>
+					</div>
+				</li>
+
+				<li>
+					<div class="subject">
+						<i class="ic ic_corp"></i>
+						<span class="txt">내용</span>
+					</div>
+					<div class="con">
+						<input class="tbox" value="테스트입니다." style="height: 300px;" readonly>
+					</div>
+				</li>
+			</ul>
+
+			<div class="editMenuBox">
+
+				<a href="#none" class="removeBtn">삭제</a>
+
+				<div class="menuBox">
+					<a href="#none" class="menuBtn">저장</a>
+					<a href="javascript:history.go(-1);" class="menuBtn">취소</a>
+				</div>
+
+
+			</div>
+		</section>
+
+	</div>
+</div>
+<div id="menuDiv" style="display:none;"></div>
+<div class = "progressDiv" style="display:none;">
+	<img src="../assets/img/progress.gif"/>
+</div>
+
+<script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
+<script src="../assets/js/jquery-3.1.1.min.js"></script>
+<script src="../assets/js/jquery-ui-1.12.1.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/datepicker.min.js"></script>
+<script src="../assets/js/datepicker.ko.js"></script>
+<script src="../assets/js/notice/noticeDetail.js"></script>
+<script src="../assets/js/core.js"></script>
+</body>
+</html>

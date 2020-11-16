@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	  content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<head>
+	<meta charset="UTF-8">
+	<title>자재·장비대금 지킴이</title>
+	<link type="text/css" rel="stylesheet" href="../assets/css/reset.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/datepicker.min.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/ui.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/style.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/core.css"/>
+</head>
+<body>
+<div class="container bg" style="background-color:white;">
+	<header class="">
+		<div class="headerWrap">
+
+			<a href="javascript:history.go(-1);" class="backBtn"></a>
+
+			<div class="pageTitBox">공지사항</div>
+
+			<!-- GNB -->
+			<a href="javascript:f_goMenu();" class="gnbBox">
+				<i class="ic ic_gnb"></i>
+			</a>
+		</div>
+	</header>
+	<div class="wrapper">
+
+		<section class="materialPriceList">
+			<div class="searchFormBox">
+				<div class="titBox"><span class="txt">제목/내용</span><input class="searchTbox"></div>
+			
+				<div class="titBox"><span class="txt">기간</span></div>
+				<div class="dateGroup">
+					<div class="dateBox">
+						<label>
+							<input class="date-picker" id="sDate" data-language="ko" data-position="bottom left" value="2020-10-01">
+							<span class="calendar"></span>
+						</label>
+					</div>
+					<div class="unit">~</div>
+					<div class="dateBox">
+						<label>
+							<input class="date-picker" id="eDate" data-language="ko" data-position="bottom right" value="2020-11-01">
+							<span class="calendar"></span>
+						</label>
+					</div>
+				</div>
+				<a href="#none" class="searchBtn">조회</a>
+			</div>
+			<div class="searchFormBox">
+				<div class="tableBox">
+					<article class="listTable">
+						<table class="table fixed" id="noticeTb">
+							<colgroup>
+								<col style="width:10%">
+								<col style="width:40%">
+								<col style="width:20%">
+								<col style="width:30%">
+							</colgroup>
+							<thead>
+								<tr>
+									<th>no</th>
+									<th>제목</th>
+									<th>등록일자</th>
+								</tr>
+							</thead>
+							<tbody id="noticeList">
+							</tbody>
+						</table>
+					</article>
+				</div>
+				<a href="javascript:f_goNoticeCreate();" class="searchBtn">등록</a>
+			</div>
+		</section>
+
+	</div>
+</div>
+<div id="menuDiv" style="display:none;"></div>
+<div class = "progressDiv" style="display:none;">
+	<img src="../assets/img/progress.gif"/>
+</div>
+
+<script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
+<script src="../assets/js/jquery-3.1.1.min.js"></script>
+<script src="../assets/js/jquery-ui-1.12.1.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/datepicker.min.js"></script>
+<script src="../assets/js/datepicker.ko.js"></script>
+<script src="../assets/js/notice/notice.js"></script>
+<script src="../assets/js/core.js"></script>
+</body>
+</html>
