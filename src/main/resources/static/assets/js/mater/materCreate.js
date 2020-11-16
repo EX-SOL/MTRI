@@ -42,3 +42,8 @@ function f_save(){
     });
 }
 
+function f_imgChange(){
+	var fileValue = $("#flUpFileData").val().split("\\");
+	var fileName = fileValue[fileValue.length-1]; // 파일명
+	$("#fileName").text(fileName);
+}

@@ -1,5 +1,8 @@
 package com.ex.mater.mater;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -23,6 +26,11 @@ public class MaterServiceImpl implements MaterService {
 			System.out.println("attflSeq : " + fileData.getAttflSeq());
 		}
 		return materrMapper.insertMaterList(fileData);
+	}
+
+	@Override
+	public List<FileCommand> selectMaterList(Map<String, Object> param) throws Exception {
+		return materrMapper.selectMaterList(param);
 	}
 
 	

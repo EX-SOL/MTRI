@@ -204,9 +204,9 @@
 					</div>
 					<div class="con">
 						<div class="fileBox">
-							<label for="flUpFileData">
-								<input type="file" id="flUpFileData" name="flUpFileData" style="display:none;">
-								<span class="txt" id="fileName"></span>
+							<label for="flUpFileData" style="padding-left: 15px; padding-top: 12px;">
+								<input type="file" id="flUpFileData" style="display:none;" name="flUpFileData" onchange="javascript:f_imgChange();">
+								<span class="txt" id="fileName" style="font-size:15px;"></span>
 								<i class="ic ic_chain"></i>
 							</label>
 						</div>
@@ -223,8 +223,6 @@
 					<a href="javascript:f_save();" class="menuBtn">저장</a>
 					<a href="history.go(-1);" class="menuBtn">취소</a>
 				</div>
-
-
 			</div>
 		</section>
 

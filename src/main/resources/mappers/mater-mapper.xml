@@ -69,4 +69,23 @@
     		, #{attflPath}
     	)
     </insert>
+    
+    <select id="selectMaterList" parameterType="map" resultType="com.ex.mater.mater.FileCommand">
+    	SELECT A.FILD_CLSS_CD       -- 현장구분코드
+		     , A.CNTC_WKSC_CD       -- 건설공구코드
+		     , A.CNTRT_CRPR_NM      -- 계약업체명
+		     , B.DEPR_NM            -- 예금주
+		     , A.MTRI_CD            -- 자재코드
+		     , A.MTRI_MNPB_ASK_YYMM -- 자재대금청구년월
+		     , A.MTRI_MNPB_ASK_SQNO -- 자재대금청구순번
+		 FROM T_MTRI_MNPB_01M1 A
+		    LEFT OUTER JOIN T_MTRI_CUST01M1 B
+		    ON A.MTRI_CUST_NO = B.MTRI_CUST_NO
+		    LEFT OUTER JOIN T_MTRI_CUST01D1 C
+		    ON B.MTRI_CUST_NO = C.MTRI_CUST_NO
+		    LEFT OUTER JOIN T_MTRI_ATTFL D
+		    ON A.ATTFL_SEQ = D.ATTFL_SEQ
+		 WHERE 1 = 1
+		 AND A.MTRI_CUST_NO = #{mtriCustNo}
+    </select>
 </mapper>
