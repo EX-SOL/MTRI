@@ -220,3 +220,54 @@ function f_masking(kind, str){
 	return newStr;
 }
 
+function f_showModal(text){
+	var htmlData = '';
+	
+	htmlData += '<div class="alertModal">';
+	htmlData += '	<div class="alert-modal-content">';
+	htmlData += '		<div class="modalWrap">';
+	htmlData += '			<div class="title">';
+	htmlData += '				<img src="../assets/img/img_header_logo.png" alt="">';
+	htmlData += '				<span>자재·장비대금 지킴이</span>';
+	htmlData += '			</div>';
+	htmlData += '		</div>';
+	htmlData += '		<div class="modalText">';
+	htmlData += '			<span>'+ text +'</span>';
+	htmlData += '		</div>';
+	htmlData += '		<div class="modalButton">';
+	htmlData += '			<button onclick="javascript:f_closeModal();" class="btn-confirm"> 확 인 </button>';
+	htmlData += '		</div>';
+	htmlData += '	</div>';
+	htmlData += '</div>';
+	$('body').append(htmlData);
+	$('body').attr("style", "overflow:hidden;");
+}
+
+function f_closeModal(){
+	$(".alertModal").hide();
+	$('body').attr("style", "overflow:auto;");
+}
+
+function f_historyGo(){
+	var htmlData = '';
+	var text = '앱을 종료하시겠습니까?';
+	htmlData += '<div class="alertModal">';
+	htmlData += '	<div class="alert-modal-content">';
+	htmlData += '		<div class="modalWrap">';
+	htmlData += '			<div class="title">';
+	htmlData += '				<img src="../assets/img/img_header_logo.png" alt="">';
+	htmlData += '				<span>자재·장비대금 지킴이</span>';
+	htmlData += '			</div>';
+	htmlData += '		</div>';
+	htmlData += '		<div class="modalText">';
+	htmlData += '			<span>'+ text +'</span>';
+	htmlData += '		</div>';
+	htmlData += '		<div class="modalButtonConfirm">';
+	htmlData += '			<button onclick="javascript:f_closeModal();" class="btn-cancel"> 취 소 </button>';
+	htmlData += '			<button onclick="javascript:f_finishApp();" class="btn-confirm"> 확 인 </button>';
+	htmlData += '		</div>';
+	htmlData += '	</div>';
+	htmlData += '</div>';
+	$('body').append(htmlData);
+	$('body').attr("style", "overflow:hidden;");
+}

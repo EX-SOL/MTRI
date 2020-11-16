@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ex.mater.mater.MaterMapper">
+
+    <insert id="insertMaterList" parameterType="com.ex.mater.mater.FileCommand">
+    	INSERT INTO T_MTRI_MNPB_01M1
+    	(
+	    	  MTRI_MNPB_ASK_YYMM
+			, MTRI_CUST_NO
+			, MTRI_CD
+			, MTRI_MNPB_ASK_SQNO
+			, FILD_CLSS_CD
+			, CNTC_WKSC_CD
+			, CNTRT_CRPR_CD
+			, CNTRT_NO
+			, MTRI_NM
+			, DLGD_AMNT
+			, DLGD_UNPR
+			, ASK_AMT
+			, RGST_STAT
+			, PPS_TRNM_YN
+			, FSTTM_RGSR_ID
+			, FSTTM_RGST_DTTM
+			, LSTTM_MODFR_ID
+			, LSTTM_ALTR_DTTM
+			, ETC_RMRK
+			, ATTFL_SEQ
+			, CNTRT_CRPR_NM
+    	) VALUES (
+ 	    	  #{mrtiMnpbAskYYMM}
+			, #{mtriCustNo}
+			, #{mtriCd}
+			, #{mtriMnpbAskSqno}
+			, #{fildClssCd}
+			, #{cntcWkscCd}
+			, #{cntrtCrprCd}
+			, #{cntrtNo}
+			, #{mtriNm}
+			, #{dlgdAmnt}
+			, #{dlgdUnpr}
+			, #{askAmt}
+			, #{rgstStat}
+			, #{ppsTrnmYn}
+			, #{fsttmRgsrId}
+			, SYSDATE
+			, #{lsttmModfrId}
+			, SYSDATE
+			, #{etcRmrk}
+			, #{attflSeq}
+			, #{cntrtCrprNm}   	
+    	)
+    </insert>
+    
+    <insert id="insertMaterAttfl" parameterType="com.ex.mater.mater.FileCommand">
+    	<selectKey resultType="String" keyProperty="attflSeq" order="BEFORE">
+			SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ATTFL_SEQ, 9,6)))+1, 1),4, '0') as attflSeq 
+			 FROM T_MTRI_ATTFL 
+			  WHERE ATTFL_SEQ LIKE TO_CHAR(SYSDATE, 'YYYYMMDD')||'%'
+		</selectKey>
+    	INSERT INTO T_MTRI_ATTFL (
+    		  ATTFL_SEQ
+    		, ATTFL_SQNO
+    		, ATTFL_NM
+    		, ATTFL_PATH
+    	) VALUES(
+    		  #{attflSeq}
+    		, 1
+    		, #{attflNm}
+    		, #{attflPath}
+    	)
+    </insert>
+</mapper>

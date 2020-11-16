@@ -31,25 +31,25 @@
 	<div class="wrapper">
 
 		<section class="edit">
-
+		<form name="materForm" id="materForm" enctype="multipart/form-data">
 			<ul class="editList">
-
 				<li>
 					<div class="subject">
 						<i class="ic ic_date"></i>
 						<span class="txt">청구년월</span>
 					</div>
 					<div class="con">
+						<input type="hidden" name="mrtiMnpbAskYYMM">
 						<div class="selectBox">
-							<select>
-								<option>2020년</option>
-								<option>2019년</option>
+							<select name="mrtiMnpbAskYY">
+								<option value="2020">2020년</option>
+								<option value="2019">2019년</option>
 							</select>
 						</div>
 						<div class="selectBox">
-							<select>
-								<option>8월</option>
-								<option>7월</option>
+							<select name="mrtiMnpbAskMM">
+								<option value="08">8월</option>
+								<option value="07">7월</option>
 							</select>
 						</div>
 
@@ -63,9 +63,9 @@
 					</div>
 					<div class="con">
 						<div class="selectBox" style="width: 100%;">
-							<select>
-								<option>2020년</option>
-								<option>2019년</option>
+							<select name="fildClssCd">
+								<option value="a">현장1</option>
+								<option value="b">현장2</option>
 							</select>
 						</div>
 					</div>
@@ -78,9 +78,9 @@
 					</div>
 					<div class="con">
 						<div class="selectBox" style="width: 100%;">
-							<select>
-								<option>2020년</option>
-								<option>2019년</option>
+							<select name="cntcWkscCd">
+								<option value="aa">공구1</option>
+								<option value="bb">공구2</option>
 							</select>
 						</div>
 					</div>
@@ -92,7 +92,7 @@
 						<span class="txt">계약업체명</span>
 					</div>
 					<div class="con">
-						<input class="tbox">
+						<input class="tbox" name="cntrtCrprNm">
 					</div>
 				</li>
 
@@ -102,7 +102,18 @@
 						<span class="txt">자재업체명</span>
 					</div>
 					<div class="con">
-						<input class="tbox">
+						<input class="tbox" name="mtriCrprNm" readonly>
+					</div>
+				</li>
+				<li>
+					<div class="subject">
+						<i class="ic ic_corp"></i>
+						<span class="txt">자재명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="mtriNm">
+						<input type="hidden" name="mtriCd" value="aa">
+						<input type="hidden" name="mtriMnpbAskSqno" value="1">
 					</div>
 				</li>
 
@@ -110,14 +121,61 @@
 				<li>
 					<div class="subject">
 						<i class="ic ic_tel"></i>
-						<span class="txt">전화번호</span>
+						<span class="txt">연락처</span>
 					</div>
 					<div class="con">
-						<input class="tbox">
+						<input class="tbox" name="custTelno" readonly>
 					</div>
 				</li>
-
 				<li>
+					<div class="subject">
+						<i class="ic ic_tel"></i>
+						<span class="txt">사업자번호</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="mtriCustNo" value="110141051000" readonly>
+					</div>
+				</li>
+				<li>
+					<div class="subject">
+						<i class="ic ic_account"></i>
+						<span class="txt">대표자명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="rpprNm" readonly>
+					</div>
+				</li>
+				
+				<li>
+					<div class="subject">
+						<i class="ic ic_account"></i>
+						<span class="txt">예금주</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="deprNm" readonly>
+					</div>
+				</li>
+				
+				<li>
+					<div class="subject">
+						<i class="ic ic_account"></i>
+						<span class="txt">은행명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="trBankNm" readonly>
+					</div>
+				</li>
+				
+				<li>
+					<div class="subject">
+						<i class="ic ic_account"></i>
+						<span class="txt">계좌번호</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="bankActno" readonly>
+					</div>
+				</li>
+				<!-- <li>
 					<div class="subject">
 						<i class="ic ic_buy"></i>
 						<span class="txt">구매품목</span>
@@ -125,18 +183,7 @@
 					<div class="con">
 						<input class="tbox">
 					</div>
-				</li>
-
-				<li>
-					<div class="subject">
-						<i class="ic ic_account"></i>
-						<span class="txt">예금주</span>
-					</div>
-					<div class="con">
-						<input class="tbox">
-					</div>
-				</li>
-
+				</li> -->
 				<li>
 					<div class="subject">
 						<i class="ic ic_charge_price"></i>
@@ -144,7 +191,7 @@
 					</div>
 					<div class="con">
 						<div class="inputBox">
-							<input class="tbox">
+							<input class="tbox" name="askAmt">
 							<span class="unit">원</span>
 						</div>
 					</div>
@@ -153,27 +200,28 @@
 				<li>
 					<div class="subject">
 						<i class="ic ic_date"></i>
-						<span class="txt">첨부자료</span>
+						<span class="txt">세금계산서</span>
 					</div>
 					<div class="con">
 						<div class="fileBox">
-							<label for="file">
-								<input type="file" style="display:none;" id="file">
-								<span class="txt"></span>
+							<label for="flUpFileData">
+								<input type="file" id="flUpFileData" name="flUpFileData" style="display:none;">
+								<span class="txt" id="fileName"></span>
 								<i class="ic ic_chain"></i>
 							</label>
 						</div>
+						
 					</div>
 				</li>
 			</ul>
-
+		</form>
 			<div class="editMenuBox">
 
-				<a href="#none" class="removeBtn">삭제</a>
+				<!-- <a href="#none" class="removeBtn">삭제</a> -->
 
 				<div class="menuBox">
-					<a href="#none" class="menuBtn">저장</a>
-					<a href="#none" class="menuBtn">취소</a>
+					<a href="javascript:f_save();" class="menuBtn">저장</a>
+					<a href="history.go(-1);" class="menuBtn">취소</a>
 				</div>
 
 
