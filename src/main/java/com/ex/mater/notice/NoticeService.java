@@ -3,11 +3,10 @@ package com.ex.mater.notice;
 import java.util.List;
 import java.util.Map;
 
-import com.ex.mater.mypage.Mypage;
 
 public interface NoticeService {
 	// 조회
-	public List<Mypage> selectMypage(Map<String, Object> paramMap) throws Exception;
+	public List<Notice> selectNotice(Map<String, Object> paramMap) throws Exception;
 	
 	// 수정
 	public Integer updateNotice(Map<String, Object> paramMap) throws Exception;

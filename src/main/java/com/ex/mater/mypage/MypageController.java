@@ -34,18 +34,10 @@ public class MypageController {
 	
     @PostMapping(value = "/selectMypage")
     public List<Mypage> selectMypage(@RequestBody Map<String, Object> paramMap) throws Exception {
-    	int result = 0;
     	List<Mypage> rtnMap = new ArrayList<Mypage>();
 
     	try {
     		rtnMap = mypageService.selectMypage(paramMap);
-
-    		if ( result > 0 ) {
-    			paramMap.put("SUCCESS", true);
-    		}else {
-    			paramMap.put("SUCCESS", false);
-    		}
-
     	} catch (Exception ex) {
     		ex.printStackTrace();
     	}

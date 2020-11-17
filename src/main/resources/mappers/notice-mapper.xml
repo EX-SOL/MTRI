@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ex.mater.notice.NoticeMapper">
+
+	<resultMap type="com.ex.mater.notice.Notice" id="NoticeMap">
+		<result column="NOTC_MTRI_SEQ" property="notcMtriSeq"/>
+		<result column="NOTC_MTRI_TITL_NM" property="notcMtriTitlNm"/>
+		<result column="NOTC_MTRI_CTNT" property="notcMtriCtnt"/>
+		<result column="BLTN_STRT_DATES" property="bltnStrtDates"/>
+		<result column="BLTN_END_DATES" property="bltnEndDates"/>
+		<result column="NOTC_MTRI_IMPT_YN" property="notcMtriImptYN"/>
+		<result column="ATTFL_SEQ" property="attflSeq"/>
+		<result column="NOTC_MTRI_BLTN_ATHR_CD" property="notcMtriBltnAthrCd"/>
+		<result column="FSTTM_RGSR_ID" property="fsttmRgsrId"/>
+		<result column="FSTTM_RGST_DTTM" property="fsttmRgstDttm"/>
+		<result column="LSTTM_MODFR_ID" property="lsttmModfrId"/>
+		<result column="LSTTM_ALTR_DTTM" property="lsttmAltrDttm"/>
+		<result column="NOTC_MTRI_DEL_YN" property="notcMtriDelYN"/>
+	</resultMap>
+
+	<select id="selectNotice" parameterType="map" resultMap="NoticeMap">
+		SELECT	
+			 NOTC_MTRI_SEQ
+			,NOTC_MTRI_TITL_NM
+			,NOTC_MTRI_CTNT
+			,BLTN_STRT_DATES
+			,BLTN_END_DATES
+			,NOTC_MTRI_IMPT_YN
+			,ATTFL_SEQ
+			,NOTC_MTRI_BLTN_ATHR_CD
+			,FSTTM_RGSR_ID
+			,FSTTM_RGST_DTTM
+			,LSTTM_MODFR_ID
+			,LSTTM_ALTR_DTTM
+			,NOTC_MTRI_DEL_YN
+		FROM	T_MTRI_NOTICE
+		WHERE	1 = 1
+		AND		NOTC_MTRI_DEL_YN = 'N'
+		<if test="notcMtriTitlNm != '' and notcMtriTitlNm != null">
+			AND (NOTC_MTRI_TITL_NM LIKE '%' || #{notcMtriTitlNm} || '%' OR NOTC_MTRI_CTNT LIKE '%' || #{notcMtriTitlNm} || '%')
+		</if>
+		<if test="bltnStrtDates != '' and bltnStrtDates != null">
+			AND TO_CHAR(FSTTM_RGST_DTTM, 'YYYYMMDD') BETWEEN #{bltnStrtDates} AND #{bltnEndDates}
+		</if>
+		<if test="notcMtriBltnAthrCd != '' and notcMtriBltnAthrCd != null">
+			AND NOTC_MTRI_BLTN_ATHR_CD like  '%' || #{notcMtriBltnAthrCd} || '%'
+		</if>
+		ORDER BY TO_NUMBER(NOTC_MTRI_SEQ) ASC
+	</select>
+</mapper>
