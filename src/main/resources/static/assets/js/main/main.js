@@ -12,31 +12,37 @@ $(document).ready(function(){
 	f_selectMainList();
 })
 
+// 공지사항더보기
 function f_goNotice(){
 	window.location = "/mater/main/load-page?pageName=notice/notice";
 }
 
-
+// 자재대금 등록
 function f_goMaterCreate(){
 	window.location = "/mater/main/load-page?pageName=mater/materCreate";
 }
 
+// 자재대금 목록
 function f_goMaterList(){
 	window.location = "/mater/main/load-page?pageName=mater/materList";
 }
 
+// 공지사항 상세
 function f_goNoticeDetail(){
 	window.location = "/mater/main/load-page?pageName=notice/noticeDetail";
 }
 
+// 장비 목록
 function f_goMachineryList(){
 	window.location = "/mater/main/load-page?pageName=machinery/machineryList";
 }
 
+// 마이페이지 상세
 function f_goMypage(){
 	window.location = "/mater/main/load-page?pageName=mypage/mypage";
 }
 
+// 메인 리스트 추출
 function f_selectMainList(){
 	var innerHTML = '';
 	var param = {"bankActno": $("#bankActno").val()
@@ -54,8 +60,9 @@ function f_selectMainList(){
      	if(response.length > 0){
      		
      		$.each(response, function(key, item){
+     			// if 자재 & 장비
      			innerHTML += '<li>';
-         		innerHTML += '	<a href="javascript:f_goMaterList();" class="itemLink">';
+     			innerHTML += "	<a href='javascript:f_goMaterDetail(\""+item.mtriMnpbAskSqno+"\", \""+item.mtriCd+"\", \""+item.mrtiMnpbAskYYMM+"\");'  class='itemLink'>";
          		innerHTML += '		<div class="topGroup">';
          		innerHTML += '			<div class="nameBox">'+item.fildClssCd+' 현장</div>';
          		innerHTML += '			<div class="dateBox">'+item.mrtiMnpbAskYYMM+'</div>';
@@ -75,7 +82,7 @@ function f_selectMainList(){
          	innerHTML += '	<div class="chargedBox">';
          	innerHTML += '		<div class="topTxt">'+response[0].custNm+'님 청구 목록</div>';
          	innerHTML += '		<div class="chargeBtnBox">';
-         	innerHTML += '			<a href="javascript:f_goMachineryList();" class="chargeBtn">';
+         	innerHTML += '			<a href="javascript:f_goMaterList();" class="chargeBtn">';
          	innerHTML += '				<i class="ic ic_charge"></i>';
          	innerHTML += '				<span class="txt">'+response[0].total+'</span> <span class="unit">건</span>';
          	innerHTML += '			</a>';
@@ -101,7 +108,7 @@ function f_selectMainList(){
          	innerHTML += '	<div class="chargedBox">';
          	innerHTML += '		<div class="topTxt">oo님 청구 목록</div>';
          	innerHTML += '		<div class="chargeBtnBox">';
-         	innerHTML += '			<a href="javascript:f_goMachineryList();" class="chargeBtn">';
+         	innerHTML += '			<a href="javascript:f_goMaterList();" class="chargeBtn">';
          	innerHTML += '				<i class="ic ic_charge"></i>';
          	innerHTML += '				<span class="txt">0</span> <span class="unit">건</span>';
          	innerHTML += '			</a>';
@@ -121,5 +128,12 @@ function f_selectMainList(){
      	f_showModal("조회 실패");
      }
  });
-	
+}
+
+//자재상세로 가기위한 데이터
+function f_goMaterDetail(mtriMnpbAskSqno, mtriCd, mrtiMnpbAskYYMM){
+	var mtriCustNo = $("#mtriCustNo").val();
+	//var param = {"mtriCustNo":mtriCustNo, "mrtiMnpbAskYYMM":mrtiMnpbAskYYMM, "mtriMnpbAskSqno":mtriMnpbAskSqno, "mtriCd":mtriCd};
+	var day = mrtiMnpbAskYYMM.replace('.', '');
+	window.location = "/mater/mater/selectMaterDetail?mtriCustNo="+mtriCustNo+"&mrtiMnpbAskYYMM="+day+"&mtriMnpbAskSqno="+mtriMnpbAskSqno+"&mtriCd="+mtriCd;
 }

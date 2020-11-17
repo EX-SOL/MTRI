@@ -39,14 +39,15 @@ public class MaterController {
     @Value("${app.global.file-path}")
     protected String filePath;
 	
+    // 자재대금 등록 및 파일 업로드
     @PostMapping(value = "/insertMaterList", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Map<String, Object> insertMaterList(FileCommand fileData) throws Exception {
-    	System.out.println("fileData : " + fileData);
     	Map<String, Object> paramMap = new HashMap<String, Object>();
     	
     	SimpleDateFormat year = new SimpleDateFormat("yyyy");
     	SimpleDateFormat month = new SimpleDateFormat("MM");
     	SimpleDateFormat day = new SimpleDateFormat("dd");
+    	// 파일업로드 경로 :: 기본경로/년/월/일
 		String materFilePath  = filePath+"/"+year.format(System.currentTimeMillis())+"/"+month.format(System.currentTimeMillis())+"/"+day.format(System.currentTimeMillis());
 		
 		if(fileData.getFlUpFileData() != null && !fileData.getFlUpFileData().getOriginalFilename().equals("") ) {
@@ -96,6 +97,7 @@ public class MaterController {
 		return paramMap;
     }
     
+    // 자재대금 목록조회
     @PostMapping(value = "/selectMaterList")
     public List<FileCommand> selectMaterList(@RequestBody Map<String, Object> dataMap) throws Exception{
     	List<FileCommand> list = new ArrayList<FileCommand>();
@@ -109,7 +111,7 @@ public class MaterController {
     	return list;
     }
 	
-    
+    // 자재&장비 메인 목록 3건 조회
     @PostMapping(value = "/selectMainList")
     public List<FileCommand> selectMainList(@RequestBody Map<String, Object> dataMap) throws Exception {
 		List<FileCommand> list = new ArrayList<>();
@@ -123,6 +125,7 @@ public class MaterController {
 		return list;
 	}
 
+    // 자재 상세
     @GetMapping(value = "/selectMaterDetail")
     public ModelAndView selectMaterDetail(String mtriCustNo, String mrtiMnpbAskYYMM, String mtriMnpbAskSqno, String mtriCd) throws Exception {
     	ModelAndView mav = new ModelAndView();
@@ -153,6 +156,7 @@ public class MaterController {
     	return mav;
     }
     
+    // 파일 다운로드시 로직
     @GetMapping(value = "/downloadFile")
     public ResponseEntity<InputStreamResource> downloadFile(@RequestParam String attflPath, @RequestParam String attflNm) throws Exception {
     	logger.info("downloadAttfl() - attflPath: {}", attflPath);

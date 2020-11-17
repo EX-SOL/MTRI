@@ -24,6 +24,7 @@ public class UserController {
 	@Resource
 	UserService userService;
 	
+	// 로그인
 	@PostMapping(value="/login")
     public Map<String,Object> login(HttpServletResponse response, HttpServletRequest request, @RequestBody Map<String, Object> paramMap) throws Exception {
     	logger.info("login param: {}", paramMap);
@@ -62,7 +63,7 @@ public class UserController {
     			session.setAttribute("mtriCustNo", "1058657078");
         		session.setAttribute("custPswd", "1234");
         		session.setAttribute("custAthrCd", "A");
-        		session.setAttribute("custTelno", "01011112222");
+        		session.setAttribute("custTelno", "010-1111-2222");
         		session.setAttribute("rpprNm", "aa");
         		session.setAttribute("deprNm", "bb");
         		session.setAttribute("bankActno", "1002141051265");
@@ -77,15 +78,18 @@ public class UserController {
     	return resultMap;
 	}
 	
+	// 로그아웃
 	@PostMapping(value="/logout")
 	public Map<String,Object> logout(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		Map<String,Object> resultMap = new HashMap<>();
 		HttpSession session = (HttpSession)request.getSession();
+		// 로그아웃시 세션날리기
 		session.invalidate();
 		
 		return resultMap;
 	}
 	
+	// 비밀번호 decode
 	public String strDecode(String str) throws Exception{
 		String resultStr = "";
 		try {
@@ -95,7 +99,6 @@ public class UserController {
 		}
 		return resultStr;
 	}
-	
 
 	// AES128.java에서 encode한 결과 리턴
 	public String strEncode(String str) throws Exception{

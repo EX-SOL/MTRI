@@ -166,7 +166,7 @@
 					</div>
 					<div class="con">
 						<div class="inputBox">
-							<input class="tbox" name="askAmt" th:value="${askAmt}" readonly>
+							<input class="tbox money" name="askAmt" th:value="${askAmt}" readonly>
 							<span class="unit">원</span>
 						</div>
 					</div>
@@ -178,10 +178,8 @@
 						<span class="txt">세금계산서</span>
 					</div>
 					<div class="con">
-						<div class="inputBox">
-							<input type="hidden" id="attflPath" th:value="${attflPath}">
-							<input class="tbox" id="attflNm" th:value="${attflNm}" readonly onclick="javascript:f_downloadFile();">
-						</div>
+						<input type="hidden" id="attflPath" th:value="${attflPath}">
+						<input class="tbox fileText" id="attflNm" th:value="${attflNm}" readonly onclick="javascript:f_downloadFile();">
 					</div>
 				</li>
 			</ul>
