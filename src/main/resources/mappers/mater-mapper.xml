@@ -2,6 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ex.mater.mater.MaterMapper">
 
+	<resultMap id="fileCommand" type="com.ex.mater.mater.FileCommand">
+		<result column="MTRI_MNPB_ASK_YYMM" property="mrtiMnpbAskYYMM"/>
+		<result column="FILD_CLSS_CD" property="fildClssCd"/>
+		<result column="CNTC_WKSC_CD" property="cntcWkscCd"/>
+		<result column="CNTRT_CRPR_CD" property="cntrtCrprNm"/>
+		<result column="MTRI_NM" property="mtriNm"/>
+		<result column="CUST_TELNO" property="custTelno"/>
+		<result column="MTRI_CUST_NO" property="mtriCustNo"/>
+		<result column="RPPR_NM" property="rpprNm"/>
+		<result column="DEPR_NM" property="deprNm"/>
+		<result column="TR_BANK_NM" property="trBankNm"/>
+		<result column="BANK_ACTNO" property="bankActno"/>
+		<result column="ASK_AMT" property="askAmt"/>
+		<result column="ATTFL_NM" property="attflNm"/>
+		<result column="ATTFL_PATH" property="attflPath"/>
+		<result column="ATTFL_SEQ" property="attflSeq"/>
+		<result column="MTRI_CD" property="mtriCd"/>
+		<result column="MTRI_MNPB_ASK_SQNO" property="mtriMnpbAskSqno"/>
+		<result column="CNTRT_CRPR_CD" property="cntrtCrprCd"/>
+		<result column="CNTRT_NO" property="cntrtNo"/>
+		<result column="DLGD_AMNT" property="dlgdAmnt"/>
+		<result column="DLGD_UNPR" property="dlgdUnpr"/>
+		<result column="RGST_STAT" property="rgstStat"/>
+		<result column="PPS_TRNM_YN" property="ppsTrnmYn"/>
+		<result column="FSTTM_RGSR_ID" property="fsttmRgsrId"/>
+		<result column="LSTTM_MODFR_ID" property="lsttmModfrId"/>
+		<result column="ETC_RMRK" property="etcRmrk"/>
+		<result column="CNTRT_CRPR_NM" property="cntrtCrprNm"/>
+		<result column="CUST_NM" property="custNm"/>
+	</resultMap>
+	
     <insert id="insertMaterList" parameterType="com.ex.mater.mater.FileCommand">
     	INSERT INTO T_MTRI_MNPB_01M1
     	(
@@ -70,14 +101,16 @@
     	)
     </insert>
     
-    <select id="selectMaterList" parameterType="map" resultType="com.ex.mater.mater.FileCommand">
+    <select id="selectMaterList" parameterType="map" resultMap="fileCommand">
     	SELECT A.FILD_CLSS_CD       -- 현장구분코드
 		     , A.CNTC_WKSC_CD       -- 건설공구코드
 		     , A.CNTRT_CRPR_NM      -- 계약업체명
 		     , B.DEPR_NM            -- 예금주
 		     , A.MTRI_CD            -- 자재코드
+		     , A.MTRI_NM			-- 자재명
 		     , A.MTRI_MNPB_ASK_YYMM -- 자재대금청구년월
 		     , A.MTRI_MNPB_ASK_SQNO -- 자재대금청구순번
+		     , TO_CHAR( NVL(A.ASK_AMT, 0), '999,999,999,999,999') AS ASK_AMT -- 청구액
 		 FROM T_MTRI_MNPB_01M1 A
 		    LEFT OUTER JOIN T_MTRI_CUST01M1 B
 		    ON A.MTRI_CUST_NO = B.MTRI_CUST_NO
@@ -87,5 +120,67 @@
 		    ON A.ATTFL_SEQ = D.ATTFL_SEQ
 		 WHERE 1 = 1
 		 AND A.MTRI_CUST_NO = #{mtriCustNo}
+		 ORDER BY FSTTM_RGST_DTTM DESC
+    </select>
+    
+    <select id="selectMainList" parameterType="map" resultMap="fileCommand">
+    SELECT *
+     FROM (	
+    	SELECT A.FILD_CLSS_CD       -- 현장구분코드
+		     , A.CNTC_WKSC_CD       -- 건설공구코드
+		     , A.CNTRT_CRPR_NM      -- 계약업체명
+		     , B.DEPR_NM            -- 예금주
+		     , A.MTRI_CD            -- 자재코드
+		     , A.MTRI_NM			-- 자재명
+		     , SUBSTR(A.MTRI_MNPB_ASK_YYMM, 0, 4) || '.' || SUBSTR(A.MTRI_MNPB_ASK_YYMM, 5,6) AS MTRI_MNPB_ASK_YYMM
+		     , A.MTRI_MNPB_ASK_SQNO -- 자재대금청구순번
+		     , TO_CHAR( NVL(A.ASK_AMT, 0), '999,999,999,999,999') AS ASK_AMT -- 청구액
+		     , B.CUST_NM			-- 회사명
+             , COUNT(*) OVER (PARTITION BY 1) AS TOTAL	-- TOTAL 개수
+		 FROM T_MTRI_MNPB_01M1 A
+		    LEFT OUTER JOIN T_MTRI_CUST01M1 B
+		    ON A.MTRI_CUST_NO = B.MTRI_CUST_NO
+		    LEFT OUTER JOIN T_MTRI_CUST01D1 C
+		    ON B.MTRI_CUST_NO = C.MTRI_CUST_NO
+		    LEFT OUTER JOIN T_MTRI_ATTFL D
+		    ON A.ATTFL_SEQ = D.ATTFL_SEQ
+		 WHERE 1 = 1
+		 AND A.MTRI_CUST_NO = #{mtriCustNo}
+		 ORDER BY FSTTM_RGST_DTTM DESC
+		 )
+	WHERE ROWNUM <![CDATA[ < ]]> 4
+    </select>
+    
+    <select id="selectMaterDetail" parameterType="map" resultMap="fileCommand">
+    	SELECT A.FILD_CLSS_CD       -- 현장구분코드
+		     , A.CNTC_WKSC_CD       -- 건설공구코드
+		     , A.CNTRT_CRPR_NM      -- 계약업체명
+		     , B.DEPR_NM            -- 예금주
+		     , A.MTRI_CD            -- 자재코드
+		     , A.MTRI_NM			-- 자재명
+		     , A.MTRI_MNPB_ASK_YYMM -- 자재대금청구년월
+		     , A.MTRI_MNPB_ASK_SQNO -- 자재대금청구순번
+		     , TO_CHAR( NVL(A.ASK_AMT, 0), '999,999,999,999,999') AS ASK_AMT -- 청구액
+             , B.CUST_NM        -- 자재업체명
+             , REGEXP_REPLACE(B.CUST_TELNO, '(.{3})(.*)(.{4})', '\1-\2-\3') CUST_TELNO
+             , A.MTRI_CUST_NO     -- 사업자번호
+             , RPPR_NM          -- 대표자명
+             , TR_BANK_NM       -- 은행명
+             , BANK_ACTNO       -- 계좌번호
+             , ASK_AMT          -- 청구금액
+             , ATTFL_NM         -- 파일명
+             , ATTFL_PATH       -- 파일경로
+		 FROM T_MTRI_MNPB_01M1 A
+		    LEFT OUTER JOIN T_MTRI_CUST01M1 B
+		    ON A.MTRI_CUST_NO = B.MTRI_CUST_NO
+		    LEFT OUTER JOIN T_MTRI_CUST01D1 C
+		    ON B.MTRI_CUST_NO = C.MTRI_CUST_NO
+		    LEFT OUTER JOIN T_MTRI_ATTFL D
+		    ON A.ATTFL_SEQ = D.ATTFL_SEQ
+		 WHERE 1 = 1
+		 AND A.MTRI_MNPB_ASK_YYMM = #{mrtiMnpbAskYYMM}
+         AND A.MTRI_CUST_NO = #{mtriCustNo}
+         AND A.MTRI_CD = #{mtriCd}
+         AND A.MTRI_MNPB_ASK_SQNO = #{mtriMnpbAskSqno}
     </select>
 </mapper>

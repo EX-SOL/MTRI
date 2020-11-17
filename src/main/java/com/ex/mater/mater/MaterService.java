@@ -8,4 +8,9 @@ public interface MaterService {
 	public Integer insertMaterList(FileCommand fileData) throws Exception;
 	
 	public List<FileCommand> selectMaterList(Map<String, Object> param) throws Exception; 
+
+	public List<FileCommand> selectMainList (Map<String, Object> param) throws Exception;
+	
+	public FileCommand selectMaterDetail(Map<String, Object> param) throws Exception;
+
 }

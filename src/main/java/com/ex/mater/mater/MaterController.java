@@ -13,10 +13,12 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,4 +104,46 @@ public class MaterController {
     	return list;
     }
 	
+    
+    @PostMapping(value = "/selectMainList")
+    public List<FileCommand> selectMainList(@RequestBody Map<String, Object> dataMap) throws Exception {
+		List<FileCommand> list = new ArrayList<>();
+		try {
+			list = materService.selectMainList(dataMap);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+    @GetMapping(value = "/selectMaterDetail")
+    public ModelAndView selectMaterDetail(String mtriCustNo, String mrtiMnpbAskYYMM, String mtriMnpbAskSqno, String mtriCd) throws Exception {
+    	ModelAndView mav = new ModelAndView();
+    	FileCommand fileCommand = new FileCommand();
+    	Map<String, Object> paramMap = new HashMap<String, Object>();
+    	paramMap.put("mtriCustNo", mtriCustNo);
+    	paramMap.put("mrtiMnpbAskYYMM", mrtiMnpbAskYYMM);
+    	paramMap.put("mtriMnpbAskSqno", mtriMnpbAskSqno);
+    	paramMap.put("mtriCd", mtriCd);
+    	System.out.println("paramMap:" + paramMap);
+    	fileCommand = materService.selectMaterDetail(paramMap);
+    	mav.setViewName("/mater/materDetail");
+    	mav.addObject("mrtiMnpbAskYYMM", fileCommand.getMrtiMnpbAskYYMM().substring(0, 4)+"년"+fileCommand.getMrtiMnpbAskYYMM().substring(5, 6)+"월");
+    	mav.addObject("fildClssCd", fileCommand.getFildClssCd());
+    	mav.addObject("cntcWkscCd", fileCommand.getCntcWkscCd());
+    	mav.addObject("cntrtCrprNm", fileCommand.getCntrtCrprNm());
+    	mav.addObject("custNm", fileCommand.getCustNm());
+    	mav.addObject("mtriNm", fileCommand.getMtriNm());
+    	mav.addObject("custTelno", fileCommand.getCustTelno());
+    	mav.addObject("mtriCustNo", fileCommand.getMtriCustNo());
+    	mav.addObject("rpprNm", fileCommand.getRpprNm());
+    	mav.addObject("deprNm", fileCommand.getDeprNm());
+    	mav.addObject("trBankNm", fileCommand.getTrBankNm());
+    	mav.addObject("bankActno", fileCommand.getBankActno());
+    	mav.addObject("askAmt", fileCommand.getAskAmt());
+    	mav.addObject("attflNm", fileCommand.getAttflNm());
+    	return mav;
+    }
 }

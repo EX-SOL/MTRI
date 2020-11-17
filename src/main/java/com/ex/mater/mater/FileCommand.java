@@ -35,6 +35,8 @@ public class FileCommand {
 	String fsttmRgsrId;
 	String lsttmModfrId;
 	String etcRmrk;
+	String custNm;
+	int total;
 	
     public MultipartFile getFlUpFileData() {
         return flUpFileData;
@@ -59,8 +61,6 @@ public class FileCommand {
     public void setTxtItem2(String txtItem2) {
         this.txtItem2 = txtItem2;
     }
-    
-    
 
     public String getMrtiMnpbAskYYMM() {
 		return mrtiMnpbAskYYMM;
@@ -166,8 +166,6 @@ public class FileCommand {
 		this.askAmt = askAmt;
 	}
 	
-	
-
 	public String getAttflNm() {
 		return attflNm;
 	}
@@ -191,7 +189,6 @@ public class FileCommand {
 	public void setAttflSeq(String attflSeq) {
 		this.attflSeq = attflSeq;
 	}
-
 	
 	public String getMtriCd() {
 		return mtriCd;
@@ -279,6 +276,22 @@ public class FileCommand {
 
 	public void setEtcRmrk(String etcRmrk) {
 		this.etcRmrk = etcRmrk;
+	}
+
+	public String getCustNm() {
+		return custNm;
+	}
+
+	public void setCustNm(String custNm) {
+		this.custNm = custNm;
+	}
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
 	}
 
 	@Override

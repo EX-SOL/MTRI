@@ -102,7 +102,7 @@
 						<span class="txt">자재업체명</span>
 					</div>
 					<div class="con">
-						<input class="tbox" name="mtriCrprNm" readonly>
+						<input class="tbox" name="mtriCrprNm" th:value="${session.custNm}" readonly>
 					</div>
 				</li>
 				<li>
@@ -124,7 +124,7 @@
 						<span class="txt">연락처</span>
 					</div>
 					<div class="con">
-						<input class="tbox" name="custTelno" readonly>
+						<input class="tbox" name="custTelno" th:value="${session.custTelno}" readonly>
 					</div>
 				</li>
 				<li>
@@ -133,7 +133,7 @@
 						<span class="txt">사업자번호</span>
 					</div>
 					<div class="con">
-						<input class="tbox" name="mtriCustNo" value="110141051000" readonly>
+						<input class="tbox" name="mtriCustNo" th:value="${session.mtriCustNo}" readonly>
 					</div>
 				</li>
 				<li>
@@ -142,7 +142,7 @@
 						<span class="txt">대표자명</span>
 					</div>
 					<div class="con">
-						<input class="tbox" name="rpprNm" readonly>
+						<input class="tbox" name="rpprNm" th:value="${session.rpprNm}" readonly>
 					</div>
 				</li>
 				
@@ -152,7 +152,7 @@
 						<span class="txt">예금주</span>
 					</div>
 					<div class="con">
-						<input class="tbox" name="deprNm" readonly>
+						<input class="tbox" name="deprNm" th:value="${session.deprNm}" readonly>
 					</div>
 				</li>
 				
@@ -162,7 +162,7 @@
 						<span class="txt">은행명</span>
 					</div>
 					<div class="con">
-						<input class="tbox" name="trBankNm" readonly>
+						<input class="tbox" name="trBankNm" th:value="${session.trBankNm}" readonly>
 					</div>
 				</li>
 				
@@ -172,7 +172,7 @@
 						<span class="txt">계좌번호</span>
 					</div>
 					<div class="con">
-						<input class="tbox" name="bankActno" readonly>
+						<input class="tbox" name="bankActno" th:value="${session.bankActno}" readonly>
 					</div>
 				</li>
 				<!-- <li>
@@ -191,7 +191,7 @@
 					</div>
 					<div class="con">
 						<div class="inputBox">
-							<input class="tbox" name="askAmt">
+							<input class="tbox" name="askAmt" numberonly>
 							<span class="unit">원</span>
 						</div>
 					</div>
@@ -221,7 +221,7 @@
 
 				<div class="menuBox">
 					<a href="javascript:f_save();" class="menuBtn">저장</a>
-					<a href="history.go(-1);" class="menuBtn">취소</a>
+					<a href="javascript:history.go(-1);" class="menuBtn">취소</a>
 				</div>
 			</div>
 		</section>

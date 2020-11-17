@@ -12,4 +12,8 @@ public interface MaterMapper {
 	public Integer insertMaterAttfl(FileCommand fileData);
 	
 	public List<FileCommand> selectMaterList(Map<String, Object> param);
+
+	public List<FileCommand> selectMainList(Map<String, Object> param);
+
+	public FileCommand selectMaterDetail(Map<String, Object> param);
 }

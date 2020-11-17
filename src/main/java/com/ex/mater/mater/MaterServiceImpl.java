@@ -14,23 +14,31 @@ import org.springframework.stereotype.Service;
 public class MaterServiceImpl implements MaterService {
 
 	@Resource
-    private MaterMapper materrMapper;
+    private MaterMapper materMapper;
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public Integer insertMaterList(FileCommand fileData) throws Exception {
 		if( fileData.getAttflNm() != "" || fileData.getAttflNm() != null ) {
-			materrMapper.insertMaterAttfl(fileData);
-			System.out.println("==============================");
-			System.out.println("attflSeq : " + fileData.getAttflSeq());
+			materMapper.insertMaterAttfl(fileData);
 		}
-		return materrMapper.insertMaterList(fileData);
+		return materMapper.insertMaterList(fileData);
 	}
 
 	@Override
 	public List<FileCommand> selectMaterList(Map<String, Object> param) throws Exception {
-		return materrMapper.selectMaterList(param);
+		return materMapper.selectMaterList(param);
+	}
+
+	@Override
+	public List<FileCommand> selectMainList(Map<String, Object> param) throws Exception {
+		return materMapper.selectMainList(param);
+	}
+
+	@Override
+	public FileCommand selectMaterDetail(Map<String, Object> param) throws Exception {
+		return materMapper.selectMaterDetail(param);
 	}
 
 	

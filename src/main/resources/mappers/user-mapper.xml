@@ -4,14 +4,26 @@
 
 	<resultMap id="User" type="com.ex.mater.user.model.User">
 		<result column="MTRI_CUST_NO" property="mtriCustNo"/>
-		<result column="CUST_ATHR_CD" property="custAthrCd"/>
 		<result column="CUST_PSWD" property="custPswd"/>
+		<result column="CUST_ATHR_CD" property="custAthrCd"/>
+		<result column="CUST_TELNO" property="custTelno"/>
+		<result column="RPPR_NM" property="rpprNm"/>
+		<result column="DEPR_NM" property="deprNm"/>
+		<result column="BANK_ACTNO" property="bankActno"/>
+		<result column="TR_BANK_NM" property="trBankNm"/>
+		<result column="CUST_NM" property="custNm"/>
 	</resultMap>
 	
     <select id="selectLogin" parameterType="map" resultMap="User">
     	SELECT MTRI_CUST_NO
     	     , CUST_ATHR_CD
 			 , CUST_PSWD
+			 , REGEXP_REPLACE(CUST_TELNO, '(.{3})(.*)(.{4})', '\1-\2-\3') CUST_TELNO
+			 , RPPR_NM
+			 , DEPR_NM
+			 , BANK_ACTNO
+			 , TR_BANK_NM
+			 , CUST_NM
     	 FROM T_MTRI_CUST01M1
     	 WHERE MTRI_CUST_NO = #{mtriCustNo}
     	 AND ACIT_LOCK_YN = 'N'
