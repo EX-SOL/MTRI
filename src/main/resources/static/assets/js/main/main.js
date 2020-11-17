@@ -70,6 +70,24 @@ function f_selectMainList(){
          		innerHTML += '	</a>';
          		innerHTML += '</li>';
      		});
+     		
+     		innerHTML += '<li>';
+         	innerHTML += '	<div class="chargedBox">';
+         	innerHTML += '		<div class="topTxt">'+response[0].custNm+'님 청구 목록</div>';
+         	innerHTML += '		<div class="chargeBtnBox">';
+         	innerHTML += '			<a href="javascript:f_goMachineryList();" class="chargeBtn">';
+         	innerHTML += '				<i class="ic ic_charge"></i>';
+         	innerHTML += '				<span class="txt">'+response[0].total+'</span> <span class="unit">건</span>';
+         	innerHTML += '			</a>';
+         	innerHTML += '		</div>';
+         	innerHTML += '		<div class="regBtnBox">';
+         	innerHTML += '			<a href="javascript:f_goMaterCreate();" class="regBtn">';
+         	innerHTML += '				<i class="ic ic_reg"></i>';
+         	innerHTML += '				<span class="txt">자재대금 등록</span>';
+         	innerHTML += '			</a>';
+         	innerHTML += '		</div>';
+         	innerHTML += '	</div>';
+         	innerHTML += '</li>';
      	} else {
      		innerHTML += '<li>';
      		innerHTML += '	<a href="#" class="itemLink">';
@@ -78,20 +96,25 @@ function f_selectMainList(){
      		innerHTML += '		</div>';
      		innerHTML += '	</a>';
      		innerHTML += '</li>';
+     		
+     		innerHTML += '<li>';
+         	innerHTML += '	<div class="chargedBox">';
+         	innerHTML += '		<div class="topTxt">oo님 청구 목록</div>';
+         	innerHTML += '		<div class="chargeBtnBox">';
+         	innerHTML += '			<a href="javascript:f_goMachineryList();" class="chargeBtn">';
+         	innerHTML += '				<i class="ic ic_charge"></i>';
+         	innerHTML += '				<span class="txt">0</span> <span class="unit">건</span>';
+         	innerHTML += '			</a>';
+         	innerHTML += '		</div>';
+         	innerHTML += '		<div class="regBtnBox">';
+         	innerHTML += '			<a href="javascript:f_goMaterCreate();" class="regBtn">';
+         	innerHTML += '				<i class="ic ic_reg"></i>';
+         	innerHTML += '				<span class="txt">자재대금 등록</span>';
+         	innerHTML += '			</a>';
+         	innerHTML += '		</div>';
+         	innerHTML += '	</div>';
+         	innerHTML += '</li>';
      	}
-     	
-     	innerHTML += '<li>';
-     	innerHTML += '	<div class="chargedBox">';
-     	innerHTML += '		<div class="topTxt">'+response[0].custNm+'님 청구 목록</div>';
-     	innerHTML += '		<div class="chargeBtnBox">';
-     	innerHTML += '			<a href="javascript:f_goMachineryList();" class="chargeBtn">';
-     	innerHTML += '				<i class="ic ic_charge"></i>';
-     	innerHTML += '				<span class="txt">'+response[0].total+'</span> <span class="unit">건</span>';
-     	innerHTML += '			</a>';
-     	innerHTML += '		</div>';
-     	innerHTML += '	</div>';
-     	innerHTML += '</li>';
-     	
      	$("#mainList").html(innerHTML);
      },
      error: function (jqXHR, status, error) {

@@ -9,8 +9,16 @@ $(document).ready(function(){
 	
 	$("#menuDiv").load('/mater/main/load-page?pageName=menu');
 	
-	
-	f_selectMaterList();
+	// 초기 데이터 설정
+	var date = new Date();
+	var year = date.getFullYear();              //yyyy
+    var month = (1 + date.getMonth());          //M
+    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+    $("#eMonth").val(year+"-"+month);
+    var prevMonth = parseInt(month)-1
+    $("#sMonth").val(year+"-"+prevMonth);
+    
+    f_selectMaterList();
 })
 
 
@@ -23,9 +31,16 @@ function f_goMaterDetail(mtriMnpbAskSqno, mtriCd, mrtiMnpbAskYYMM){
 
 
 function f_selectMaterList(){
+	var sMonth = $("#sMonth").val();
+	var eMonth = $("#eMonth").val();
+	
+	sMonth = f_hyphenReplaceEmpty(sMonth);
+	eMonth = f_hyphenReplaceEmpty(eMonth);
+
 	//청구기간
-	var param = {"bankActno": $("#bankActno").val()
-			   , "mtriCustNo":$("#mtriCustNo").val()};
+	var param = {"sMonth": sMonth, 
+				"eMonth": eMonth,
+				"mtriCustNo":$("#mtriCustNo").val()};
 	$.ajax({
         method: "POST",
         url: "/mater/mater/selectMaterList",

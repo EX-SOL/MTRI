@@ -178,14 +178,10 @@
 						<span class="txt">세금계산서</span>
 					</div>
 					<div class="con">
-						<div class="fileBox">
-							<label for="flUpFileData" style="padding-left: 15px; padding-top: 12px;">
-								<input type="file" id="flUpFileData" style="display:none;" name="flUpFileData" readonly>
-								<span class="txt" id="fileName" style="font-size:15px;" th:value="${attflNm}"></span>
-								<i class="ic ic_chain"></i>
-							</label>
+						<div class="inputBox">
+							<input type="hidden" id="attflPath" th:value="${attflPath}">
+							<input class="tbox" id="attflNm" th:value="${attflNm}" readonly onclick="javascript:f_downloadFile();">
 						</div>
-						
 					</div>
 				</li>
 			</ul>
@@ -217,6 +213,6 @@
 <script src="../assets/js/datepicker.min.js"></script>
 <script src="../assets/js/datepicker.ko.js"></script>
 <script src="../assets/js/core.js"></script>
-<script src="../assets/js/mater/materCreate.js"></script>
+<script src="../assets/js/mater/materDetail.js"></script>
 </body>
 </html>

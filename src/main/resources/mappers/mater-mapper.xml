@@ -120,6 +120,7 @@
 		    ON A.ATTFL_SEQ = D.ATTFL_SEQ
 		 WHERE 1 = 1
 		 AND A.MTRI_CUST_NO = #{mtriCustNo}
+		 AND A.MTRI_MNPB_ASK_YYMM BETWEEN #{sMonth} AND #{eMonth}
 		 ORDER BY FSTTM_RGST_DTTM DESC
     </select>
     

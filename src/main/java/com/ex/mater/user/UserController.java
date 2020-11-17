@@ -62,6 +62,12 @@ public class UserController {
     			session.setAttribute("mtriCustNo", "1058657078");
         		session.setAttribute("custPswd", "1234");
         		session.setAttribute("custAthrCd", "A");
+        		session.setAttribute("custTelno", "01011112222");
+        		session.setAttribute("rpprNm", "aa");
+        		session.setAttribute("deprNm", "bb");
+        		session.setAttribute("bankActno", "1002141051265");
+        		session.setAttribute("trBankNm", "우리은행");
+        		session.setAttribute("custNm", "(주)아와소프트");
         		resultMap.put("SUCCESS", true);
     		}
     		
