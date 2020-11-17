@@ -569,7 +569,8 @@ section.materialPriceList .listFormBox {
     font-weight: 700;
     padding-bottom: 10px;
     color: #1b1d1f;
-    letter-spacing: 0.042px; }
+    letter-spacing: 0.042px;
+    margin-top: 10px; }
   section.materialPriceList .listFormBox .listGroup ul.itemList li {
     background-color: #fff;
     border-radius: 5px;

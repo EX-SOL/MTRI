@@ -8,35 +8,36 @@ public class FileCommand {
 	private String txtItem1;
     private String txtItem2;
 
-    String mrtiMnpbAskYYMM;
-	String fildClssCd;
-	String cntcWkscCd;
-	String cntrtCrprNm;
-	String mtriCrprNm;
-	String mtriNm;
-	String custTelno;
-	String mtriCustNo;
-	String rpprNm;
-	String deprNm;
-	String trBankNm;
-	String bankActno;
-	String askAmt;
-	String attflNm;  //첨부파일 이름
-	String attflPath;  //첨부파일 경로
-	String attflSeq;
-	String mtriCd;
-	String mtriMnpbAskSqno;
-	String cntrtCrprCd;
-	String cntrtNo;
-	String dlgdAmnt;
-	String dlgdUnpr;
-	String rgstStat;
-	String ppsTrnmYn;
-	String fsttmRgsrId;
-	String lsttmModfrId;
-	String etcRmrk;
-	String custNm;
-	int total;
+    String mrtiMnpbAskYYMM;		//자재대금청구년월
+	String fildClssCd;			//현장구분코드
+	String cntcWkscCd;			//건설공구코드
+	String cntrtCrprNm;			//계약업체명
+	String mtriCrprNm;			//자재업체명
+	String mtriNm;				//자재명
+	String custTelno;			//사용자전화번호
+	String mtriCustNo;			//사용자id(사업자번호)
+	String rpprNm;				//대표자명
+	String deprNm;				//예금주
+	String trBankNm;			//거래은행명
+	String bankActno;			//은행계좌번호
+	String askAmt;				//금액
+	String attflNm;  			//첨부파일 이름
+	String attflPath;  			//첨부파일 경로
+	String attflSeq;			//첨부파일 일련번호
+	String mtriCd;				//자재코드
+	String mtriMnpbAskSqno;		//자재대금청구순번
+	String cntrtCrprCd;			//계약업체코드
+	String cntrtNo;				//계약번호
+	String dlgdAmnt;			//수량
+	String dlgdUnpr;			//단가
+	String rgstStat;			//상태
+	String ppsTrnmYn;			//전송여부
+	String fsttmRgsrId;			//등록자
+	String lsttmModfrId;		//수정자
+	String etcRmrk;				//기타비고
+	String custNm;				//사용자명/법인명
+	int total;					//총카운트
+	
 	
     public MultipartFile getFlUpFileData() {
         return flUpFileData;

@@ -133,3 +133,19 @@
 	.dayMonth{height: 37px;background: #fff;border: 1px solid #ffe346;border-radius: 7px;width: calc(50% - 15px);padding-left: 8px;}
 	.money{text-align: right;}
 	.fileText{color:blue;}
+	
+	
+	section.materialPriceList .listFormBox .searchBtn {
+    margin-top: 11px;
+    width: calc(50% - 10px);
+    font-weight: 700;
+    border-radius: 6px;
+    line-height: 36px;
+    height: 36px;
+    text-align: center;
+    color: #fff;
+    font-size: 17px;
+    letter-spacing: -0.136px;
+    background-color: #22374c; }
+
+    section.materialPriceList .listFormBox .listGroup ul.itemList{margin-bottom:10px;}

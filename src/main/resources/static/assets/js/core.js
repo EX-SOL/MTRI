@@ -234,6 +234,7 @@ function f_masking(kind, str){
 	return newStr;
 }
 
+// modal 띄우기
 function f_showModal(text){
 	var htmlData = '';
 	
@@ -257,11 +258,13 @@ function f_showModal(text){
 	$('body').attr("style", "overflow:hidden;");
 }
 
+// modal 닫기
 function f_closeModal(){
 	$(".alertModal").hide();
 	$('body').attr("style", "overflow:auto;");
 }
 
+// 앱 메인에서 뒤로가기시 종료
 function f_historyGo(){
 	var htmlData = '';
 	var text = '앱을 종료하시겠습니까?';
@@ -285,3 +288,12 @@ function f_historyGo(){
 	$('body').append(htmlData);
 	$('body').attr("style", "overflow:hidden;");
 }
+
+
+// 첨부파일 선택 시 파일명 표출
+function f_imgChange(){
+	var fileValue = $("#flUpFileData").val().split("\\");
+	var fileName = fileValue[fileValue.length-1]; // 파일명
+	$("#fileName").text(fileName);
+}
+
