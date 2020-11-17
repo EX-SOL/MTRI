@@ -29,28 +29,15 @@
 		</div>
 	</header>
 	<div class="wrapper">
-
 		<section class="edit">
-
 			<ul class="editList">
-
 				<li>
 					<div class="subject">
 						<i class="ic ic_date"></i>
 						<span class="txt">청구년월</span>
 					</div>
 					<div class="con">
-						<div class="selectBox">
-							<select>
-								<option>2020년</option>
-							</select>
-						</div>
-						<div class="selectBox">
-							<select>
-								<option>10월</option>
-							</select>
-						</div>
-
+						<input class="tbox" name="mrtiMnpbAskYYMM" th:value="${mrtiMnpbAskYYMM}" readonly>
 					</div>
 				</li>
 
@@ -60,7 +47,7 @@
 						<span class="txt">현장명</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="한국도로공사 현장" readonly>
+						<input class="tbox" name="fildClssCd" th:value="${fildClssCd}" readonly>
 					</div>
 				</li>
 
@@ -70,7 +57,7 @@
 						<span class="txt">공 구</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="한국도로공사 공구" readonly>
+						<input class="tbox" name="cntcWkscCd" th:value="${cntcWkscCd}" readonly>
 					</div>
 				</li>
 
@@ -80,7 +67,7 @@
 						<span class="txt">계약업체명</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="아와소프트" readonly>
+						<input class="tbox" name="cntrtCrprNm" th:value="${cntrtCrprNm}" readonly>
 					</div>
 				</li>
 
@@ -90,7 +77,18 @@
 						<span class="txt">자재업체명</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="아와" readonly>
+						<input class="tbox" name="mtriCrprNm" th:value="${custNm}" readonly>
+					</div>
+				</li>
+				<li>
+					<div class="subject">
+						<i class="ic ic_corp"></i>
+						<span class="txt">자재명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="mtriNm" th:value="${mtriNm}" readonly>
+						<input type="hidden" name="mtriCd" value="aa">
+						<input type="hidden" name="mtriMnpbAskSqno" value="1">
 					</div>
 				</li>
 
@@ -98,33 +96,69 @@
 				<li>
 					<div class="subject">
 						<i class="ic ic_tel"></i>
-						<span class="txt">전화번호</span>
+						<span class="txt">연락처</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="010-1234-5678" readonly>
+						<input class="tbox" name="custTelno" th:value="${custTelno}" readonly>
 					</div>
 				</li>
-
 				<li>
 					<div class="subject">
-						<i class="ic ic_buy"></i>
-						<span class="txt">구매품목</span>
+						<i class="ic ic_tel"></i>
+						<span class="txt">사업자번호</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="크레인" readonly>
+						<input class="tbox" name="mtriCustNo" th:value="${mtriCustNo}" readonly>
 					</div>
 				</li>
-
+				<li>
+					<div class="subject">
+						<i class="ic ic_account"></i>
+						<span class="txt">대표자명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="rpprNm" th:value="${rpprNm}" readonly>
+					</div>
+				</li>
+				
 				<li>
 					<div class="subject">
 						<i class="ic ic_account"></i>
 						<span class="txt">예금주</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="김아와" readonly>
+						<input class="tbox" name="deprNm" th:value="${deprNm}" readonly>
 					</div>
 				</li>
-
+				
+				<li>
+					<div class="subject">
+						<i class="ic ic_account"></i>
+						<span class="txt">은행명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="trBankNm" th:value="${trBankNm}" readonly>
+					</div>
+				</li>
+				
+				<li>
+					<div class="subject">
+						<i class="ic ic_account"></i>
+						<span class="txt">계좌번호</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="bankActno" th:value="${bankActno}" readonly>
+					</div>
+				</li>
+				<!-- <li>
+					<div class="subject">
+						<i class="ic ic_buy"></i>
+						<span class="txt">구매품목</span>
+					</div>
+					<div class="con">
+						<input class="tbox">
+					</div>
+				</li> -->
 				<li>
 					<div class="subject">
 						<i class="ic ic_charge_price"></i>
@@ -132,7 +166,7 @@
 					</div>
 					<div class="con">
 						<div class="inputBox">
-							<input class="tbox" value="100,000,000" readonly>
+							<input class="tbox money" name="askAmt" th:value="${askAmt}" readonly>
 							<span class="unit">원</span>
 						</div>
 					</div>
@@ -141,16 +175,11 @@
 				<li>
 					<div class="subject">
 						<i class="ic ic_date"></i>
-						<span class="txt">첨부자료</span>
+						<span class="txt">세금계산서</span>
 					</div>
 					<div class="con">
-						<div class="fileBox">
-							<label for="file">
-								<input type="text" style="display:none;" id="file">
-								<span class="txt"></span>
-								<i class="ic ic_chain"></i>
-							</label>
-						</div>
+						<input type="hidden" id="attflPath" th:value="${attflPath}">
+						<input class="tbox fileText" id="attflNm" th:value="${attflNm}" readonly onclick="javascript:f_downloadFile();">
 					</div>
 				</li>
 			</ul>
@@ -182,6 +211,6 @@
 <script src="../assets/js/datepicker.min.js"></script>
 <script src="../assets/js/datepicker.ko.js"></script>
 <script src="../assets/js/core.js"></script>
-<script src="../assets/js/mater/materCreate.js"></script>
+<script src="../assets/js/mater/materDetail.js"></script>
 </body>
 </html>

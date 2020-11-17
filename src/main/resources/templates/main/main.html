@@ -34,81 +34,9 @@
 		</div>
 	</header>
 	<div class="wrapper main">
-
+		<input type="hidden" id="mtriCustNo" th:value="${session.mtriCustNo}">
 		<section class="main">
-
-			<ul class="mainList">
-
-				<li>
-					<a href="javascript:f_goMaterList();" class="itemLink">
-						<div class="topGroup">
-							<div class="nameBox">한국도로공사 현장</div>
-							<div class="dateBox">2020.10</div>
-							<div class="itemBox">
-								<div class="topTxt">한국도로공사 공구</div>
-								<div class="bottomTxt">크레인</div>
-							</div>
-						</div>
-						<div class="bottomGroup">
-							<span class="priceTxt">1,480,000,000</span>
-						</div>
-					</a>
-				</li>
-
-				<li>
-					<a href="javascript:f_goMaterList();" class="itemLink">
-						<div class="topGroup">
-							<div class="nameBox">남양주 현장</div>
-							<div class="dateBox">2020.09</div>
-							<div class="itemBox">
-								<div class="topTxt">00공구</div>
-								<div class="bottomTxt">굴삭기</div>
-							</div>
-						</div>
-						<div class="bottomGroup">
-							<span class="priceTxt">1,480,000,000</span>
-						</div>
-					</a>
-				</li>
-
-				<li>
-					<a href="javascript:f_goMaterList();" class="itemLink">
-						<div class="topGroup">
-							<div class="nameBox">강원도신축건물</div>
-							<div class="dateBox">2020.09</div>
-							<div class="itemBox">
-								<div class="topTxt">강원공구</div>
-								<div class="bottomTxt">파이프</div>
-							</div>
-						</div>
-						<div class="bottomGroup">
-							<span class="priceTxt">678,500,000</span>
-						</div>
-					</a>
-				</li>
-
-				<li>
-					<div class="chargedBox">
-
-						<div class="topTxt">김도공님<br/>청구 목록</div>
-						<div class="chargeBtnBox">
-							<a href="javascript:f_goMachineryList();" class="chargeBtn">
-								<i class="ic ic_charge"></i>
-								<span class="txt">15</span> <span class="unit">건</span>
-							</a>
-						</div>
-
-
-						<div class="regBtnBox">
-							<a href="javascript:f_goMaterCreate();" class="regBtn">
-								<i class="ic ic_reg"></i>
-								<span class="txt">자재대금 등록</span>
-							</a>
-						</div>
-
-					</div>
-				</li>
-
+			<ul class="mainList" id="mainList">
 
 			</ul>
 

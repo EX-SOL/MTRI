@@ -11,6 +11,15 @@ $(document).ready(function() {
 	});
 
     $('.progressDiv').hide();
+    
+    $("input:text[numberOnly]").on("keyup", function() {
+		// 숫자만 입력하기 위해 문자 제거
+	    $(this).val($(this).val().replace(/[^0-9^,]/g,""));
+	    // ,가 있다면 제거하고
+	    $(this).val($(this).val().replace(/[^\d]+/g, ""));
+	    // 새로 3자리마다 , 입력
+	    $(this).val($(this).val().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,"));
+	});
 });
 
 // 메뉴바 오픈
@@ -41,24 +50,29 @@ function f_dateClick(id){
 }
 
 function f_goLogout(){
-	localStorage.removeItem("id");
-	localStorage.removeItem("pw");
-	localStorage.removeItem("placeCd");
+	localStorage.removeItem("mtriCustNo");
+	localStorage.removeItem("custPswd");
+	localStorage.removeItem("custAthrCd");
+	localStorage.removeItem("custTelno");
+	localStorage.removeItem("rpprNm");
+	localStorage.removeItem("deprNm");
+	localStorage.removeItem("bankActno");
+	localStorage.removeItem("trBankNm");
 	window.location = "/mater";
-//	$.ajax({
-//        method: "POST",
-//        url: "/mater/user/logout",
-//        contentType: 'application/json',
-//        dataType: 'json',
-//        success: function (response, textStatus, jqXHR) {
-//    		window.location = "/mater";
-//        },
-//        error: function (jqXHR, status, error) {
-//            console.error(jqXHR.responseJSON.message);
-//            f_showModal("로그아웃에 실패하였습니다.");
-//            
-//        }
-//    });
+	$.ajax({
+        method: "POST",
+        url: "/mater/user/logout",
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (response, textStatus, jqXHR) {
+    		window.location = "/mater";
+        },
+        error: function (jqXHR, status, error) {
+            console.error(jqXHR.responseJSON.message);
+            f_showModal("로그아웃에 실패하였습니다.");
+            
+        }
+    });
 }
 
 // 팝업창

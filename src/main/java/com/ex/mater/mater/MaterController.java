@@ -8,15 +8,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.apache.commons.io.FileUtils;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,14 +39,15 @@ public class MaterController {
     @Value("${app.global.file-path}")
     protected String filePath;
 	
+    // 자재대금 등록 및 파일 업로드
     @PostMapping(value = "/insertMaterList", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Map<String, Object> insertMaterList(FileCommand fileData) throws Exception {
-    	System.out.println("fileData : " + fileData);
     	Map<String, Object> paramMap = new HashMap<String, Object>();
     	
     	SimpleDateFormat year = new SimpleDateFormat("yyyy");
     	SimpleDateFormat month = new SimpleDateFormat("MM");
     	SimpleDateFormat day = new SimpleDateFormat("dd");
+    	// 파일업로드 경로 :: 기본경로/년/월/일
 		String materFilePath  = filePath+"/"+year.format(System.currentTimeMillis())+"/"+month.format(System.currentTimeMillis())+"/"+day.format(System.currentTimeMillis());
 		
 		if(fileData.getFlUpFileData() != null && !fileData.getFlUpFileData().getOriginalFilename().equals("") ) {
@@ -89,6 +97,7 @@ public class MaterController {
 		return paramMap;
     }
     
+    // 자재대금 목록조회
     @PostMapping(value = "/selectMaterList")
     public List<FileCommand> selectMaterList(@RequestBody Map<String, Object> dataMap) throws Exception{
     	List<FileCommand> list = new ArrayList<FileCommand>();
@@ -102,4 +111,97 @@ public class MaterController {
     	return list;
     }
 	
+    // 자재&장비 메인 목록 3건 조회
+    @PostMapping(value = "/selectMainList")
+    public List<FileCommand> selectMainList(@RequestBody Map<String, Object> dataMap) throws Exception {
+		List<FileCommand> list = new ArrayList<>();
+		try {
+			list = materService.selectMainList(dataMap);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+    // 자재 상세
+    @GetMapping(value = "/selectMaterDetail")
+    public ModelAndView selectMaterDetail(String mtriCustNo, String mrtiMnpbAskYYMM, String mtriMnpbAskSqno, String mtriCd) throws Exception {
+    	ModelAndView mav = new ModelAndView();
+    	FileCommand fileCommand = new FileCommand();
+    	Map<String, Object> paramMap = new HashMap<String, Object>();
+    	paramMap.put("mtriCustNo", mtriCustNo);
+    	paramMap.put("mrtiMnpbAskYYMM", mrtiMnpbAskYYMM);
+    	paramMap.put("mtriMnpbAskSqno", mtriMnpbAskSqno);
+    	paramMap.put("mtriCd", mtriCd);
+    	System.out.println("paramMap:" + paramMap);
+    	fileCommand = materService.selectMaterDetail(paramMap);
+    	mav.setViewName("mater/materDetail");
+    	mav.addObject("mrtiMnpbAskYYMM", fileCommand.getMrtiMnpbAskYYMM().substring(0, 4)+"년"+fileCommand.getMrtiMnpbAskYYMM().substring(5, 6)+"월");
+    	mav.addObject("fildClssCd", fileCommand.getFildClssCd());
+    	mav.addObject("cntcWkscCd", fileCommand.getCntcWkscCd());
+    	mav.addObject("cntrtCrprNm", fileCommand.getCntrtCrprNm());
+    	mav.addObject("custNm", fileCommand.getCustNm());
+    	mav.addObject("mtriNm", fileCommand.getMtriNm());
+    	mav.addObject("custTelno", fileCommand.getCustTelno());
+    	mav.addObject("mtriCustNo", fileCommand.getMtriCustNo());
+    	mav.addObject("rpprNm", fileCommand.getRpprNm());
+    	mav.addObject("deprNm", fileCommand.getDeprNm());
+    	mav.addObject("trBankNm", fileCommand.getTrBankNm());
+    	mav.addObject("bankActno", fileCommand.getBankActno());
+    	mav.addObject("askAmt", fileCommand.getAskAmt());
+    	mav.addObject("attflNm", fileCommand.getAttflNm());
+    	mav.addObject("attflPath", fileCommand.getAttflPath());
+    	return mav;
+    }
+    
+    // 파일 다운로드시 로직
+    @GetMapping(value = "/downloadFile")
+    public ResponseEntity<InputStreamResource> downloadFile(@RequestParam String attflPath, @RequestParam String attflNm) throws Exception {
+    	logger.info("downloadAttfl() - attflPath: {}", attflPath);
+    	logger.info("downloadAttfl() - attflNm: {}", attflNm);
+    	
+    	String attflType = attflNm.substring(attflNm.lastIndexOf(".")).trim();
+    	String mimeType = "";
+    	logger.info("downloadAttfl() - attflType: {}", attflType);
+    	
+    	if(attflType.equals(".hwp")) {
+    		mimeType = "application/x-hwp";
+    	} else if(attflType.equals("pdf")) {
+    		mimeType = "application/pdf";
+    	} else if(attflType.equals(".doc") || attflType.equals(".docx")) {
+    		mimeType = "application/msword";
+    	} else if(attflType.equals(".xls") || attflType.equals(".xlsx")) {
+    		mimeType = "application/vnd.ms-excel";
+    	} else if(attflType.equals(".ppt") || attflType.equals(".pptx")) {
+    		mimeType = "application/vnd.ms-powerpoint";
+    	} else if(attflType.equals(".zip")) {
+    		mimeType = "application/zip";
+    	} else if(attflType.equals(".jpeg") || attflType.equals(".jpg") || attflType.equals(".png") || attflType.equals(".PNG")) {
+    		mimeType = " image/jpeg";
+    	} else if(attflType.equals(".txt")) {
+    		mimeType = "text/plain";
+    	} else {
+    		mimeType = " image/jpeg";
+    	}
+    	
+    	String fileNm = new String(attflNm.getBytes("UTF-8"),"8859_1");
+    	
+        File file = new File(attflPath, attflNm);
+        InputStreamResource isr = new InputStreamResource(FileUtils.openInputStream(file));
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType(mimeType));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Content-Disposition", "attachment; filename="+fileNm+" ;");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Set-Cookie", "fileDownload=true; path=/");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        headers.setContentLength(file.length());
+        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(isr, headers, HttpStatus.OK);
+        return response;
+    }
 }
