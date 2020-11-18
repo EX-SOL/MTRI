@@ -51,7 +51,7 @@ public class UserController {
                 		session.setAttribute("deprNm", user.getDeprNm());
                 		session.setAttribute("bankActno", user.getBankActno());
                 		session.setAttribute("trBankNm", user.getTrBankNm());
-                		session.setAttribute("custNm", user.getCustNm());
+                		session.setAttribute("corpNm", user.getCorpNm());
                 		resultMap.put("SUCCESS", true);
                 		
             		} else {
@@ -64,11 +64,11 @@ public class UserController {
         		session.setAttribute("custPswd", "1234");
         		session.setAttribute("custAthrCd", "A");
         		session.setAttribute("custTelno", "010-1111-2222");
-        		session.setAttribute("rpprNm", "aa");
-        		session.setAttribute("deprNm", "bb");
+        		session.setAttribute("rpprNm", "김양수");
+        		session.setAttribute("deprNm", "김양수");
         		session.setAttribute("bankActno", "1002141051265");
         		session.setAttribute("trBankNm", "우리은행");
-        		session.setAttribute("custNm", "(주)아와소프트");
+        		session.setAttribute("corpNm", "(주)아와소프트");
         		session.setAttribute("mtriCrprNm", "(주)장비업체");
         		session.setAttribute("mtriEqpmSeq", "11112222");
         		resultMap.put("SUCCESS", true);

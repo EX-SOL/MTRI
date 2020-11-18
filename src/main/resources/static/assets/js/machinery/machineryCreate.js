@@ -13,8 +13,8 @@ $(document).ready(function(){
 
 // 장비대금 등록
 function f_save(){
-	var mrtiMnpbAskYYMM = $("select[name='mrtiMnpbAskYY']").val() + $("select[name='mrtiMnpbAskMM']").val();
-	$("input[name='mrtiMnpbAskYYMM']").val(mrtiMnpbAskYYMM);
+	var mnpbAskYYMM = $("select[name='mrtiMnpbAskYY']").val() + $("select[name='mrtiMnpbAskMM']").val();
+	$("input[name='mnpbAskYYMM']").val(mnpbAskYYMM);
 	
 	var askAmt = $("input[name='askAmt']").val();
 	var newAskAmt = askAmt.replace(/,/gi, '');
@@ -25,7 +25,7 @@ function f_save(){
 	$.ajax({
         method: "POST",
         enctype: 'multipart/form-data',
-        url: "/mater/machinery/insertMachineryList",
+        url: "/mater/mater/insertMaterList",
         async: true,
         processData: false,
         contentType: false,

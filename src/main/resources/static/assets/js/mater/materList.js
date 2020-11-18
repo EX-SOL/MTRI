@@ -22,11 +22,10 @@ $(document).ready(function(){
 })
 
 // 장비 대금 상세
-function f_goMaterDetail(mtriMnpbAskSqno, mtriCd, mrtiMnpbAskYYMM){
+function f_goMaterDetail(mnpbAskSqno, mnpbClssCd, mnpbAskYYMM){
 	var mtriCustNo = $("#mtriCustNo").val();
-	//var param = {"mtriCustNo":mtriCustNo, "mrtiMnpbAskYYMM":mrtiMnpbAskYYMM, "mtriMnpbAskSqno":mtriMnpbAskSqno, "mtriCd":mtriCd};
 	
-	window.location = "/mater/mater/selectMaterDetail?mtriCustNo="+mtriCustNo+"&mrtiMnpbAskYYMM="+mrtiMnpbAskYYMM+"&mtriMnpbAskSqno="+mtriMnpbAskSqno+"&mtriCd="+mtriCd;
+	window.location = "/mater/mater/selectMaterDetail?mtriCustNo="+mtriCustNo+"&mnpbAskYYMM="+mnpbAskYYMM+"&mnpbAskSqno="+mnpbAskSqno+"&mnpbClssCd="+mnpbClssCd;
 }
 
 // 자재 대금 등록
@@ -64,10 +63,17 @@ function f_selectMaterList(){
         	if(response.length > 0){
         		var emptyMonth = "";
         		$.each(response, function(key, item){
-        			if (item.mrtiMnpbAskYYMM == emptyMonth){
-        				innerHTML += "<li onclick='javascript:f_goMaterDetail(\""+item.mtriMnpbAskSqno+"\", \""+item.mtriCd+"\", \""+item.mrtiMnpbAskYYMM+"\");'>";
+        			//mnpbClssCd
+        			var mnpbNm;
+        			if ( item.mnpbClssCd == "M" ){mnpbNm = "자재";}else{mnpbNm="장비";};
+        			if (item.mnpbAskYYMM == emptyMonth){
+        				if ( item.mnpbClssCd == "M" ){
+        					innerHTML += "<li onclick='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\");'>";
+        				} else {
+        					innerHTML += "<li  style='background-color:#eee; border:1px solid;' onclick='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\");'>";
+        				}
                 		innerHTML += '	<div class="topBox">';
-                		innerHTML += '		<div class="nameTxt">[장비] '+item.fildClssCd+' 현장</div>';
+                		innerHTML += '		<div class="nameTxt">['+mnpbNm+'] '+item.fildClssCd+' 현장</div>';
                 		innerHTML += '		<div class="priceBox">';
                 		innerHTML += '			<span class="priceTxt">'+item.askAmt+'</span>';
                 		innerHTML += '			<span class="unit">원</span>';
@@ -79,12 +85,12 @@ function f_selectMaterList(){
                 		innerHTML += '			<div class="con">'+item.cntrtCrprNm+'</div>';
                 		innerHTML += '		</div>';
                 		innerHTML += '		<div class="cellBox">';
-                		innerHTML += '			<div class="subject">자재업체</div>';
-                		innerHTML += '			<div class="con">'+item.mtriCd+'</div>';
+                		innerHTML += '			<div class="subject">'+mnpbNm+'업체</div>';
+                		innerHTML += '			<div class="con">'+item.corpNm+'</div>';
                 		innerHTML += '		</div>';
                 		innerHTML += '		<div class="cellBox">';
-                		innerHTML += '			<div class="subject">자재명</div>';
-                		innerHTML += '			<div class="con">'+item.mtriNm+'</div>';
+                		innerHTML += '			<div class="subject">'+mnpbNm+'명</div>';
+                		innerHTML += '			<div class="con">'+item.cntrtNm+'</div>';
                 		innerHTML += '		</div>';
                 		innerHTML += '		<div class="cellBox">';
                 		innerHTML += '			<div class="subject">예금주</div>';
@@ -92,15 +98,20 @@ function f_selectMaterList(){
                 		innerHTML += '		</div>';
                 		innerHTML += '	</div>';
                 		innerHTML += '</li>';
+        				
         			} else {
         				if ( key != 0 ) {innerHTML += '</ul>'};
-        				emptyMonth = item.mrtiMnpbAskYYMM;
-        				var yymm = item.mrtiMnpbAskYYMM.substring(0, 4)+". " + item.mrtiMnpbAskYYMM.substring(4) ;
+        				emptyMonth = item.mnpbAskYYMM;
+        				var yymm = item.mnpbAskYYMM.substring(0, 4)+". " + item.mnpbAskYYMM.substring(4) ;
         				innerHTML += '<div class="titBox">'+ yymm +'</div>';
         				innerHTML += '<ul class="itemList">';
-        				innerHTML += "<li onclick='javascript:f_goMaterDetail(\""+item.mtriMnpbAskSqno+"\", \""+item.mtriCd+"\", \""+item.mrtiMnpbAskYYMM+"\");'>";
-                		innerHTML += '	<div class="topBox">';
-                		innerHTML += '		<div class="nameTxt">[장비] '+item.fildClssCd+' 현장</div>';
+        				if ( item.mnpbClssCd == "M" ){
+        					innerHTML += "<li onclick='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\");'>";
+        				} else {
+        					innerHTML += "<li style='background-color:#eee; border:1px solid;' onclick='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\");'>";
+        				}
+        				innerHTML += '	<div class="topBox">';
+                		innerHTML += '		<div class="nameTxt">['+mnpbNm+'] '+item.fildClssCd+' 현장</div>';
                 		innerHTML += '		<div class="priceBox">';
                 		innerHTML += '			<span class="priceTxt">'+item.askAmt+'</span>';
                 		innerHTML += '			<span class="unit">원</span>';
@@ -112,12 +123,12 @@ function f_selectMaterList(){
                 		innerHTML += '			<div class="con">'+item.cntrtCrprNm+'</div>';
                 		innerHTML += '		</div>';
                 		innerHTML += '		<div class="cellBox">';
-                		innerHTML += '			<div class="subject">자재업체</div>';
-                		innerHTML += '			<div class="con">'+item.mtriCd+'</div>';
+                		innerHTML += '			<div class="subject">'+mnpbNm+'업체</div>';
+                		innerHTML += '			<div class="con">'+item.corpNm+'</div>';
                 		innerHTML += '		</div>';
                 		innerHTML += '		<div class="cellBox">';
-                		innerHTML += '			<div class="subject">자재명</div>';
-                		innerHTML += '			<div class="con">'+item.mtriNm+'</div>';
+                		innerHTML += '			<div class="subject">'+mnpbNm+'명</div>';
+                		innerHTML += '			<div class="con">'+item.cntrtNm+'</div>';
                 		innerHTML += '		</div>';
                 		innerHTML += '		<div class="cellBox">';
                 		innerHTML += '			<div class="subject">예금주</div>';

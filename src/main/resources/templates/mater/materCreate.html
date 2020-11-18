@@ -32,6 +32,7 @@
 
 		<section class="edit">
 		<form name="materForm" id="materForm" enctype="multipart/form-data">
+			<input type="hidden" name="mnpbClssCd" value="M">
 			<ul class="editList">
 				<li>
 					<div class="subject">
@@ -39,7 +40,7 @@
 						<span class="txt">청구년월</span>
 					</div>
 					<div class="con">
-						<input type="hidden" name="mrtiMnpbAskYYMM">
+						<input type="hidden" name="mnpbAskYYMM">
 						<div class="selectBox">
 							<select name="mrtiMnpbAskYY">
 								<option value="2020">2020년</option>
@@ -112,7 +113,7 @@
 						<span class="txt">자재업체명</span>
 					</div>
 					<div class="con">
-						<input class="tbox" name="mtriCrprNm" th:value="${session.custNm}" readonly>
+						<input class="tbox" name="corpNm" th:value="${session.corpNm}" readonly>
 					</div>
 				</li>
 				<li>
@@ -121,9 +122,7 @@
 						<span class="txt">자재명</span>
 					</div>
 					<div class="con">
-						<input class="tbox" name="mtriNm">
-						<input type="hidden" name="mtriCd" value="aa">
-						<input type="hidden" name="mtriMnpbAskSqno" value="1">
+						<input class="tbox" name="cntrtNm">
 					</div>
 				</li>
 

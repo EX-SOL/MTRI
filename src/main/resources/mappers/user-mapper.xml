@@ -11,7 +11,7 @@
 		<result column="DEPR_NM" property="deprNm"/>
 		<result column="BANK_ACTNO" property="bankActno"/>
 		<result column="TR_BANK_NM" property="trBankNm"/>
-		<result column="CUST_NM" property="custNm"/>
+		<result column="CORP_NM" property="corpNm"/>
 	</resultMap>
 	
     <select id="selectLogin" parameterType="map" resultMap="User">

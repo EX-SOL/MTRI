@@ -127,23 +127,27 @@ public class MaterController {
 
     // 자재 상세
     @GetMapping(value = "/selectMaterDetail")
-    public ModelAndView selectMaterDetail(String mtriCustNo, String mrtiMnpbAskYYMM, String mtriMnpbAskSqno, String mtriCd) throws Exception {
+    public ModelAndView selectMaterDetail(String mtriCustNo, String mnpbAskYYMM, String mnpbAskSqno, String mnpbClssCd) throws Exception {
     	ModelAndView mav = new ModelAndView();
     	FileCommand fileCommand = new FileCommand();
     	Map<String, Object> paramMap = new HashMap<String, Object>();
     	paramMap.put("mtriCustNo", mtriCustNo);
-    	paramMap.put("mrtiMnpbAskYYMM", mrtiMnpbAskYYMM);
-    	paramMap.put("mtriMnpbAskSqno", mtriMnpbAskSqno);
-    	paramMap.put("mtriCd", mtriCd);
+    	paramMap.put("mnpbAskYYMM", mnpbAskYYMM);
+    	paramMap.put("mnpbAskSqno", mnpbAskSqno);
+    	paramMap.put("mnpbClssCd", mnpbClssCd);
     	System.out.println("paramMap:" + paramMap);
     	fileCommand = materService.selectMaterDetail(paramMap);
-    	mav.setViewName("mater/materDetail");
-    	mav.addObject("mrtiMnpbAskYYMM", fileCommand.getMrtiMnpbAskYYMM().substring(0, 4)+"년"+fileCommand.getMrtiMnpbAskYYMM().substring(5, 6)+"월");
+    	if ("M".equals(fileCommand.getMnpbClssCd())) {
+    		mav.setViewName("mater/materDetail");
+    	}else {
+    		mav.setViewName("machinery/machineryDetail");
+    	}
+    	mav.addObject("mnpbAskYYMM", fileCommand.getMnpbAskYYMM().substring(0, 4)+"년"+fileCommand.getMnpbAskYYMM().substring(5, 6)+"월");
     	mav.addObject("fildClssCd", fileCommand.getFildClssCd());
     	mav.addObject("cntcWkscCd", fileCommand.getCntcWkscCd());
     	mav.addObject("cntrtCrprNm", fileCommand.getCntrtCrprNm());
-    	mav.addObject("custNm", fileCommand.getCustNm());
-    	mav.addObject("mtriNm", fileCommand.getMtriNm());
+    	mav.addObject("corpNm", fileCommand.getCorpNm());
+    	mav.addObject("cntrtNm", fileCommand.getCntrtNm());
     	mav.addObject("custTelno", fileCommand.getCustTelno());
     	mav.addObject("mtriCustNo", fileCommand.getMtriCustNo());
     	mav.addObject("rpprNm", fileCommand.getRpprNm());
@@ -153,6 +157,7 @@ public class MaterController {
     	mav.addObject("askAmt", fileCommand.getAskAmt());
     	mav.addObject("attflNm", fileCommand.getAttflNm());
     	mav.addObject("attflPath", fileCommand.getAttflPath());
+    	mav.addObject("mnpbRgsrSeq", fileCommand.getMnpbRgsrSeq());
     	return mav;
     }
     

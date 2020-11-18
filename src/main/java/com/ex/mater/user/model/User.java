@@ -10,7 +10,7 @@ public class User {
 	String deprNm;		//예금주
 	String bankActno;	//은행계좌번호
 	String trBankNm;	//은행명
-	String custNm;		//자재업체명
+	String corpNm;		//법인명
 	
 	public String getMtriCustNo() {
 		return mtriCustNo;
@@ -60,11 +60,11 @@ public class User {
 	public void setTrBankNm(String trBankNm) {
 		this.trBankNm = trBankNm;
 	}
-	public String getCustNm() {
-		return custNm;
+	public String getCorpNm() {
+		return corpNm;
 	}
-	public void setCustNm(String custNm) {
-		this.custNm = custNm;
+	public void setCorpNm(String corpNm) {
+		this.corpNm = corpNm;
 	}
 	
 	
