@@ -20,7 +20,9 @@ public class MaterServiceImpl implements MaterService {
 
 	@Override
 	public Integer insertMaterList(FileCommand fileData) throws Exception {
-		if( fileData.getAttflNm() != "" || fileData.getAttflNm() != null ) {
+		if( fileData.getAttflNm().length() < 1 || fileData.getAttflNm() == "" || fileData.getAttflNm() == null ) {
+			fileData.setAttflSeq("");
+		} else {
 			materMapper.insertMaterAttfl(fileData);
 		}
 		return materMapper.insertMaterList(fileData);

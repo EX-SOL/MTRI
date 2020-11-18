@@ -21,7 +21,7 @@ $(document).ready(function(){
     f_selectMaterList();
 })
 
-
+// 장비 대금 상세
 function f_goMaterDetail(mtriMnpbAskSqno, mtriCd, mrtiMnpbAskYYMM){
 	var mtriCustNo = $("#mtriCustNo").val();
 	//var param = {"mtriCustNo":mtriCustNo, "mrtiMnpbAskYYMM":mrtiMnpbAskYYMM, "mtriMnpbAskSqno":mtriMnpbAskSqno, "mtriCd":mtriCd};
@@ -29,7 +29,17 @@ function f_goMaterDetail(mtriMnpbAskSqno, mtriCd, mrtiMnpbAskYYMM){
 	window.location = "/mater/mater/selectMaterDetail?mtriCustNo="+mtriCustNo+"&mrtiMnpbAskYYMM="+mrtiMnpbAskYYMM+"&mtriMnpbAskSqno="+mtriMnpbAskSqno+"&mtriCd="+mtriCd;
 }
 
+// 자재 대금 등록
+function f_goMaterCreate(){
+	window.location = "/mater/main/load-page?pageName=mater/materCreate";
+}
 
+// 장비 대금 등록
+function f_goMachineryCreate(){
+	window.location = "/mater/main/load-page?pageName=machinery/machineryCreate";
+}
+
+// 자재&장비 대금 목록
 function f_selectMaterList(){
 	var sMonth = $("#sMonth").val();
 	var eMonth = $("#eMonth").val();
@@ -52,44 +62,83 @@ function f_selectMaterList(){
         	var innerHTML = '';
         	
         	if(response.length > 0){
-        		
+        		var emptyMonth = "";
         		$.each(response, function(key, item){
-        			innerHTML += "<li onclick='javascript:f_goMaterDetail(\""+item.mtriMnpbAskSqno+"\", \""+item.mtriCd+"\", \""+item.mrtiMnpbAskYYMM+"\");'>";
-            		innerHTML += '	<div class="topBox">';
-            		innerHTML += '		<div class="nameTxt">'+item.fildClssCd+' 현장</div>';
-            		innerHTML += '		<div class="priceBox">';
-            		innerHTML += '			<span class="priceTxt">'+item.askAmt+'</span>';
-            		innerHTML += '			<span class="unit">원</span>';
-            		innerHTML += '		</div>';
-            		innerHTML += '	</div>';
-            		innerHTML += '	<div class="bottomBox">';
-            		innerHTML += '		<div class="cellBox">';
-            		innerHTML += '			<div class="subject">계약업체</div>';
-            		innerHTML += '			<div class="con">'+item.cntrtCrprNm+'</div>';
-            		innerHTML += '		</div>';
-            		innerHTML += '		<div class="cellBox">';
-            		innerHTML += '			<div class="subject">자재업체</div>';
-            		innerHTML += '			<div class="con">'+item.mtriCd+'</div>';
-            		innerHTML += '		</div>';
-            		innerHTML += '		<div class="cellBox">';
-            		innerHTML += '			<div class="subject">자재명</div>';
-            		innerHTML += '			<div class="con">'+item.mtriNm+'</div>';
-            		innerHTML += '		</div>';
-            		innerHTML += '		<div class="cellBox">';
-            		innerHTML += '			<div class="subject">예금주</div>';
-            		innerHTML += '			<div class="con">'+item.deprNm+'</div>';
-            		innerHTML += '		</div>';
-            		innerHTML += '	</div>';
-            		innerHTML += '</li>';
+        			if (item.mrtiMnpbAskYYMM == emptyMonth){
+        				innerHTML += "<li onclick='javascript:f_goMaterDetail(\""+item.mtriMnpbAskSqno+"\", \""+item.mtriCd+"\", \""+item.mrtiMnpbAskYYMM+"\");'>";
+                		innerHTML += '	<div class="topBox">';
+                		innerHTML += '		<div class="nameTxt">[장비] '+item.fildClssCd+' 현장</div>';
+                		innerHTML += '		<div class="priceBox">';
+                		innerHTML += '			<span class="priceTxt">'+item.askAmt+'</span>';
+                		innerHTML += '			<span class="unit">원</span>';
+                		innerHTML += '		</div>';
+                		innerHTML += '	</div>';
+                		innerHTML += '	<div class="bottomBox">';
+                		innerHTML += '		<div class="cellBox">';
+                		innerHTML += '			<div class="subject">계약업체</div>';
+                		innerHTML += '			<div class="con">'+item.cntrtCrprNm+'</div>';
+                		innerHTML += '		</div>';
+                		innerHTML += '		<div class="cellBox">';
+                		innerHTML += '			<div class="subject">자재업체</div>';
+                		innerHTML += '			<div class="con">'+item.mtriCd+'</div>';
+                		innerHTML += '		</div>';
+                		innerHTML += '		<div class="cellBox">';
+                		innerHTML += '			<div class="subject">자재명</div>';
+                		innerHTML += '			<div class="con">'+item.mtriNm+'</div>';
+                		innerHTML += '		</div>';
+                		innerHTML += '		<div class="cellBox">';
+                		innerHTML += '			<div class="subject">예금주</div>';
+                		innerHTML += '			<div class="con">'+item.deprNm+'</div>';
+                		innerHTML += '		</div>';
+                		innerHTML += '	</div>';
+                		innerHTML += '</li>';
+        			} else {
+        				if ( key != 0 ) {innerHTML += '</ul>'};
+        				emptyMonth = item.mrtiMnpbAskYYMM;
+        				var yymm = item.mrtiMnpbAskYYMM.substring(0, 4)+". " + item.mrtiMnpbAskYYMM.substring(4) ;
+        				innerHTML += '<div class="titBox">'+ yymm +'</div>';
+        				innerHTML += '<ul class="itemList">';
+        				innerHTML += "<li onclick='javascript:f_goMaterDetail(\""+item.mtriMnpbAskSqno+"\", \""+item.mtriCd+"\", \""+item.mrtiMnpbAskYYMM+"\");'>";
+                		innerHTML += '	<div class="topBox">';
+                		innerHTML += '		<div class="nameTxt">[장비] '+item.fildClssCd+' 현장</div>';
+                		innerHTML += '		<div class="priceBox">';
+                		innerHTML += '			<span class="priceTxt">'+item.askAmt+'</span>';
+                		innerHTML += '			<span class="unit">원</span>';
+                		innerHTML += '		</div>';
+                		innerHTML += '	</div>';
+                		innerHTML += '	<div class="bottomBox">';
+                		innerHTML += '		<div class="cellBox">';
+                		innerHTML += '			<div class="subject">계약업체</div>';
+                		innerHTML += '			<div class="con">'+item.cntrtCrprNm+'</div>';
+                		innerHTML += '		</div>';
+                		innerHTML += '		<div class="cellBox">';
+                		innerHTML += '			<div class="subject">자재업체</div>';
+                		innerHTML += '			<div class="con">'+item.mtriCd+'</div>';
+                		innerHTML += '		</div>';
+                		innerHTML += '		<div class="cellBox">';
+                		innerHTML += '			<div class="subject">자재명</div>';
+                		innerHTML += '			<div class="con">'+item.mtriNm+'</div>';
+                		innerHTML += '		</div>';
+                		innerHTML += '		<div class="cellBox">';
+                		innerHTML += '			<div class="subject">예금주</div>';
+                		innerHTML += '			<div class="con">'+item.deprNm+'</div>';
+                		innerHTML += '		</div>';
+                		innerHTML += '	</div>';
+                		innerHTML += '</li>';
+        			}
+        			
         		});
-        		
+        		innerHTML += '</ul>'
         		
         	} else {
-        		innerHTML += '<li>';
-        		innerHTML += '	<div class="topBox">';
-        		innerHTML += '		<div class="nameTxt">조회된 데이터가 없습니다.</div>';
-        		innerHTML += '	</div>';
-        		innerHTML += '</li>';
+        		innerHTML += '<ul class="itemList">';
+        		innerHTML += '	<li>';
+        		innerHTML += '		<div class="topBox">';
+        		innerHTML += '			<div class="nameTxt">조회된 데이터가 없습니다.</div>';
+        		innerHTML += '		</div>';
+        		innerHTML += '	</li>';
+        		innerHTML += '</ul>';
+        		
         	}
         	
         	$("#materListData").html(innerHTML);

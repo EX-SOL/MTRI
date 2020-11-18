@@ -20,7 +20,7 @@
 
 			<a href="javascript:history.go(-1);" class="backBtn"></a>
 
-			<div class="pageTitBox">자재대금 등록</div>
+			<div class="pageTitBox">장비대금 등록</div>
 
 			<!-- GNB -->
 			<a href="javascript:f_goMenu();" class="gnbBox">
@@ -109,10 +109,10 @@
 				<li>
 					<div class="subject">
 						<i class="ic ic_corp"></i>
-						<span class="txt">자재업체명</span>
+						<span class="txt">장비업체명</span>
 					</div>
 					<div class="con">
-						<input class="tbox" name="mtriCrprNm" th:value="${session.custNm}" readonly>
+						<input class="tbox" name="mtriCrprNm" th:value="${session.mtriCrprNm}" readonly>
 					</div>
 				</li>
 				<li>
@@ -144,6 +144,15 @@
 					</div>
 					<div class="con">
 						<input class="tbox" name="mtriCustNo" th:value="${session.mtriCustNo}" readonly>
+					</div>
+				</li>
+				<li>
+					<div class="subject">
+						<i class="ic ic_device"></i>
+						<span class="txt" style="font-size: 15px;">장비등록번호</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="mtriEqpmSeq" th:value="${session.mtriEqpmSeq}" readonly>
 					</div>
 				</li>
 				<li>
@@ -185,15 +194,6 @@
 						<input class="tbox" name="bankActno" th:value="${session.bankActno}" readonly>
 					</div>
 				</li>
-				<!-- <li>
-					<div class="subject">
-						<i class="ic ic_buy"></i>
-						<span class="txt">구매품목</span>
-					</div>
-					<div class="con">
-						<input class="tbox">
-					</div>
-				</li> -->
 				<li>
 					<div class="subject">
 						<i class="ic ic_charge_price"></i>
@@ -250,6 +250,6 @@
 <script src="../assets/js/datepicker.min.js"></script>
 <script src="../assets/js/datepicker.ko.js"></script>
 <script src="../assets/js/core.js"></script>
-<script src="../assets/js/mater/materCreate.js"></script>
+<script src="../assets/js/machinery/machineryCreate.js"></script>
 </body>
 </html>

@@ -11,7 +11,7 @@ $(document).ready(function(){
 	
 })
 
-// 자재대금 등록
+// 장비대금 등록
 function f_save(){
 	var mrtiMnpbAskYYMM = $("select[name='mrtiMnpbAskYY']").val() + $("select[name='mrtiMnpbAskMM']").val();
 	$("input[name='mrtiMnpbAskYYMM']").val(mrtiMnpbAskYYMM);
@@ -25,7 +25,7 @@ function f_save(){
 	$.ajax({
         method: "POST",
         enctype: 'multipart/form-data',
-        url: "/mater/mater/insertMaterList",
+        url: "/mater/machinery/insertMachineryList",
         async: true,
         processData: false,
         contentType: false,
@@ -47,4 +47,3 @@ function f_save(){
         }
     });
 }
-

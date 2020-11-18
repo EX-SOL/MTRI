@@ -69,6 +69,8 @@ public class UserController {
         		session.setAttribute("bankActno", "1002141051265");
         		session.setAttribute("trBankNm", "우리은행");
         		session.setAttribute("custNm", "(주)아와소프트");
+        		session.setAttribute("mtriCrprNm", "(주)장비업체");
+        		session.setAttribute("mtriEqpmSeq", "11112222");
         		resultMap.put("SUCCESS", true);
     		}
     		
