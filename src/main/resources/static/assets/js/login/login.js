@@ -68,3 +68,10 @@ function f_closeModal(){
 	$(".alertModal").hide();
 	$('body').attr("style", "overflow:auto;");
 }
+
+
+function f_goRegister(){
+	alert("회원가입 고");
+	
+	
+}

@@ -130,7 +130,8 @@
 	
 	.cm-listwrap .cm-qbox .qbox-tit .qbinput{background-color: #eee;border: 1px solid #e5e5e5;width:100%;height:31px;box-sizing: border-box;outline: none;padding-left: 5px;}
 
-	.dayMonth{height: 37px;background: #fff;border: 1px solid #ffe346;border-radius: 7px;width: calc(50% - 15px);padding-left: 8px;}
+	section.edit ul.editList li .con .dayMonth{font-size:17px;height: 40px;background: #fff;border: 1px solid #bababa;border-radius: 7px;width:100%;padding-left: 8px;}
+	.dayMonth{height: 37px;background: #fff;border: 1px solid #ffe346;border-radius: 7px;width: calc(50% - 15px);padding-left: 5px;}
 	.money{text-align: right;}
 	.fileText{color:blue;}
 	
@@ -149,3 +150,36 @@
     background-color: #22374c; }
 
     section.materialPriceList .listFormBox .listGroup ul.itemList{margin-bottom:10px;}
+    
+    
+    section.edit ul.editList li .con .dateBox {
+      font-size: 0;
+      display: inline-block;
+      vertical-align: middle;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      }
+     section.edit ul.editList li .con .dateBox label {
+      height: 100%;
+      width: 100%;
+      border: 1px solid #bababa;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+      padding-right: 33px; }
+     section.edit ul.editList li .con .dateBox label input {
+       width: 100%;
+       height: 100%;
+       font-size: 15px;
+       outline: none;
+       text-align: left;
+       padding: 0 10px; }
+     section.edit ul.editList li .con .dateBox label .calendar {
+       position: absolute;
+       right: 0;
+       top: 0;
+       bottom: 0;
+       width: 33px;
+       border-left: 1px solid #bababa;
+       background: #f1f1f1 url("../img/ic_calendar.png") no-repeat center/20px 20px; }

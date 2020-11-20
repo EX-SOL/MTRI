@@ -21,8 +21,7 @@
 	.mn-btnwrap .mn-btnrow{padding:0 0 40px 0; color:black;}
 	.mn-btnwrap .mn-btnrow  .mn-btn-tit{font-size: 20px;font-weight: 400;color:black;position: absolute;left:30px;right: 0;letter-spacing: -1px;}
 	.mn-btnrow span{font-size: 20px;font-weight: 400;color:#fff ;}
-
-	
+      
 	.ct-wrap .cm-qbox .qbox-datep{padding:15px 0 0;}
 	.ct-wrap .cm-qbox .qbox-datep input{background-color: #eee;border: 1px solid #e5e5e5;width:calc(100% - 200px);height:31px;box-sizing: border-box;outline: none;padding-left: 5px;vertical-align: top;;}
 	.ct-wrap .cm-qbox .qbox-datep button{background-color: #5d5d5d;border:0;height: 31px;vertical-align: top;outline: none;;}

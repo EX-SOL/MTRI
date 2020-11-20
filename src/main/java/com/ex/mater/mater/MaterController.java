@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -24,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.ex.mater.user.model.User;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -142,7 +148,8 @@ public class MaterController {
     	}else {
     		mav.setViewName("machinery/machineryDetail");
     	}
-    	mav.addObject("mnpbAskYYMM", fileCommand.getMnpbAskYYMM().substring(0, 4)+"년"+fileCommand.getMnpbAskYYMM().substring(5, 6)+"월");
+    	mav.addObject("mnpbAskYYMM_v", fileCommand.getMnpbAskYYMM().substring(0, 4)+"년"+fileCommand.getMnpbAskYYMM().substring(4, 6)+"월");
+    	mav.addObject("mnpbAskYYMM", fileCommand.getMnpbAskYYMM());
     	mav.addObject("fildClssCd", fileCommand.getFildClssCd());
     	mav.addObject("cntcWkscCd", fileCommand.getCntcWkscCd());
     	mav.addObject("cntrtCrprNm", fileCommand.getCntrtCrprNm());
@@ -158,6 +165,9 @@ public class MaterController {
     	mav.addObject("attflNm", fileCommand.getAttflNm());
     	mav.addObject("attflPath", fileCommand.getAttflPath());
     	mav.addObject("mnpbRgsrSeq", fileCommand.getMnpbRgsrSeq());
+    	mav.addObject("mnpbStatCd", fileCommand.getMnpbStatCd());
+    	mav.addObject("attflSeq", fileCommand.getAttflSeq());
+    	mav.addObject("mnpbAskSqno", fileCommand.getMnpbAskSqno());
     	return mav;
     }
     
@@ -209,4 +219,79 @@ public class MaterController {
         ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(isr, headers, HttpStatus.OK);
         return response;
     }
+    
+    // 자재대금 등록 및 파일 업로드
+    @PostMapping(value = "/updateMaterList", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Map<String, Object> updateMaterList(FileCommand fileData) throws Exception {
+    	Map<String, Object> paramMap = new HashMap<String, Object>();
+    	
+    	System.out.println("fileData : " + fileData.getMnpbAskYYMM());
+    	SimpleDateFormat year = new SimpleDateFormat("yyyy");
+    	SimpleDateFormat month = new SimpleDateFormat("MM");
+    	SimpleDateFormat day = new SimpleDateFormat("dd");
+    	// 파일업로드 경로 :: 기본경로/년/월/일
+		String materFilePath  = filePath+"/"+year.format(System.currentTimeMillis())+"/"+month.format(System.currentTimeMillis())+"/"+day.format(System.currentTimeMillis());
+		
+		if(fileData.getFlUpFileData() != null && !fileData.getFlUpFileData().getOriginalFilename().equals("") ) {
+			fileData.setAttflNm(fileData.getFlUpFileData().getOriginalFilename());
+			fileData.setAttflPath(materFilePath);
+		} else {
+			fileData.setAttflNm("");
+			fileData.setAttflPath("");
+		}
+		
+    	int result = materService.updateMaterList(fileData);
+		
+		try {
+			if ( result > 0 ) {
+				paramMap.put("SUCCESS", true);
+			}else {
+				paramMap.put("SUCCESS", false);
+			}
+			
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		//해당경로 없을 시 경로 생성 
+		File dir1 = new File(filePath+"/"+year.format(System.currentTimeMillis()));
+		File dir2 = new File(filePath+"/"+year.format(System.currentTimeMillis())+"/"+month.format(System.currentTimeMillis()));
+		File dir3 = new File(filePath+"/"+year.format(System.currentTimeMillis())+"/"+month.format(System.currentTimeMillis())+"/"+day.format(System.currentTimeMillis()));
+		if(!dir1.exists()) { dir1.mkdirs(); }
+		if(!dir2.exists()) { dir2.mkdirs(); }
+		if(!dir3.exists()) { dir3.mkdirs(); }
+		
+		File file = Paths.get(materFilePath, fileData.getFlUpFileData().getOriginalFilename()).toFile();
+	    
+		try {
+            // TODO: 파일경로(filePath) 유효성 처리 추가 - 필요시
+            if (!file.exists()) {
+            	fileData.getFlUpFileData().transferTo(file);
+            } else {
+            	
+            }
+        } catch (IOException e) {
+        	e.printStackTrace();
+        } catch (IllegalStateException ie) {
+        	ie.printStackTrace();
+        }
+		
+		return paramMap;
+    }
+    
+    @PostMapping(value="/deleteMater")
+    public Map<String,Object> deleteMater(@RequestBody Map<String, Object> paramMap) throws Exception {
+    	int result = 0;
+    	try {
+    		result = materService.deleteMater(paramMap);
+    		if(result > 0) {
+    			paramMap.put("SUCCESS", true);
+    		}else {
+    			paramMap.put("SUCCESS", false);
+    		}
+    	}catch (Exception e) {
+    		throw e;
+    	}
+    	return paramMap;
+	}
 }

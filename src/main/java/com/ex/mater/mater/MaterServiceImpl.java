@@ -43,5 +43,30 @@ public class MaterServiceImpl implements MaterService {
 		return materMapper.selectMaterDetail(param);
 	}
 
+	@Override
+	public Integer updateMaterList(FileCommand fileData) throws Exception {
+		// 기존 데이터가 비어있는 경우
+		if( fileData.getEtcFileName().length() < 1 || fileData.getEtcFileName() == "" || fileData.getEtcFileName() == null ) {
+			if( fileData.getAttflNm().length() > 1 || fileData.getAttflNm() != "" || fileData.getAttflNm() != null ) {
+				// 처음 데이터가 들어오기떄문에 생성
+				materMapper.insertMaterAttfl(fileData);
+			}
+		} else {
+			if( fileData.getAttflNm().length() < 1 || fileData.getAttflNm() == "" || fileData.getAttflNm() == null ) {
+			}else {
+				// 기존에 데이터가 있고 새로운 데이터도 있음
+				if(!fileData.getAttflNm().equals(fileData.getEtcFileName())) {
+					// 기존 파일과 새로운 파일이 다를경우 업데이트
+					materMapper.updateMaterAttfl(fileData);
+				}
+			}
+		}
+		return materMapper.updateMaterList(fileData);
+	}
+
+	@Override
+	public Integer deleteMater(Map<String, Object> param) throws Exception {
+		return materMapper.deleteMater(param);
+	}
 	
 }

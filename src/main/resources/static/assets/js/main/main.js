@@ -5,9 +5,10 @@ $(document).ready(function(){
 	$('.showToggleBtn').on('click',function () {
 		$(this).toggleClass('on');
 	})
+
+	$(".progressDiv").show();
 	
 	$("#menuDiv").load('/mater/main/load-page?pageName=menu');
-	
 	// 메인리스트
 	f_selectMainList();
 })
@@ -40,6 +41,11 @@ function f_goMachineryList(){
 // 마이페이지 상세
 function f_goMypage(){
 	window.location = "/mater/main/load-page?pageName=mypage/mypage";
+}
+
+// 자료실 상세
+function f_goReference(){
+	window.location = "/mater/main/load-page?pageName=ref/reference";
 }
 
 // 메인 리스트 추출
@@ -129,8 +135,10 @@ function f_selectMainList(){
          	innerHTML += '</li>';
      	}
      	$("#mainList").html(innerHTML);
+     	$(".progressDiv").hide();
      },
      error: function (jqXHR, status, error) {
+    	 $(".progressDiv").hide();
      	f_showModal("조회 실패");
      }
  });

@@ -5,7 +5,7 @@ $(document).ready(function(){
 	$('.showToggleBtn').on('click',function () {
 		$(this).toggleClass('on');
 	})
-	$(".progressDiv").hide();
+	$(".progressDiv").show();
 	
 	$("#menuDiv").load('/mater/main/load-page?pageName=menu');
 	
@@ -45,7 +45,6 @@ function f_selectMaterList(){
 	
 	sMonth = f_hyphenReplaceEmpty(sMonth);
 	eMonth = f_hyphenReplaceEmpty(eMonth);
-
 	//청구기간
 	var param = {"sMonth": sMonth, 
 				"eMonth": eMonth,
@@ -153,8 +152,10 @@ function f_selectMaterList(){
         	}
         	
         	$("#materListData").html(innerHTML);
+        	$(".progressDiv").hide();
         },
         error: function (jqXHR, status, error) {
+        	$(".progressDiv").hide();
         	f_showModal("조회 실패");
         }
     });

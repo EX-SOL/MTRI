@@ -1,37 +1,37 @@
 @charset "UTF-8";
-@font-face {
+/* @font-face {
   font-family: "NanumSquare";
   src: url("../fonts/NanumSquare-T.woff") format("woff");
   font-weight: 200;
-  font-style: normal; }
+  font-style: normal; } */
 
 @font-face {
   font-family: "NanumSquare";
-  src: url("../fonts/NanumSquare-L.woff") format("woff");
+  src: url("../fonts/NanumSquareL.woff") format("woff");
   font-weight: 300;
   font-style: normal; }
 
 @font-face {
   font-family: "NanumSquare";
-  src: url("../fonts/NanumSquare-R.woff") format("woff");
+  src: url("../fonts/NanumSquareR.woff") format("woff");
   font-weight: 400;
   font-style: normal; }
 
-@font-face {
+/* @font-face {
   font-family: "NanumSquare";
   src: url("../fonts/NanumSquare-M.woff") format("woff");
   font-weight: 500;
   font-style: normal; }
-
+ */
 @font-face {
   font-family: "NanumSquare";
-  src: url("../fonts/NanumSquare-B.woff") format("woff");
+  src: url("../fonts/NanumSquareB.woff") format("woff");
   font-weight: 700;
   font-style: normal; }
 
 @font-face {
   font-family: "NanumSquare";
-  src: url("../fonts/NanumSquare-EB.woff") format("woff");
+  src: url("../fonts/NanumSquareEB.woff") format("woff");
   font-weight: 900;
   font-style: normal; }
 

@@ -16,4 +16,9 @@ public interface MaterMapper {
 	public List<FileCommand> selectMainList(Map<String, Object> param);
 
 	public FileCommand selectMaterDetail(Map<String, Object> param);
+
+	public Integer updateMaterList(FileCommand fileData);
+	public Integer updateMaterAttfl(FileCommand fileData);
+	
+	public Integer deleteMater(Map<String, Object> param);
 }

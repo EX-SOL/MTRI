@@ -5,16 +5,24 @@ $(document).ready(function(){
 	$('.showToggleBtn').on('click',function () {
 		$(this).toggleClass('on');
 	})
-	$(".progressDiv").hide();
+	$(".progressDiv").show();
 	
 	$("#menuDiv").load('/mater/main/load-page?pageName=menu');
 	
+	// 초기 데이터 설정
+	var date = new Date();
+	var year = date.getFullYear();              //yyyy
+    var month = (1 + date.getMonth());          //M
+    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+    $("input[name='d_mnpbAskYYMM']").val(year+"-"+month);
 })
 
 // 장비대금 등록
 function f_save(){
-	var mnpbAskYYMM = $("select[name='mrtiMnpbAskYY']").val() + $("select[name='mrtiMnpbAskMM']").val();
-	$("input[name='mnpbAskYYMM']").val(mnpbAskYYMM);
+	$(".progressDiv").show();
+	var mnpbAskYYMM = $("input[name='d_mnpbAskYYMM']").val();
+	var newMnpbAskYYMM = f_hyphenReplaceEmpty(mnpbAskYYMM);
+	$("input[name='mnpbAskYYMM']").val(newMnpbAskYYMM);
 	
 	var askAmt = $("input[name='askAmt']").val();
 	var newAskAmt = askAmt.replace(/,/gi, '');
@@ -40,9 +48,10 @@ function f_save(){
         	}else {
         		f_showModal("등록에 실패하였습니다.");
         	}
-        	
+        	$(".progressDiv").hide();
         },
         error: function (jqXHR, status, error) {
+        	$(".progressDiv").hide();
         	f_showModal("등록에 실패하였습니다.");
         }
     });

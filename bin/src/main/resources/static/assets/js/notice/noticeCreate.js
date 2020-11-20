@@ -13,7 +13,6 @@ $(document).ready(function(){
 
 
 function f_noticeSave(){
-	alert("f_noticeSave");
 	
 	
 	

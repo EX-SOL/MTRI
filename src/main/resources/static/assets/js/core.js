@@ -68,91 +68,10 @@ function f_goLogout(){
     		window.location = "/mater";
         },
         error: function (jqXHR, status, error) {
-            console.error(jqXHR.responseJSON.message);
             f_showModal("로그아웃에 실패하였습니다.");
             
         }
     });
-}
-
-// 팝업창
-function f_showModal(text){
-	var htmlData = '';
-	
-	htmlData += '<div class="searchModal" id="modalView">';
-	htmlData += '	<div class="search-modal-content">';
-	htmlData += '		<div class="modalWrap">';
-	htmlData += '			<h1 class="logo">';
-	htmlData += '				<a href="javascript:f_goMain();" class="logoImg"></a>';
-	htmlData += '			</h1>';
-	htmlData += '		</div>';
-	htmlData += '		<div class="modalText">';
-	htmlData += '			<span>'+ text +'</span>';
-	htmlData += '		</div>';
-	htmlData += '		<div class="modalButton">';
-	htmlData += '			<button onclick="javascript:f_closeModal();" class="btn-confirm"> 확 인 </button>';
-	htmlData += '		</div>';
-	htmlData += '	</div>';
-	htmlData += '</div>';
-	$('body').append(htmlData);
-	$('body').attr("style", "overflow:hidden;");
-}
-
-// confirm창
-function f_confirm(text, func){
-	var htmlData = '';
-	$("#modalView").remove();
-	htmlData += '<div class="searchModal" id="modalView">';
-	htmlData += '	<div class="search-modal-content">';
-	htmlData += '		<div class="modalWrap">';
-	htmlData += '			<h1 class="logo">';
-	htmlData += '				<a href="javascript:f_goMain();" class="logoImg"></a>';
-	htmlData += '			</h1>';
-	htmlData += '		</div>';
-	htmlData += '		<div class="modalText">';
-	htmlData += '			<span>'+ text +'</span>';
-	htmlData += '		</div>';
-	htmlData += '		<div class="modalButton">';
-	htmlData += '			<button style="margin-left: -130px;" onclick="javascript:f_closeModal();" class="btn-cancel"> 취 소 </button>';
-	htmlData += '			<button style="margin-left: 0;" onclick="'+func+'" class="btn-confirm"> 확 인 </button>';
-	htmlData += '		</div>';
-	htmlData += '	</div>';
-	htmlData += '</div>';
-	
-	$('body').append(htmlData);
-	$('body').attr("style", "overflow:hidden;");
-}
-
-// 팝업 닫기
-function f_closeModal(){
-	$(".searchModal").hide();
-	$('body').attr("style", "overflow:auto;");
-}
-
-// APP 뒤로가기시 팝업 디자인
-function f_historyGo(){
-	var htmlData = '';
-	var text = '앱을 종료하시겠습니까?';
-	$("#modalView").remove();
-	htmlData += '<div class="searchModal" id="modalView">';
-	htmlData += '	<div class="search-modal-content">';
-	htmlData += '		<div class="modalWrap">';
-	htmlData += '			<h1 class="logo">';
-	htmlData += '				<a href="javascript:f_goMain();" class="logoImg"></a>';
-	htmlData += '			</h1>';
-	htmlData += '		</div>';
-	htmlData += '		<div class="modalText">';
-	htmlData += '			<span>'+ text +'</span>';
-	htmlData += '		</div>';
-	htmlData += '		<div class="modalButton">';
-	htmlData += '			<button style="margin-left: -130px;" onclick="javascript:f_closeModal();" class="btn-cancel"> 취 소 </button>';
-	htmlData += '			<button style="margin-left: 0;" onclick="javascript:f_finishApp();" class="btn-confirm"> 확 인 </button>';
-	htmlData += '		</div>';
-	htmlData += '	</div>';
-	htmlData += '</div>';
-	
-	$('body').append(htmlData);
-	$('body').attr("style", "overflow:hidden;");
 }
 
 
@@ -258,6 +177,31 @@ function f_showModal(text){
 	$('body').attr("style", "overflow:hidden;");
 }
 
+// modal 띄우기
+function f_confirm(text, func){
+	var htmlData = '';
+	
+	htmlData += '<div class="alertModal">';
+	htmlData += '	<div class="alert-modal-content">';
+	htmlData += '		<div class="modalWrap">';
+	htmlData += '			<div class="title">';
+	htmlData += '				<img src="../assets/img/img_header_logo.png" alt="">';
+	htmlData += '				<span>자재·장비대금 지킴이</span>';
+	htmlData += '			</div>';
+	htmlData += '		</div>';
+	htmlData += '		<div class="modalText">';
+	htmlData += '			<span>'+ text +'</span>';
+	htmlData += '		</div>';
+	htmlData += '		<div class="modalButton">';
+	htmlData += '			<button style="margin-left: -130px;" onclick="javascript:f_closeModal();" class="btn-cancel"> 취 소 </button>';
+	htmlData += '			<button style="margin-left: 0;" onclick="'+func+'" class="btn-confirm"> 확 인 </button>';
+	htmlData += '		</div>';
+	htmlData += '	</div>';
+	htmlData += '</div>';
+	$('body').append(htmlData);
+	$('body').attr("style", "overflow:hidden;");
+}
+
 // modal 닫기
 function f_closeModal(){
 	$(".alertModal").hide();
@@ -295,5 +239,33 @@ function f_imgChange(){
 	var fileValue = $("#flUpFileData").val().split("\\");
 	var fileName = fileValue[fileValue.length-1]; // 파일명
 	$("#fileName").text(fileName);
+}
+
+
+//처음 진입 시 한달 기간두기
+function f_dateSetting(sDate, eDate){
+	var date = new Date();
+	$(eDate).val(getFormatDate(date));
+	date.setMonth(date.getMonth()-1);
+	$(sDate).val(getFormatDate(date));
+}
+
+function getFormatDate(date){
+    var year = date.getFullYear();              //yyyy
+    var month = (1 + date.getMonth());          //M
+    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+    var day = date.getDate();                   //d
+    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+    return  year + '/' + month + '/' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
+}
+
+//첨부파일 다운로드 
+function f_downloadFile() {
+	var attflNm = $('#attflNm').val();
+	var attflPath = $('#attflPath').val();
+	var param = '?attflPath='+attflPath+'&attflNm='+attflNm;
+	if( attflNm != "" && attflPath != "" ){
+		location.href = "/mater/mater/downloadFile"+param;
+	}
 }
 

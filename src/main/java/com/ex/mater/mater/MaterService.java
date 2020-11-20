@@ -13,4 +13,7 @@ public interface MaterService {
 	
 	public FileCommand selectMaterDetail(Map<String, Object> param) throws Exception;
 
+	public Integer updateMaterList(FileCommand fileData) throws Exception;
+
+	public Integer deleteMater(Map<String, Object> param) throws Exception;
 }

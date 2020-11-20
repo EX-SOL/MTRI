@@ -54,7 +54,6 @@ function f_goLogout(){
 //    		window.location = "/mater";
 //        },
 //        error: function (jqXHR, status, error) {
-//            console.error(jqXHR.responseJSON.message);
 //            f_showModal("로그아웃에 실패하였습니다.");
 //            
 //        }

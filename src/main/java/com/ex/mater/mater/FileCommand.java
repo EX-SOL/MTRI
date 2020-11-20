@@ -38,6 +38,7 @@ public class FileCommand {
 	String custNm;			//사용자명
 	int total;				//총카운트
 	String mnpbRgsrSeq;		//장비등록번호
+	String etcFileName;		//파일명 비교시 사용
 	
 	
 	public MultipartFile getFlUpFileData() {
@@ -232,5 +233,12 @@ public class FileCommand {
 	public void setMnpbRgsrSeq(String mnpbRgsrSeq) {
 		this.mnpbRgsrSeq = mnpbRgsrSeq;
 	}
+	public String getEtcFileName() {
+		return etcFileName;
+	}
+	public void setEtcFileName(String etcFileName) {
+		this.etcFileName = etcFileName;
+	}
+	
 	
 }

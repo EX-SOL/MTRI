@@ -78,11 +78,11 @@
 			, #{dlgdUnpr}
 			, #{askAmt}
 			, #{attflSeq}
-			, #{mnpbStatCd}
-			, #{ppsTrnmYn}
-			, #{fsttmRgsrId}
+			, '01'
+			, NVL(#{ppsTrnmYn}, 'N')
+			, #{mtriCustNo}
 			, SYSDATE
-			, #{lsttmModfrId}
+			, #{mtriCustNo}
 			, SYSDATE
 			, #{etcRmrk}
 			, #{mnpbRgsrSeq}
@@ -102,7 +102,7 @@
     		, ATTFL_PATH
     	) VALUES(
     		  #{attflSeq}
-    		, 1
+    		, (SELECT NVL(MAX(ATTFL_SQNO)+1, 1) FROM T_MTRI_ATTFL WHERE ATTFL_SEQ = #{attflSeq})
     		, #{attflNm}
     		, #{attflPath}
     	)
@@ -185,6 +185,8 @@
              , ATTFL_PATH       -- 파일경로
              , A.MNPB_CLSS_CD	-- 대금구분코드
              , A.MNPB_RGSR_SEQ  -- 대금등록일련번호
+             , A.MNPB_STAT_CD   -- 대금상태코드
+             , A.ATTFL_SEQ		-- 첨부파일일련번호
 		 FROM T_MTRI_MNPB_01M1 A
 		    LEFT OUTER JOIN T_MTRI_CUST01M1 B
 		    ON A.MTRI_CUST_NO = B.MTRI_CUST_NO
@@ -198,4 +200,44 @@
          AND A.MNPB_CLSS_CD = #{mnpbClssCd}
          AND A.MNPB_ASK_SQNO = #{mnpbAskSqno}
     </select>
+    
+    
+    <update id="updateMaterList" parameterType="com.ex.mater.mater.FileCommand">
+    	UPDATE T_MTRI_MNPB_01M1
+    	  SET FILD_CLSS_CD = #{fildClssCd}
+			, CNTC_WKSC_CD = #{cntcWkscCd}
+			, CNTRT_CRPR_NM = #{cntrtCrprNm}
+			, CNTRT_CRPR_CD = #{cntrtCrprCd}
+			, CNTRT_CNTC_NO = #{cntrtCntcNo}
+			, CNTRT_NM = #{cntrtNm}
+			, CNTRT_CD = #{cntrtCd}
+			, DLGD_AMNT = #{dlgdAmnt}
+			, DLGD_UNPR = #{dlgdUnpr}
+			, ASK_AMT = #{askAmt}
+			, ATTFL_SEQ = #{attflSeq}
+			, LSTTM_MODFR_ID = #{mtriCustNo}
+			, LSTTM_ALTR_DTTM = SYSDATE
+			, ETC_RMRK = #{etcRmrk}
+			, MNPB_RGSR_SEQ = #{mnpbRgsrSeq}
+		  WHERE MTRI_CUST_NO = #{mtriCustNo}
+		  AND MNPB_ASK_SQNO = #{mnpbAskSqno}
+		  AND MNPB_CLSS_CD = #{mnpbClssCd}
+		  AND MNPB_ASK_YYMM = #{mnpbAskYYMM}
+    </update>
+    
+    <update id="updateMaterAttfl" parameterType="com.ex.mater.mater.FileCommand">
+    	UPDATE T_MTRI_ATTFL 
+    	SET ATTFL_NM = #{attflNm} 
+    	  , ATTFL_PATH = #{attflPath}
+    	WHERE ATTFL_SEQ = #{attflSeq}
+    	AND ATTFL_NM = #{etcFileName}
+    </update>
+    
+    <delete id="deleteMater" parameterType="map">
+    	DELETE FROM T_MTRI_MNPB_01M1
+    	 WHERE MTRI_CUST_NO = #{mtriCustNo}
+		 AND MNPB_ASK_SQNO = #{mnpbAskSqno}
+		 AND MNPB_CLSS_CD = #{mnpbClssCd} 
+		 AND MNPB_ASK_YYMM = #{mnpbAskYYMM}
+    </delete>
 </mapper>
