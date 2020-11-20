@@ -5,312 +5,232 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileCommand {
 	private MultipartFile flUpFileData;
 	
-	private String txtItem1;
-    private String txtItem2;
-
-    String mrtiMnpbAskYYMM;		//자재대금청구년월
-	String fildClssCd;			//현장구분코드
-	String cntcWkscCd;			//건설공구코드
-	String cntrtCrprNm;			//계약업체명
-	String mtriCrprNm;			//자재업체명
-	String mtriNm;				//자재명
-	String custTelno;			//사용자전화번호
-	String mtriCustNo;			//사용자id(사업자번호)
-	String rpprNm;				//대표자명
-	String deprNm;				//예금주
-	String trBankNm;			//거래은행명
-	String bankActno;			//은행계좌번호
-	String askAmt;				//금액
-	String attflNm;  			//첨부파일 이름
-	String attflPath;  			//첨부파일 경로
-	String attflSeq;			//첨부파일 일련번호
-	String mtriCd;				//자재코드
-	String mtriMnpbAskSqno;		//자재대금청구순번
-	String cntrtCrprCd;			//계약업체코드
-	String cntrtNo;				//계약번호
-	String dlgdAmnt;			//수량
-	String dlgdUnpr;			//단가
-	String rgstStat;			//상태
-	String ppsTrnmYn;			//전송여부
-	String fsttmRgsrId;			//등록자
-	String lsttmModfrId;		//수정자
-	String etcRmrk;				//기타비고
-	String custNm;				//사용자명/법인명
-	int total;					//총카운트
+    String mnpbAskYYMM;		//청구년월
+    String mtriCustNo;		//사용자ID(사업자번호)
+    String mnpbAskSqno;		//대금청구순번
+    String mnpbClssCd;		//대금구분코드
+    String fildClssCd;		//현장구분코드
+    String cntcWkscCd;		//건설공구코드
+    String cntrtCrprNm;		//계약업체명
+    String cntrtCrprCd;		//계약업체코드
+    String cntrtCntcNo;		//대금계약번호
+    String cntrtNm;			//대금명
+    String cntrtCd;			//대금코드
+    String dlgdAmnt;		//수량
+    String dlgdUnpr;		//단가
+    String askAmt;			//청구금액
+    String attflSeq;		//첨부파일일련번호
+    String mnpbStatCd;		//대금상태코드
+    String ppsTrnmYn;		//전송여부
+    String fsttmRgsrId;		//최초등록자ID
+    String lsttmModfrId;	//최종수정자ID
+    String etcRmrk;			//기타비고
+    
+    // 추가
+	String corpNm;			//법인명
+	String custTelno;		//사용자전화번호
+	String rpprNm;			//대표자명
+	String deprNm;			//예금주
+	String trBankNm;		//거래은행명
+	String bankActno;		//은행계좌번호
+	String attflNm;  		//첨부파일 이름
+	String attflPath;  		//첨부파일 경로
+	String custNm;			//사용자명
+	int total;				//총카운트
+	String mnpbRgsrSeq;		//장비등록번호
 	
 	
-    public MultipartFile getFlUpFileData() {
-        return flUpFileData;
-    }
-
-    public void setFlUpFileData(MultipartFile flUpFileData) {
-        this.flUpFileData = flUpFileData;
-    }
-
-    public String getTxtItem1() {
-        return txtItem1;
-    }
-
-    public void setTxtItem1(String txtItem1) {
-        this.txtItem1 = txtItem1;
-    }
-
-    public String getTxtItem2() {
-        return txtItem2;
-    }
-
-    public void setTxtItem2(String txtItem2) {
-        this.txtItem2 = txtItem2;
-    }
-
-    public String getMrtiMnpbAskYYMM() {
-		return mrtiMnpbAskYYMM;
+	public MultipartFile getFlUpFileData() {
+		return flUpFileData;
 	}
-
-	public void setMrtiMnpbAskYYMM(String mrtiMnpbAskYYMM) {
-		this.mrtiMnpbAskYYMM = mrtiMnpbAskYYMM;
+	public void setFlUpFileData(MultipartFile flUpFileData) {
+		this.flUpFileData = flUpFileData;
 	}
-
-	public String getFildClssCd() {
-		return fildClssCd;
+	public String getMnpbAskYYMM() {
+		return mnpbAskYYMM;
 	}
-
-	public void setFildClssCd(String fildClssCd) {
-		this.fildClssCd = fildClssCd;
+	public void setMnpbAskYYMM(String mnpbAskYYMM) {
+		this.mnpbAskYYMM = mnpbAskYYMM;
 	}
-
-	public String getCntcWkscCd() {
-		return cntcWkscCd;
-	}
-
-	public void setCntcWkscCd(String cntcWkscCd) {
-		this.cntcWkscCd = cntcWkscCd;
-	}
-
-	public String getCntrtCrprNm() {
-		return cntrtCrprNm;
-	}
-
-	public void setCntrtCrprNm(String cntrtCrprNm) {
-		this.cntrtCrprNm = cntrtCrprNm;
-	}
-
-	public String getMtriCrprNm() {
-		return mtriCrprNm;
-	}
-
-	public void setMtriCrprNm(String mtriCrprNm) {
-		this.mtriCrprNm = mtriCrprNm;
-	}
-
-	public String getMtriNm() {
-		return mtriNm;
-	}
-
-	public void setMtriNm(String mtriNm) {
-		this.mtriNm = mtriNm;
-	}
-
-	public String getCustTelno() {
-		return custTelno;
-	}
-
-	public void setCustTelno(String custTelno) {
-		this.custTelno = custTelno;
-	}
-
 	public String getMtriCustNo() {
 		return mtriCustNo;
 	}
-
 	public void setMtriCustNo(String mtriCustNo) {
 		this.mtriCustNo = mtriCustNo;
 	}
-
-	public String getRpprNm() {
-		return rpprNm;
+	public String getMnpbAskSqno() {
+		return mnpbAskSqno;
 	}
-
-	public void setRpprNm(String rpprNm) {
-		this.rpprNm = rpprNm;
+	public void setMnpbAskSqno(String mnpbAskSqno) {
+		this.mnpbAskSqno = mnpbAskSqno;
 	}
-
-	public String getDeprNm() {
-		return deprNm;
+	public String getMnpbClssCd() {
+		return mnpbClssCd;
 	}
-
-	public void setDeprNm(String deprNm) {
-		this.deprNm = deprNm;
+	public void setMnpbClssCd(String mnpbClssCd) {
+		this.mnpbClssCd = mnpbClssCd;
 	}
-
-	public String getTrBankNm() {
-		return trBankNm;
+	public String getFildClssCd() {
+		return fildClssCd;
 	}
-
-	public void setTrBankNm(String trBankNm) {
-		this.trBankNm = trBankNm;
+	public void setFildClssCd(String fildClssCd) {
+		this.fildClssCd = fildClssCd;
 	}
-
-	public String getBankActno() {
-		return bankActno;
+	public String getCntcWkscCd() {
+		return cntcWkscCd;
 	}
-
-	public void setBankActno(String bankActno) {
-		this.bankActno = bankActno;
+	public void setCntcWkscCd(String cntcWkscCd) {
+		this.cntcWkscCd = cntcWkscCd;
 	}
-
-	public String getAskAmt() {
-		return askAmt;
+	public String getCntrtCrprNm() {
+		return cntrtCrprNm;
 	}
-
-	public void setAskAmt(String askAmt) {
-		this.askAmt = askAmt;
+	public void setCntrtCrprNm(String cntrtCrprNm) {
+		this.cntrtCrprNm = cntrtCrprNm;
 	}
-	
-	public String getAttflNm() {
-		return attflNm;
-	}
-
-	public void setAttflNm(String attflNm) {
-		this.attflNm = attflNm;
-	}
-
-	public String getAttflPath() {
-		return attflPath;
-	}
-
-	public void setAttflPath(String attflPath) {
-		this.attflPath = attflPath;
-	}
-
-	public String getAttflSeq() {
-		return attflSeq;
-	}
-
-	public void setAttflSeq(String attflSeq) {
-		this.attflSeq = attflSeq;
-	}
-	
-	public String getMtriCd() {
-		return mtriCd;
-	}
-
-	public void setMtriCd(String mtriCd) {
-		this.mtriCd = mtriCd;
-	}
-
-	public String getMtriMnpbAskSqno() {
-		return mtriMnpbAskSqno;
-	}
-
-	public void setMtriMnpbAskSqno(String mtriMnpbAskSqno) {
-		this.mtriMnpbAskSqno = mtriMnpbAskSqno;
-	}
-
 	public String getCntrtCrprCd() {
 		return cntrtCrprCd;
 	}
-
 	public void setCntrtCrprCd(String cntrtCrprCd) {
 		this.cntrtCrprCd = cntrtCrprCd;
 	}
-
-	public String getCntrtNo() {
-		return cntrtNo;
+	public String getCntrtCntcNo() {
+		return cntrtCntcNo;
 	}
-
-	public void setCntrtNo(String cntrtNo) {
-		this.cntrtNo = cntrtNo;
+	public void setCntrtCntcNo(String cntrtCntcNo) {
+		this.cntrtCntcNo = cntrtCntcNo;
 	}
-
+	public String getCntrtNm() {
+		return cntrtNm;
+	}
+	public void setCntrtNm(String cntrtNm) {
+		this.cntrtNm = cntrtNm;
+	}
+	public String getCntrtCd() {
+		return cntrtCd;
+	}
+	public void setCntrtCd(String cntrtCd) {
+		this.cntrtCd = cntrtCd;
+	}
 	public String getDlgdAmnt() {
 		return dlgdAmnt;
 	}
-
 	public void setDlgdAmnt(String dlgdAmnt) {
 		this.dlgdAmnt = dlgdAmnt;
 	}
-
 	public String getDlgdUnpr() {
 		return dlgdUnpr;
 	}
-
 	public void setDlgdUnpr(String dlgdUnpr) {
 		this.dlgdUnpr = dlgdUnpr;
 	}
-
-	public String getRgstStat() {
-		return rgstStat;
+	public String getAskAmt() {
+		return askAmt;
 	}
-
-	public void setRgstStat(String rgstStat) {
-		this.rgstStat = rgstStat;
+	public void setAskAmt(String askAmt) {
+		this.askAmt = askAmt;
 	}
-
+	public String getAttflSeq() {
+		return attflSeq;
+	}
+	public void setAttflSeq(String attflSeq) {
+		this.attflSeq = attflSeq;
+	}
+	public String getMnpbStatCd() {
+		return mnpbStatCd;
+	}
+	public void setMnpbStatCd(String mnpbStatCd) {
+		this.mnpbStatCd = mnpbStatCd;
+	}
 	public String getPpsTrnmYn() {
 		return ppsTrnmYn;
 	}
-
 	public void setPpsTrnmYn(String ppsTrnmYn) {
 		this.ppsTrnmYn = ppsTrnmYn;
 	}
-
 	public String getFsttmRgsrId() {
 		return fsttmRgsrId;
 	}
-
 	public void setFsttmRgsrId(String fsttmRgsrId) {
 		this.fsttmRgsrId = fsttmRgsrId;
 	}
-
 	public String getLsttmModfrId() {
 		return lsttmModfrId;
 	}
-
 	public void setLsttmModfrId(String lsttmModfrId) {
 		this.lsttmModfrId = lsttmModfrId;
 	}
-
 	public String getEtcRmrk() {
 		return etcRmrk;
 	}
-
 	public void setEtcRmrk(String etcRmrk) {
 		this.etcRmrk = etcRmrk;
 	}
-
+	public String getCorpNm() {
+		return corpNm;
+	}
+	public void setCorpNm(String corpNm) {
+		this.corpNm = corpNm;
+	}
+	public String getCustTelno() {
+		return custTelno;
+	}
+	public void setCustTelno(String custTelno) {
+		this.custTelno = custTelno;
+	}
+	public String getRpprNm() {
+		return rpprNm;
+	}
+	public void setRpprNm(String rpprNm) {
+		this.rpprNm = rpprNm;
+	}
+	public String getDeprNm() {
+		return deprNm;
+	}
+	public void setDeprNm(String deprNm) {
+		this.deprNm = deprNm;
+	}
+	public String getTrBankNm() {
+		return trBankNm;
+	}
+	public void setTrBankNm(String trBankNm) {
+		this.trBankNm = trBankNm;
+	}
+	public String getBankActno() {
+		return bankActno;
+	}
+	public void setBankActno(String bankActno) {
+		this.bankActno = bankActno;
+	}
+	public String getAttflNm() {
+		return attflNm;
+	}
+	public void setAttflNm(String attflNm) {
+		this.attflNm = attflNm;
+	}
+	public String getAttflPath() {
+		return attflPath;
+	}
+	public void setAttflPath(String attflPath) {
+		this.attflPath = attflPath;
+	}
 	public String getCustNm() {
 		return custNm;
 	}
-
 	public void setCustNm(String custNm) {
 		this.custNm = custNm;
 	}
-
 	public int getTotal() {
 		return total;
 	}
-
 	public void setTotal(int total) {
 		this.total = total;
 	}
-
-	@Override
-    public String toString() {
-        return "FileCommand [flUpFileData=" + flUpFileData + ", txtItem1=" + txtItem1  + ", txtItem2=" + txtItem2  
-        		+ ", mrtiMnpbAskYYMM=" +mrtiMnpbAskYYMM
-        		+ ", fildClssCd=" +fildClssCd
-        		+ ", cntcWkscCd=" +cntcWkscCd
-        		+ ", cntrtCrprNm=" + cntrtCrprNm
-        		+ ", mtriCrprNm=" + mtriCrprNm  
-        		+ ", mtriNm=" + mtriNm  
-        		+ ", custTelno=" + custTelno  
-        		+ ", mtriCustNo=" + mtriCustNo  
-        		+ ", rpprNm=" + rpprNm  
-        		+ ", deprNm=" + deprNm  
-        		+ ", trBankNm=" + trBankNm  
-        		+ ", bankActno=" + bankActno  
-        		+ ", askAmt=" + askAmt  
-        		+"]";
-    }
+	public String getMnpbRgsrSeq() {
+		return mnpbRgsrSeq;
+	}
+	public void setMnpbRgsrSeq(String mnpbRgsrSeq) {
+		this.mnpbRgsrSeq = mnpbRgsrSeq;
+	}
+	
 }

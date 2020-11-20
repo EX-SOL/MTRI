@@ -60,15 +60,21 @@ function f_selectMainList(){
      	if(response.length > 0){
      		
      		$.each(response, function(key, item){
-     			// if 자재 & 장비
-     			innerHTML += '<li>';
-     			innerHTML += "	<a href='javascript:f_goMaterDetail(\""+item.mtriMnpbAskSqno+"\", \""+item.mtriCd+"\", \""+item.mrtiMnpbAskYYMM+"\");'  class='itemLink'>";
+     			var mnpbNm;
+    			if ( item.mnpbClssCd == "M" ){mnpbNm = "자재";}else{mnpbNm="장비";};
+    			
+     			innerHTML += "<li>";
+     			if ( item.mnpbClssCd == "M" ){
+     				innerHTML += "	<a href='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\");'  class='itemLink'>";
+     			} else {
+     				innerHTML += "	<a style='background-color:#eee; border:1px solid;' href='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\");'  class='itemLink'>";
+				}
          		innerHTML += '		<div class="topGroup">';
-         		innerHTML += '			<div class="nameBox">'+item.fildClssCd+' 현장</div>';
-         		innerHTML += '			<div class="dateBox">'+item.mrtiMnpbAskYYMM+'</div>';
+         		innerHTML += '			<div class="nameBox">['+mnpbNm+'] '+item.fildClssCd+' 현장</div>';
+         		innerHTML += '			<div class="dateBox">'+item.mnpbAskYYMM+'</div>';
          		innerHTML += '			<div class="itemBox">';
          		innerHTML += '				<div class="topTxt">'+item.cntcWkscCd+' 공구</div>';
-         		innerHTML += '				<div class="bottomTxt">'+item.mtriNm+'</div>';
+         		innerHTML += '				<div class="bottomTxt">'+item.cntrtNm+'</div>';
          		innerHTML += '			</div>';
          		innerHTML += '		</div>';
          		innerHTML += '		<div class="bottomGroup">';
@@ -80,7 +86,7 @@ function f_selectMainList(){
      		
      		innerHTML += '<li>';
          	innerHTML += '	<div class="chargedBox">';
-         	innerHTML += '		<div class="topTxt">'+response[0].custNm+'님 청구 목록</div>';
+         	innerHTML += '		<div class="topTxt">'+response[0].corpNm+'님 청구 목록</div>';
          	innerHTML += '		<div class="chargeBtnBox">';
          	innerHTML += '			<a href="javascript:f_goMaterList();" class="chargeBtn">';
          	innerHTML += '				<i class="ic ic_charge"></i>';
@@ -131,9 +137,8 @@ function f_selectMainList(){
 }
 
 //자재상세로 가기위한 데이터
-function f_goMaterDetail(mtriMnpbAskSqno, mtriCd, mrtiMnpbAskYYMM){
+function f_goMaterDetail(mnpbAskSqno, mnpbClssCd, mnpbAskYYMM){
 	var mtriCustNo = $("#mtriCustNo").val();
-	//var param = {"mtriCustNo":mtriCustNo, "mrtiMnpbAskYYMM":mrtiMnpbAskYYMM, "mtriMnpbAskSqno":mtriMnpbAskSqno, "mtriCd":mtriCd};
-	var day = mrtiMnpbAskYYMM.replace('.', '');
-	window.location = "/mater/mater/selectMaterDetail?mtriCustNo="+mtriCustNo+"&mrtiMnpbAskYYMM="+day+"&mtriMnpbAskSqno="+mtriMnpbAskSqno+"&mtriCd="+mtriCd;
+	var day = mnpbAskYYMM.replace('.', '');
+	window.location = "/mater/mater/selectMaterDetail?mtriCustNo="+mtriCustNo+"&mnpbAskYYMM="+day+"&mnpbAskSqno="+mnpbAskSqno+"&mnpbClssCd="+mnpbClssCd;
 }

@@ -17,6 +17,7 @@ function f_downloadFile() {
 	var attflNm = $('#attflNm').val();
 	var attflPath = $('#attflPath').val();
 	var param = '?attflPath='+attflPath+'&attflNm='+attflNm;
-	
-	location.href = "/mater/mater/downloadFile"+param;
+	if( attflNm != "" && attflPath != "" ){
+		location.href = "/mater/mater/downloadFile"+param;
+	}
 }
