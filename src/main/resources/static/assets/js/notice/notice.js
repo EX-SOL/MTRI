@@ -12,6 +12,15 @@ $(document).ready(function(){
 	selectNotice();
 })
 
+// 공지사항 상세 조회 화면 이동
+function goNoticeDetail(notcMtriSeq) {
+
+	//window.location = "/mater/main/load-page?pageName=notice/noticeDetail?notcMtriSeq="+notcMtriSeq;
+	//window.location = "/mater/main/load-page?pageName=notice/noticeDetail";
+	window.location = "/mater/notice/selectNoticeDetail?notcMtriSeq="+notcMtriSeq;
+}
+
+// 공지사항 조회
 function selectNotice() {
 
 	console.log('sDate : ', $('#sDate').val());
@@ -78,7 +87,7 @@ function selectNotice() {
     				if(ddNew<10){ddNew='0'+ddNew}
     				var compareNewDate = yyNew+'-'+mmNew+'-'+ddNew;
     				
-    				trtd += '<tr id="notice-list-tr-'+item.notcMtriSeq+'" onClick="f_selectComnNoticeDetail(\''+item.notcMtriSeq+'\')">';
+    				trtd += '<tr id="notice-list-tr-'+item.notcMtriSeq+'" onClick="goNoticeDetail(\''+item.notcMtriSeq+'\')">';
     				trtd += '	<td style="width: 15%;">'+(key+1)+'</td>';
     				
     				if(item.notcMtriImptYN == 'Y') {

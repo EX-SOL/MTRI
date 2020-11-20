@@ -21,8 +21,34 @@ public class Notice {
     String lsttmModfrId;
     String lsttmAltrDttm;
     String notcMtriDelYN;
+    String attflNm;
+    String attflPath;
 
-    public MultipartFile getFlUpFileData() {
+    public String getLsttmModfrId() {
+		return lsttmModfrId;
+	}
+	public void setLsttmModfrId(String lsttmModfrId) {
+		this.lsttmModfrId = lsttmModfrId;
+	}
+	public String getLsttmAltrDttm() {
+		return lsttmAltrDttm;
+	}
+	public void setLsttmAltrDttm(String lsttmAltrDttm) {
+		this.lsttmAltrDttm = lsttmAltrDttm;
+	}
+	public String getAttflNm() {
+		return attflNm;
+	}
+	public void setAttflNm(String attflNm) {
+		this.attflNm = attflNm;
+	}
+	public String getAttflPath() {
+		return attflPath;
+	}
+	public void setAttflPath(String attflPath) {
+		this.attflPath = attflPath;
+	}
+	public MultipartFile getFlUpFileData() {
 		return flUpFileData;
 	}
 	public void setFlUpFileData(MultipartFile flUpFileData) {

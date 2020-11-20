@@ -42,4 +42,10 @@ public class NoticeServiceImpl implements NoticeService{
 		return null;
 	}
 
+	@Override
+	public Notice selectNoticeDetail(Map<String, Object> paramMap) throws Exception {
+		// TODO Auto-generated method stub
+		return noticeMapper.selectNoticeDetail(paramMap);
+	}
+
 }

@@ -42,7 +42,7 @@
 						<span class="txt">제목</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="자재관리 관련 공지사항" readonly>
+						<input class="tbox" th:value="${notcMtriTitlNm}" readonly>
 					</div>
 				</li>
 
@@ -52,17 +52,18 @@
 						<span class="txt">게시일</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="2020-10-01 ~ 2020-11-30" readonly>
+						<input class="tbox" th:value="${bltnEndDates}" readonly>
 					</div>
 				</li>
 
 				<li>
 					<div class="subject">
 						<i class="ic ic_corp"></i>
-						<span class="txt">등록자</span>
+						<span class="txt">첨부파일</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="관리자" readonly>
+						<input type="hidden" id="attflPath" th:value="${attflPath}">
+						<input class="tbox" id="attflNm" th:value="${attflNm}" readonly onclick="javascript:f_downloadFile();">
 					</div>
 				</li>
 
@@ -72,7 +73,7 @@
 						<span class="txt">내용</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="테스트입니다." style="height: 300px;" readonly>
+						<input class="tbox" th:value="${notcMtriCtnt}" style="height: 300px;" readonly>
 					</div>
 				</li>
 			</ul>

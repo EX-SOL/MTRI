@@ -16,8 +16,33 @@
 		<result column="LSTTM_MODFR_ID" property="lsttmModfrId"/>
 		<result column="LSTTM_ALTR_DTTM" property="lsttmAltrDttm"/>
 		<result column="NOTC_MTRI_DEL_YN" property="notcMtriDelYN"/>
+		<result column="ATTFL_NM" property="attflNm"/>
+		<result column="ATTFL_PATH" property="attflPath"/>
 	</resultMap>
 
+	<!-- 상세조회 -->
+	<select id="selectNoticeDetail" parameterType="map" resultMap="NoticeMap">
+		SELECT
+			 T1.NOTC_MTRI_SEQ
+			,T1.NOTC_MTRI_TITL_NM
+			,T1.NOTC_MTRI_CTNT
+			,TO_CHAR(T1.BLTN_STRT_DATES, 'YYYY/MM/DD HH:MM') || '~' || TO_CHAR(T1.BLTN_END_DATES, 'YYYY/MM/DD HH:MM') AS BLTN_END_DATES 
+			,T1.NOTC_MTRI_IMPT_YN
+			,T1.ATTFL_SEQ
+			,T1.NOTC_MTRI_BLTN_ATHR_CD
+			,T1.FSTTM_RGSR_ID
+			,T1.FSTTM_RGST_DTTM
+			,T1.LSTTM_MODFR_ID
+			,T1.LSTTM_ALTR_DTTM
+			,T1.NOTC_MTRI_DEL_YN
+			,T2.ATTFL_NM
+			,T2.ATTFL_PATH
+		FROM	T_MTRI_NOTICE T1 LEFT OUTER JOIN T_MTRI_ATTFL T2
+					ON T1.ATTFL_SEQ = T2.ATTFL_SEQ
+		WHERE	1 = 1
+		AND		NOTC_MTRI_SEQ = #{notcMtriSeq}
+	</select>
+	<!-- 리스트 조회 -->
 	<select id="selectNotice" parameterType="map" resultMap="NoticeMap">
 		SELECT	
 			 NOTC_MTRI_SEQ

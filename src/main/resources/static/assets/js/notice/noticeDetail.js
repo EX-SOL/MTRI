@@ -10,3 +10,17 @@ $(document).ready(function(){
 	$("#menuDiv").load('/mater/main/load-page?pageName=menu');
 	
 })
+
+//첨부파일 다운로드 
+function f_downloadFile() {
+	
+	var attflNm = $('#attflNm').val();
+	var attflPath = $('#attflPath').val();
+	var param = '?attflPath='+attflPath+'&attflNm='+attflNm;
+
+	console.log('attflNm : ', attflNm);
+	console.log('attflPath : ', attflPath);
+	console.log('param : ', param);
+
+	location.href = "/mater/notice/downloadFile"+param;
+}
