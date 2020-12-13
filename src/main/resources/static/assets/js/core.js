@@ -50,15 +50,6 @@ function f_dateClick(id){
 }
 
 function f_goLogout(){
-	localStorage.removeItem("mtriCustNo");
-	localStorage.removeItem("custPswd");
-	localStorage.removeItem("custAthrCd");
-	localStorage.removeItem("custTelno");
-	localStorage.removeItem("rpprNm");
-	localStorage.removeItem("deprNm");
-	localStorage.removeItem("bankActno");
-	localStorage.removeItem("trBankNm");
-	window.location = "/mater";
 	$.ajax({
         method: "POST",
         url: "/mater/user/logout",
@@ -177,10 +168,33 @@ function f_showModal(text){
 	$('body').attr("style", "overflow:hidden;");
 }
 
+function f_showModal_func(text, func){
+	var htmlData = '';
+	
+	htmlData += '<div class="alertModal">';
+	htmlData += '	<div class="alert-modal-content">';
+	htmlData += '		<div class="modalWrap">';
+	htmlData += '			<div class="title">';
+	htmlData += '				<img src="../assets/img/img_header_logo.png" alt="">';
+	htmlData += '				<span>자재·장비대금 지킴이</span>';
+	htmlData += '			</div>';
+	htmlData += '		</div>';
+	htmlData += '		<div class="modalText">';
+	htmlData += '			<span>'+ text +'</span>';
+	htmlData += '		</div>';
+	htmlData += '		<div class="modalButton">';
+	htmlData += '			<button onclick="javascript:'+func+'" class="btn-confirm"> 확 인 </button>';
+	htmlData += '		</div>';
+	htmlData += '	</div>';
+	htmlData += '</div>';
+	$('body').append(htmlData);
+	$('body').attr("style", "overflow:hidden;");
+}
+
 // modal 띄우기
 function f_confirm(text, func){
 	var htmlData = '';
-	
+	$(".alertModal").remove();
 	htmlData += '<div class="alertModal">';
 	htmlData += '	<div class="alert-modal-content">';
 	htmlData += '		<div class="modalWrap">';
@@ -211,6 +225,7 @@ function f_closeModal(){
 // 앱 메인에서 뒤로가기시 종료
 function f_historyGo(){
 	var htmlData = '';
+	$(".alertModal").remove();
 	var text = '앱을 종료하시겠습니까?';
 	htmlData += '<div class="alertModal">';
 	htmlData += '	<div class="alert-modal-content">';
@@ -223,9 +238,9 @@ function f_historyGo(){
 	htmlData += '		<div class="modalText">';
 	htmlData += '			<span>'+ text +'</span>';
 	htmlData += '		</div>';
-	htmlData += '		<div class="modalButtonConfirm">';
-	htmlData += '			<button onclick="javascript:f_closeModal();" class="btn-cancel"> 취 소 </button>';
-	htmlData += '			<button onclick="javascript:f_finishApp();" class="btn-confirm"> 확 인 </button>';
+	htmlData += '		<div class="modalButton">';
+	htmlData += '			<button style="margin-left: -130px;" onclick="javascript:f_closeModal();" class="btn-cancel"> 취 소 </button>';
+	htmlData += '			<button style="margin-left: 0;" onclick="javascript:f_finishApp();" class="btn-confirm"> 확 인 </button>';
 	htmlData += '		</div>';
 	htmlData += '	</div>';
 	htmlData += '</div>';
@@ -235,14 +250,15 @@ function f_historyGo(){
 
 
 // 첨부파일 선택 시 파일명 표출
-function f_imgChange(){
-	var fileValue = $("#flUpFileData").val().split("\\");
+function f_imgChange(fileId, fileLabel){
+	var fv = $(fileLabel).val();
+	var fileValue = fv.split("\\");
 	var fileName = fileValue[fileValue.length-1]; // 파일명
-	$("#fileName").text(fileName);
+	$(fileId).text(fileName);
 }
 
 
-//처음 진입 시 한달 기간두기
+//처음 진입 시 한달 기간두기 -1달
 function f_dateSetting(sDate, eDate){
 	var date = new Date();
 	$(eDate).val(getFormatDate(date));
@@ -259,6 +275,22 @@ function getFormatDate(date){
     return  year + '/' + month + '/' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
 }
 
+//YYYY-MM 형태로 +1달
+function f_monthSetting(sDate, eDate){
+	var date = new Date();
+	$(sDate).val(getFormatDateYYYYMM(date));
+	date.setMonth(date.getMonth()+1);
+	$(eDate).val(getFormatDateYYYYMM(date));
+}
+
+// YYYY-MM 형태
+function getFormatDateYYYYMM(date){
+    var year = date.getFullYear();              //yyyy
+    var month = (1 + date.getMonth());          //M
+    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+    return  year + '-' + month;       //'-' 추가하여 yyyy-mm 형태 생성 가능
+}
+
 //첨부파일 다운로드 
 function f_downloadFile() {
 	var attflNm = $('#attflNm').val();
@@ -269,3 +301,74 @@ function f_downloadFile() {
 	}
 }
 
+//현장데이터
+function f_fildData(){
+	$(".progressDiv").show();
+	$.ajax({
+        method: "POST",
+        url: "/mater/mater/selectFildData",
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (response, textStatus, jqXHR) {
+        	console.log("response: ", response);
+        	var innerHTML = '';
+        	
+        	$.each(response, function(key, item){
+        		if(key == 0){
+        			innerHTML += '<option value="'+item.BLNG_DPTCD+'" selected>'+item.KOR_DPTNM+'</option>';
+        		}else {
+        			innerHTML += '<option value="'+item.BLNG_DPTCD+'">'+item.KOR_DPTNM+'</option>';
+        		}
+        	});
+        	
+        	$("select[name='blngDptcd']").html(innerHTML);
+        	$(".progressDiv").hide();
+        	
+        	f_wkscData();
+        },
+        error: function (jqXHR, status, error) {
+        	$(".progressDiv").hide();
+        	f_showModal("조회 실패");
+        }
+    });
+}
+
+//공구데이터
+function f_wkscData(){
+	$(".progressDiv").show();
+
+	var blngDptcd = $("select[name='blngDptcd']").val();
+	if (blngDptcd == null || blngDptcd == "" ){
+		$(".progressDiv").hide();
+		return;
+	}
+    var param = { "blngDptcd" : blngDptcd };
+    
+	$.ajax({
+        method: "POST",
+        url: "/mater/mater/selectWkscData",
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(param),
+        success: function (response, textStatus, jqXHR) {
+        	console.log("response: ", response);
+        	var innerHTML = '';
+        	
+        	$.each(response, function(key, item){
+        		if(key == 0){
+        			innerHTML += '<option value="'+item.WKSC_CD+'" selected>'+item.WKSC_NM+'</option>';
+        		}else {
+        			innerHTML += '<option value="'+item.WKSC_CD+'">'+item.WKSC_NM+'</option>';
+        		}
+        		
+        		
+        	});
+        	$("select[name='wkscCd']").html(innerHTML);
+        	$(".progressDiv").hide();
+        },
+        error: function (jqXHR, status, error) {
+        	$(".progressDiv").hide();
+        	f_showModal("조회 실패");
+        }
+    });
+}

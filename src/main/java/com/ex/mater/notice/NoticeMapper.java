@@ -16,4 +16,13 @@ public interface NoticeMapper {
 	// 상세 조회
 	public Notice selectNoticeDetail(Map<String, Object> paramMap);
 
+	public Integer insertNotice(Notice noti);
+	public Integer insertNoticeAttfl(Notice noti);
+	
+	public Integer updateNoticeAttfl(Notice noti);
+	public Integer updateNotice(Notice noti);
+	
+	public Integer deleteNotice(Map<String, Object> paramMap);
+	
+	public List<Notice> selectNoticeMainList(Map<String, Object> paramMap);
 }

@@ -6,13 +6,13 @@ public class FileCommand {
 	private MultipartFile flUpFileData;
 	
     String mnpbAskYYMM;		//청구년월
-    String mtriCustNo;		//사용자ID(사업자번호)
+    String mtriCustNo;		//사용자ID
     String mnpbAskSqno;		//대금청구순번
     String mnpbClssCd;		//대금구분코드
-    String fildClssCd;		//현장구분코드
-    String cntcWkscCd;		//건설공구코드
+    String blngDptcd;		//현장구분코드
+    String wkscCd;			//건설공구코드
     String cntrtCrprNm;		//계약업체명
-    String cntrtCrprCd;		//계약업체코드
+    String cntrtCrprSeq;	//계약업체일련번호
     String cntrtCntcNo;		//대금계약번호
     String cntrtNm;			//대금명
     String cntrtCd;			//대금코드
@@ -40,6 +40,12 @@ public class FileCommand {
 	String mnpbRgsrSeq;		//장비등록번호
 	String etcFileName;		//파일명 비교시 사용
 	
+	String korDptnm;		//현장명
+	String wkscNm;			//공구명
+	
+	String rprsCrno;		//사업자등록번호
+	String acitLockYn;		//탈퇴여부
+	String custAthrCd;		//사용자권한
 	
 	public MultipartFile getFlUpFileData() {
 		return flUpFileData;
@@ -71,17 +77,17 @@ public class FileCommand {
 	public void setMnpbClssCd(String mnpbClssCd) {
 		this.mnpbClssCd = mnpbClssCd;
 	}
-	public String getFildClssCd() {
-		return fildClssCd;
+	public String getBlngDptcd() {
+		return blngDptcd;
 	}
-	public void setFildClssCd(String fildClssCd) {
-		this.fildClssCd = fildClssCd;
+	public void setBlngDptcd(String blngDptcd) {
+		this.blngDptcd = blngDptcd;
 	}
-	public String getCntcWkscCd() {
-		return cntcWkscCd;
+	public String getWkscCd() {
+		return wkscCd;
 	}
-	public void setCntcWkscCd(String cntcWkscCd) {
-		this.cntcWkscCd = cntcWkscCd;
+	public void setWkscCd(String wkscCd) {
+		this.wkscCd = wkscCd;
 	}
 	public String getCntrtCrprNm() {
 		return cntrtCrprNm;
@@ -89,11 +95,11 @@ public class FileCommand {
 	public void setCntrtCrprNm(String cntrtCrprNm) {
 		this.cntrtCrprNm = cntrtCrprNm;
 	}
-	public String getCntrtCrprCd() {
-		return cntrtCrprCd;
+	public String getCntrtCrprSeq() {
+		return cntrtCrprSeq;
 	}
-	public void setCntrtCrprCd(String cntrtCrprCd) {
-		this.cntrtCrprCd = cntrtCrprCd;
+	public void setCntrtCrprSeq(String cntrtCrprSeq) {
+		this.cntrtCrprSeq = cntrtCrprSeq;
 	}
 	public String getCntrtCntcNo() {
 		return cntrtCntcNo;
@@ -238,6 +244,36 @@ public class FileCommand {
 	}
 	public void setEtcFileName(String etcFileName) {
 		this.etcFileName = etcFileName;
+	}
+	public String getKorDptnm() {
+		return korDptnm;
+	}
+	public void setKorDptnm(String korDptnm) {
+		this.korDptnm = korDptnm;
+	}
+	public String getWkscNm() {
+		return wkscNm;
+	}
+	public void setWkscNm(String wkscNm) {
+		this.wkscNm = wkscNm;
+	}
+	public String getRprsCrno() {
+		return rprsCrno;
+	}
+	public void setRprsCrno(String rprsCrno) {
+		this.rprsCrno = rprsCrno;
+	}
+	public String getAcitLockYn() {
+		return acitLockYn;
+	}
+	public void setAcitLockYn(String acitLockYn) {
+		this.acitLockYn = acitLockYn;
+	}
+	public String getCustAthrCd() {
+		return custAthrCd;
+	}
+	public void setCustAthrCd(String custAthrCd) {
+		this.custAthrCd = custAthrCd;
 	}
 	
 	

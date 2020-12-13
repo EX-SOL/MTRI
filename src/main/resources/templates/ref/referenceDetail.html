@@ -36,7 +36,7 @@
 			<ul class="editList">
 				<li>
 					<div class="subject">
-						<i class="ic ic_spot"></i>
+						<i class="ic ic_charge_term"></i>
 						<span class="txt">제목</span>
 					</div>
 					<div class="con">
@@ -46,7 +46,7 @@
 
 				<li>
 					<div class="subject">
-						<i class="ic ic_device"></i>
+						<i class="ic ic_date"></i>
 						<span class="txt">게시시작일</span>
 					</div>
 					<div class="con">
@@ -55,7 +55,7 @@
 				</li>
 				<li>
 					<div class="subject">
-						<i class="ic ic_device"></i>
+						<i class="ic ic_date"></i>
 						<span class="txt">게시종료일</span>
 					</div>
 					<div class="con">
@@ -64,7 +64,7 @@
 				</li>
 				<li>
 					<div class="subject">
-						<i class="ic ic_corp"></i>
+						<i class="ic ic_charge_term"></i>
 						<span class="txt">내용</span>
 					</div>
 					<div class="con">
@@ -73,7 +73,7 @@
 				</li>
 				<li>
 					<div class="subject">
-						<i class="ic ic_date"></i>
+						<i class="ic ic_data"></i>
 						<span class="txt">첨부파일</span>
 					</div>
 					<div class="con">
@@ -83,10 +83,10 @@
 				</li>
 			</ul>
 			<div class="editMenuBox">
-				<a href="javascript:f_remove();" class="removeBtn">삭제</a>
+				<a href="javascript:f_remove();" class="removeBtn" th:if="${session.custAthrCd != 'D' and session.mtriCustNo == fsttmRgsrId}">삭제</a>
 
 				<div class="menuBox">
-					<a href="javascript:f_modify();" class="menuBtn">수정</a>
+					<a href="javascript:f_modify();" class="menuBtn" th:if="${session.custAthrCd != 'D' and session.mtriCustNo == fsttmRgsrId}">수정</a>
 					<a href="javascript:history.go(-1);" class="menuBtn">취소</a>
 				</div>
 			</div>
@@ -100,17 +100,16 @@
 				<ul class="editList">
 					<li>
 						<div class="subject">
-							<i class="ic ic_spot"></i>
+							<i class="ic ic_charge_term"></i>
 							<span class="txt">제목</span>
 						</div>
 						<div class="con">
 							<input class="tbox" name="rfrmrBlbnTitlNm" id="rfrmrBlbnTitlNm" th:value="${rfrmrBlbnTitlNm}">
 						</div>
 					</li>
-	
 					<li>
 						<div class="subject">
-							<i class="ic ic_device"></i>
+							<i class="ic ic_date"></i>
 							<span class="txt">게시시작일</span>
 						</div>
 						<div class="con">
@@ -124,7 +123,7 @@
 					</li>
 					<li>
 						<div class="subject">
-							<i class="ic ic_device"></i>
+							<i class="ic ic_date"></i>
 							<span class="txt">게시종료일</span>
 						</div>
 						<div class="con">
@@ -138,7 +137,7 @@
 					</li>
 					<li>
 						<div class="subject">
-							<i class="ic ic_corp"></i>
+							<i class="ic ic_charge_term"></i>
 							<span class="txt">내용</span>
 						</div>
 						<div class="con">
@@ -147,7 +146,7 @@
 					</li>
 					<li>
 						<div class="subject">
-							<i class="ic ic_date"></i>
+							<i class="ic ic_data"></i>
 							<span class="txt">첨부파일</span>
 						</div>
 						<div class="con">
@@ -155,7 +154,7 @@
 							<input type="hidden" name="attflSeq" th:value="${attflSeq}"/>
 							<div class="fileBox">
 								<label for="flUpFileData" style="padding-left: 15px; padding-top: 12px;">
-									<input type="file" id="flUpFileData" style="display:none;" name="flUpFileData" onchange="javascript:f_imgChange();">
+									<input type="file" id="flUpFileData" style="display:none;" name="flUpFileData" onchange="javascript:f_imgChange('#fileName', '#flUpFileData');">
 									<span class="txt" id="fileName" style="font-size:15px;" th:text="${attflNm}"></span>
 									<i class="ic ic_chain"></i>
 								</label>

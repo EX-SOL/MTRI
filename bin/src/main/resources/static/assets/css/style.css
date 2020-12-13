@@ -754,7 +754,7 @@ section.edit {
         width: 18px;
         height: 18px;
         background: url("../img/ic_charge_price.png") no-repeat center/cover; }
-      section.edit ul.editList li .subject .ic_date {
+      section.edit ul.editList li .subject .ic_data {
         width: 19px;
         height: 18px;
         background: url("../img/ic_data.png") no-repeat center/cover; }

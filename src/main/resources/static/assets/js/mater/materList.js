@@ -18,13 +18,14 @@ $(document).ready(function(){
     var prevMonth = parseInt(month)-1
     $("#sMonth").val(year+"-"+prevMonth);
     
+    $("#check_M").attr("checked", true);
+    $("#check_E").attr("checked", true);
+    
     f_selectMaterList();
 })
 
 // 장비 대금 상세
-function f_goMaterDetail(mnpbAskSqno, mnpbClssCd, mnpbAskYYMM){
-	var mtriCustNo = $("#mtriCustNo").val();
-	
+function f_goMaterDetail(mnpbAskSqno, mnpbClssCd, mnpbAskYYMM, mtriCustNo){
 	window.location = "/mater/mater/selectMaterDetail?mtriCustNo="+mtriCustNo+"&mnpbAskYYMM="+mnpbAskYYMM+"&mnpbAskSqno="+mnpbAskSqno+"&mnpbClssCd="+mnpbClssCd;
 }
 
@@ -40,15 +41,32 @@ function f_goMachineryCreate(){
 
 // 자재&장비 대금 목록
 function f_selectMaterList(){
+	var sWkscNm = $("#sWkscNm").val();
 	var sMonth = $("#sMonth").val();
 	var eMonth = $("#eMonth").val();
 	
 	sMonth = f_hyphenReplaceEmpty(sMonth);
 	eMonth = f_hyphenReplaceEmpty(eMonth);
+	
+	var checkM = 'N';
+	var checkE = 'N';
+	if($("#check_M").is(":checked") == true){
+		checkM = 'Y';
+	}
+	if($("#check_E").is(":checked") == true){
+		checkE = 'Y';
+	}
+	
 	//청구기간
 	var param = {"sMonth": sMonth, 
 				"eMonth": eMonth,
-				"mtriCustNo":$("#mtriCustNo").val()};
+				"mtriCustNo":$("#mtriCustNo").val(),
+				"sWkscNm" : sWkscNm,
+				"checkM" : checkM,
+				"checkE" : checkE,
+				"custAthrCd" : $("#custAthrCd").val(),
+				"blngDptcd": $("#blngDptcd").val(),
+			    "wkscCd": $("#wkscCd").val()};
 	$.ajax({
         method: "POST",
         url: "/mater/mater/selectMaterList",
@@ -66,13 +84,13 @@ function f_selectMaterList(){
         			var mnpbNm;
         			if ( item.mnpbClssCd == "M" ){mnpbNm = "자재";}else{mnpbNm="장비";};
         			if (item.mnpbAskYYMM == emptyMonth){
-        				if ( item.mnpbClssCd == "M" ){
-        					innerHTML += "<li onclick='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\");'>";
+        				if ( item.etcRmrk == null || item.etcRmrk == "" ){
+        					innerHTML += "<li onclick='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\", \""+item.mtriCustNo+"\");'>";
         				} else {
-        					innerHTML += "<li  style='background-color:#eee; border:1px solid;' onclick='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\");'>";
+        					innerHTML += "<li  style='background-color:#eee; border:1px solid;' onclick='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\", \""+item.mtriCustNo+"\");'>";
         				}
                 		innerHTML += '	<div class="topBox">';
-                		innerHTML += '		<div class="nameTxt">['+mnpbNm+'] '+item.fildClssCd+' 현장</div>';
+                		innerHTML += '		<div class="nameTxt">['+mnpbNm+'] '+item.korDptnm+' 현장</div>';
                 		innerHTML += '		<div class="priceBox">';
                 		innerHTML += '			<span class="priceTxt">'+item.askAmt+'</span>';
                 		innerHTML += '			<span class="unit">원</span>';
@@ -104,13 +122,13 @@ function f_selectMaterList(){
         				var yymm = item.mnpbAskYYMM.substring(0, 4)+". " + item.mnpbAskYYMM.substring(4) ;
         				innerHTML += '<div class="titBox">'+ yymm +'</div>';
         				innerHTML += '<ul class="itemList">';
-        				if ( item.mnpbClssCd == "M" ){
-        					innerHTML += "<li onclick='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\");'>";
+        				if ( item.etcRmrk == null || item.etcRmrk == "" ){
+        					innerHTML += "<li onclick='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\", \""+item.mtriCustNo+"\");'>";
         				} else {
-        					innerHTML += "<li style='background-color:#eee; border:1px solid;' onclick='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\");'>";
+        					innerHTML += "<li style='background-color:#eee; border:1px solid;' onclick='javascript:f_goMaterDetail(\""+item.mnpbAskSqno+"\", \""+item.mnpbClssCd+"\", \""+item.mnpbAskYYMM+"\", \""+item.mtriCustNo+"\");'>";
         				}
         				innerHTML += '	<div class="topBox">';
-                		innerHTML += '		<div class="nameTxt">['+mnpbNm+'] '+item.fildClssCd+' 현장</div>';
+                		innerHTML += '		<div class="nameTxt">['+mnpbNm+'] '+item.korDptnm+' 현장</div>';
                 		innerHTML += '		<div class="priceBox">';
                 		innerHTML += '			<span class="priceTxt">'+item.askAmt+'</span>';
                 		innerHTML += '			<span class="unit">원</span>';
@@ -160,4 +178,27 @@ function f_selectMaterList(){
         }
     });
 	
+}
+
+// 엑셀 내려받기
+function f_excelDownload(){
+	
+	var sMonth = $("#sMonth").val();
+	var eMonth = $("#eMonth").val();
+	var mtriCustNo = $("#mtriCustNo").val();
+	var sWkscNm = $("#sWkscNm").val();
+	var checkM = 'N';
+	var checkE = 'N';
+	var custAthrCd = $("#custAthrCd").val();
+	var blngDptcd = $("#blngDptcd").val();
+	var wkscCd = $("#wkscCd").val();
+	sMonth = f_hyphenReplaceEmpty(sMonth);
+	eMonth = f_hyphenReplaceEmpty(eMonth);
+	
+	if($("#check_M").is(":checked") == true){ checkM = 'Y'; }
+	if($("#check_E").is(":checked") == true){ checkE = 'Y'; }
+	
+	var param = "sMonth="+sMonth+"&eMonth="+eMonth+"&mtriCustNo="+mtriCustNo+"&sWkscNm="+sWkscNm+"&checkM="+checkM+"&checkE="+checkE+"&custAthrCd="+custAthrCd+"&blngDptcd="+blngDptcd+"&wkscCd="+wkscCd;
+	location.href="/mater/materExcel/downloadExcel.xlsx?"+param;
+
 }

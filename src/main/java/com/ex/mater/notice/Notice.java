@@ -5,9 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class Notice {
 	private MultipartFile flUpFileData;
 	
-	private String txtItem1;
-    private String txtItem2;
-
     String notcMtriSeq;
     String notcMtriTitlNm;
     String notcMtriCtnt;
@@ -23,6 +20,8 @@ public class Notice {
     String notcMtriDelYN;
     String attflNm;
     String attflPath;
+    String mtriCustNo;
+    String etcFileName;
 
     public String getLsttmModfrId() {
 		return lsttmModfrId;
@@ -53,18 +52,6 @@ public class Notice {
 	}
 	public void setFlUpFileData(MultipartFile flUpFileData) {
 		this.flUpFileData = flUpFileData;
-	}
-	public String getTxtItem1() {
-		return txtItem1;
-	}
-	public void setTxtItem1(String txtItem1) {
-		this.txtItem1 = txtItem1;
-	}
-	public String getTxtItem2() {
-		return txtItem2;
-	}
-	public void setTxtItem2(String txtItem2) {
-		this.txtItem2 = txtItem2;
 	}
 	public String getNotcMtriSeq() {
 		return notcMtriSeq;
@@ -144,7 +131,20 @@ public class Notice {
 	public void setNotcMtriDelYN(String notcMtriDelYN) {
 		this.notcMtriDelYN = notcMtriDelYN;
 	}
-
+	public String getMtriCustNo() {
+		return mtriCustNo;
+	}
+	public void setMtriCustNo(String mtriCustNo) {
+		this.mtriCustNo = mtriCustNo;
+	}
+	public String getEtcFileName() {
+		return etcFileName;
+	}
+	public void setEtcFileName(String etcFileName) {
+		this.etcFileName = etcFileName;
+	}
+	
+	
 	@Override
     public String toString() {
         return "Mypage [notcMtriSeq=" + notcMtriSeq + ", notcMtriTitlNm=" + notcMtriTitlNm  + ", notcMtriCtnt=" + notcMtriCtnt  

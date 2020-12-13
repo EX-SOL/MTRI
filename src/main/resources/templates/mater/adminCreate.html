@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	  content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<head>
+	<meta charset="UTF-8">
+	<title>자재·장비대금 지킴이</title>
+	<link type="text/css" rel="stylesheet" href="../assets/css/reset.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/datepicker.min.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/ui.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/style.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/core.css"/>
+</head>
+<body>
+<div class="container bg" style="background-color: white;">
+	<header class="">
+		<div class="headerWrap">
+
+			<a href="javascript:history.go(-1);" class="backBtn"></a>
+
+			<div class="pageTitBox">관리자 계정관리</div>
+
+			<!-- GNB -->
+			<a href="javascript:f_goMenu();" class="gnbBox">
+				<i class="ic ic_gnb"></i>
+			</a>
+		</div>
+	</header>
+	<div class="wrapper">
+		<input type="hidden" id="mtriCustNo" th:value="${session.mtriCustNo}">
+		<input type="hidden" id="custAthrCd" th:value="${session.custAthrCd}">
+		<section class="materialPriceList">
+			<div class="searchFormBox">
+				<div class="titBox" style="margin-top: 10px;">
+					<span class="txt">현장/공구명</span> 
+					<input class="tbox" id="sWkscNm" style="margin-left: 17px;">
+				</div>
+				<a href="javascript:f_selectAdmin();" class="searchBtn">조회</a>
+			</div>
+			
+			<div class="listFormBox" style="background-color:white; height: 100%;">
+				<div class="listGroup" style="padding-top: 0px; height: 100%;">
+					
+					<table id="joinTb" style="border:0px;margin-top:0px; width:100%; height:350px; display:block; overflow-y:auto">
+						<colgroup>
+							<col style="width:10%;">
+							<col style="width:20%;">
+							<col style="width:20%">
+							<col style="width:20%">
+							<col style="width:20%">
+							<col style="width:10%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th>no</th>
+								<th>계정</th>
+								<th>현장</th>
+								<th>공구</th>
+								<th>권한</th>
+								<th>탈퇴<br>여부</th>
+							</tr>
+						</thead>
+						<tbody id="materList">
+						
+						</tbody>
+					</table>
+				</div>
+				<a href="javascript:f_showModalAdmin();" style="width: 100%;" class="searchBtn">관리자 등록</a>
+			</div>
+		</section>
+
+	</div>
+</div>
+<div id="menuDiv"></div>
+<div class="progressDiv">
+	<img src="../assets/img/progress.gif"/>
+</div>
+<!-- 관리자등록 -->
+<div id="adminCreateModal" class="searchModal_pw" style="display:none;">
+	<div class="search-modal-content-popup" style="overflow:auto;">
+		<div class="qbox-input">
+			<div class="fr hd-right">
+	            <a href="javascript:f_modalClose();"> <i class="fas fa-times"></i></a>
+	        </div>
+	   		<section class="admin">
+				<div class="searchFormBox">
+					<ul class="editList">
+						<li>
+							<div class="subject">
+								<span class="txt">아이디</span>
+							</div>
+							<div class="con">
+								<input type="hidden" id="mtriCustNoYn" value="N">
+								<input class="tbox" id="newMtriCustNo" name="newMtriCustNo" style="width:56%;">
+								<button type="button" onclick="javascript:f_idCheck();" class="btn-confirm btn-check"> 중복확인 </button>
+							</div>
+						</li>
+						<li>
+							<div class="subject">
+								<span class="txt">비밀번호</span>
+							</div>
+							<div class="con">
+								<input type="password" class="tbox" id="custPswd" name="custPswd">
+							</div>
+						</li>
+						<li>
+							<div class="subject">
+								<span class="txt">성명</span>
+							</div>
+							<div class="con">
+								<input class="tbox" id="custNm" name="custNm">
+							</div>
+						</li>
+						<li>
+							<div class="subject">
+								<span class="txt">권한</span>
+							</div>
+							<div class="con">
+								<div class="selectBox">
+									<select name="custAthrCd" onchange="javascript:f_changeAthrCd();">
+										<option value="A">관리자</option>
+										<option value="B">원도급</option>
+										<option value="C">하도급</option>
+									</select>
+								</div>
+							</div>
+						</li>
+						<li id="blng-page" style="display: none;">
+							<div class="subject">
+								<span class="txt">현장명</span>
+							</div>
+							<div class="con">
+								<div class="selectBox">
+									<select name="blngDptcd" onchange="javascript:f_wkscData();">
+									</select>
+								</div>
+							</div>
+						</li>
+						<li  id="wksc-page" style="display: none;">
+							<div class="subject">
+								<span class="txt">공구명</span>
+							</div>
+							<div class="con">
+								<div class="selectBox">
+									<select name="wkscCd">
+									</select>
+								</div>
+							</div>
+						</li>
+					</ul>	
+				</div>
+			</section>
+	      	<div class="cb-btnwrap" style="padding:0px;">
+               <button type="button" onclick="javascript:f_goAdminCreate();" class="btn-confirm">등 록</button>
+            </div>
+	    </div>
+    </div>
+</div>
+
+<script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
+<script src="../assets/js/jquery-3.1.1.min.js"></script>
+<script src="../assets/js/jquery-ui-1.12.1.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/datepicker.min.js"></script>
+<script src="../assets/js/datepicker.ko.js"></script>
+<script src="../assets/js/core.js"></script>
+<script src="../assets/js/mater/adminCreate.js"></script>
+</body>
+</html>

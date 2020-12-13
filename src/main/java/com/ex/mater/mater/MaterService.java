@@ -16,4 +16,13 @@ public interface MaterService {
 	public Integer updateMaterList(FileCommand fileData) throws Exception;
 
 	public Integer deleteMater(Map<String, Object> param) throws Exception;
+	
+	public List<Map<String, Object>> selectFildData() throws Exception;
+	public List<Map<String, Object>> selectWkscData(Map<String, Object> param) throws Exception;
+
+	public List<Map<String, Object>> selectCntrtCrprList(Map<String, Object> param) throws Exception;
+
+	public List<FileCommand> selectAdminList (Map<String, Object> param) throws Exception;
+	
+	public Integer createAdmin(Map<String, Object> param) throws Exception;
 }

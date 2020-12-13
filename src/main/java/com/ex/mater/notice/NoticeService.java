@@ -14,11 +14,13 @@ public interface NoticeService {
 	public Notice selectNoticeDetail(Map<String, Object> paramMap) throws Exception;
 	
 	// 수정
-	public Integer updateNotice(Map<String, Object> paramMap) throws Exception;
+	public Integer updateNotice(Notice noti) throws Exception;
 
 	// 입력
-	public Integer insertNotice(Map<String, Object> paramMap) throws Exception;
+	public Integer insertNotice(Notice noti) throws Exception;
 	
 	// 삭제
 	public Integer deleteNotice(Map<String, Object> paramMap) throws Exception;
+
+	public List<Notice> selectNoticeMainList(Map<String, Object> paramMap) throws Exception;
 }

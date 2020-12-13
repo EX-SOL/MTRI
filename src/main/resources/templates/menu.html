@@ -17,12 +17,17 @@
           	<div class="mn-btnwrap">
               	<div class="mn-btnrow">
 		    		<ul>
-	                   <li class="mn-btnrow">
+		    			<li class="mn-btnrow" th:if="${session.custAthrCd == 'A'}">
+	                   		<a href="javascript:void(0);" data-path="mater" data-page="adminCreate" class="mn-btn-tit">
+	                   			<i class="far fa-plus-square"></i>  관리자 계정관리
+	                   		</a> 
+	                   	</li>
+	                   <li class="mn-btnrow" th:if="${session.custAthrCd == 'D'}">
 	                   		<a href="javascript:void(0);" data-path="mater" data-page="materCreate" class="mn-btn-tit">
 	                   			<i class="far fa-plus-square"></i>  자재대금 등록
 	                   		</a> 
 	                   	</li>
-	                   <li class="mn-btnrow">
+	                   <li class="mn-btnrow" th:if="${session.custAthrCd == 'D'}">
 	                   		<a href="javascript:void(0);" data-path="machinery" data-page="machineryCreate" class="mn-btn-tit">
 	                   			<i class="far fa-plus-square"></i>  장비대금 등록
 	                   		</a> 
@@ -40,6 +45,11 @@
 	                   <li class="mn-btnrow">
 	                   		<a href="javascript:void(0);" data-path="ref" data-page="reference" class="mn-btn-tit">
 	                   			<i class="fas fa-folder-open"></i>  자료실
+	                   		</a> 
+	                   	</li>
+	                   <li class="mn-btnrow">
+	                   		<a href="javascript:void(0);" data-path="mypage" data-page="mypage" class="mn-btn-tit">
+	                   			<i class="fas fa-user"></i>  마이페이지
 	                   		</a> 
 	                   	</li>
 	            	</ul>

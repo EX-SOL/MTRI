@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ex.mater.intro.IntroMapper">
+	
+    <select id="selectIdFind" parameterType="map" resultType="map">
+    	SELECT MTRI_CUST_NO
+	    FROM T_MTRI_CUST01M1
+	    WHERE CUST_NM = #{userNm}
+	    AND CUST_TELNO = #{userPhoneNo}
+	    <if test='userId != "" and userId != null'>
+	    AND MTRI_CUST_NO = #{userId}
+	    </if>
+    </select>
+    
+    <update id="updateNewPw" parameterType="map">
+    	UPDATE T_MTRI_CUST01M1
+    	SET USER_PSWD = #{pswd}
+    	  , LSTTM_MODFR_ID = #{userId}
+    	  , LSTTM_ALTR_DTTM = SYSDATE
+    	WHERE MTRI_CUST_NO = #{userId}
+    </update>
+</mapper>

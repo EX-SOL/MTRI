@@ -6,20 +6,20 @@
 		<result column="MNPB_ASK_YYMM" property="mnpbAskYYMM"/>
 		<result column="MTRI_CUST_NO" property="mtriCustNo"/>
 		<result column="MNPB_ASK_SQNO" property="mnpbAskSqno"/>
-		<result column="MNPB_CLSS_CD" property="mnpbClssCd"/>
-		<result column="FILD_CLSS_CD" property="fildClssCd"/>
-		<result column="CNTC_WKSC_CD" property="cntcWkscCd"/>
+		<result column="MTRI_CLSS_CD" property="mnpbClssCd"/>
+		<result column="BLNG_DPTCD" property="blngDptcd"/>
+		<result column="WKSC_CD" property="wkscCd"/>
 		<result column="CNTRT_CRPR_NM" property="cntrtCrprNm"/>
-		<result column="CNTRT_CRPR_CD" property="cntrtCrprCd"/>
+		<result column="CNTRT_CRPR_SEQ" property="cntrtCrprSeq"/>
 		<result column="CNTRT_CNTC_NO" property="cntrtCntcNo"/>
-		<result column="CNTRT_NM" property="cntrtNm"/>
+		<result column="MTRI_NM" property="cntrtNm"/>
 		<result column="CNTRT_CD" property="cntrtCd"/>
-		<result column="DLGD_AMNT" property="dlgdAmnt"/>
-		<result column="DLGD_UNPR" property="dlgdUnpr"/>
+		<result column="MTRI_AMNT" property="dlgdAmnt"/>
+		<result column="MTRI_UNPR" property="dlgdUnpr"/>
 		<result column="ASK_AMT" property="askAmt"/>
-		<result column="ATTFL_SEQ" property="attflSeq"/>
+		<result column="MTRI_ATTFL_SEQ" property="attflSeq"/>
 		<result column="MNPB_STAT_CD" property="mnpbStatCd"/>
-		<result column="PPS_TRNM_YN" property="ppsTrnmYn"/>
+		<result column="TRNM_YN" property="ppsTrnmYn"/>
 		<result column="FSTTM_RGSR_ID" property="fsttmRgsrId"/>
 		<result column="LSTTM_MODFR_ID" property="lsttmModfrId"/>
 		<result column="ETC_RMRK" property="etcRmrk"/>
@@ -34,6 +34,12 @@
 		<result column="CUST_NM" property="custNm"/>
 		<result column="TOTAL" property="total"/>
 		<result column="MNPB_RGSR_SEQ" property="mnpbRgsrSeq"/>
+		<result column="KOR_DPTNM" property="korDptnm"/>
+		<result column="WKSC_NM" property="wkscNm"/>
+		<result column="RPRS_CRNO" property="rprsCrno"/>
+		<result column="ETC_RMRK" property="etcRmrk"/>
+		<result column="ACIT_LOCK_YN" property="acitLockYn"/>
+		<result column="USER_ATHR_CD" property="custAthrCd"/>
 	</resultMap>
 	
     <insert id="insertMaterList" parameterType="com.ex.mater.mater.FileCommand">
@@ -42,20 +48,20 @@
 	    	  MNPB_ASK_YYMM
 			, MTRI_CUST_NO
 			, MNPB_ASK_SQNO
-			, MNPB_CLSS_CD
-			, FILD_CLSS_CD
-			, CNTC_WKSC_CD
+			, MTRI_CLSS_CD
+			, BLNG_DPTCD
+			, WKSC_CD
 			, CNTRT_CRPR_NM
-			, CNTRT_CRPR_CD
+			, CNTRT_CRPR_SEQ
 			, CNTRT_CNTC_NO
-			, CNTRT_NM
+			, MTRI_NM
 			, CNTRT_CD
-			, DLGD_AMNT
-			, DLGD_UNPR
+			, MTRI_AMNT
+			, MTRI_UNPR
 			, ASK_AMT
-			, ATTFL_SEQ
+			, MTRI_ATTFL_SEQ
 			, MNPB_STAT_CD
-			, PPS_TRNM_YN
+			, TRNM_YN
 			, FSTTM_RGSR_ID
 			, FSTTM_RGST_DTTM
 			, LSTTM_MODFR_ID
@@ -65,12 +71,12 @@
     	) VALUES (
  	    	  #{mnpbAskYYMM}
 			, #{mtriCustNo}
-			, (SELECT NVL(MAX(MNPB_ASK_SQNO)+1, 1) FROM T_MTRI_MNPB_01M1 WHERE MNPB_ASK_YYMM = #{mnpbAskYYMM} AND MTRI_CUST_NO = #{mtriCustNo} AND MNPB_CLSS_CD = #{mnpbClssCd})
+			, (SELECT NVL(MAX(TO_NUMBER(MNPB_ASK_SQNO))+1, 1) FROM T_MTRI_MNPB_01M1 WHERE MNPB_ASK_YYMM = #{mnpbAskYYMM} AND MTRI_CUST_NO = #{mtriCustNo} AND MTRI_CLSS_CD = #{mnpbClssCd})
 			, #{mnpbClssCd}
-			, #{fildClssCd}
-			, #{cntcWkscCd}
+			, #{blngDptcd}
+			, #{wkscCd}
 			, #{cntrtCrprNm}
-			, #{cntrtCrprCd}
+			, #{cntrtCrprSeq}
 			, #{cntrtCntcNo}
 			, #{cntrtNm}
 			, #{cntrtCd}
@@ -91,137 +97,192 @@
     
     <insert id="insertMaterAttfl" parameterType="com.ex.mater.mater.FileCommand">
     	<selectKey resultType="String" keyProperty="attflSeq" order="BEFORE">
-			SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ATTFL_SEQ, 9,6)))+1, 1),4, '0') as attflSeq 
+			SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MTRI_ATTFL_SEQ, 9,6)))+1, 1),4, '0') as attflSeq 
 			 FROM T_MTRI_ATTFL 
-			  WHERE ATTFL_SEQ LIKE TO_CHAR(SYSDATE, 'YYYYMMDD')||'%'
+			  WHERE MTRI_ATTFL_SEQ LIKE TO_CHAR(SYSDATE, 'YYYYMMDD')||'%'
 		</selectKey>
     	INSERT INTO T_MTRI_ATTFL (
-    		  ATTFL_SEQ
+    		  MTRI_ATTFL_SEQ
     		, ATTFL_SQNO
     		, ATTFL_NM
     		, ATTFL_PATH
     	) VALUES(
     		  #{attflSeq}
-    		, (SELECT NVL(MAX(ATTFL_SQNO)+1, 1) FROM T_MTRI_ATTFL WHERE ATTFL_SEQ = #{attflSeq})
+    		, (SELECT NVL(MAX(ATTFL_SQNO)+1, 1) FROM T_MTRI_ATTFL WHERE MTRI_ATTFL_SEQ = #{attflSeq})
     		, #{attflNm}
     		, #{attflPath}
     	)
     </insert>
     
     <select id="selectMaterList" parameterType="map" resultMap="fileCommand">
-    	SELECT A.FILD_CLSS_CD       -- 현장구분코드
-		     , A.CNTC_WKSC_CD       -- 건설공구코드
+    	SELECT A.BLNG_DPTCD       -- 현장구분코드
+		     , (SELECT KOR_DPTNM FROM V_CPMB_SECT_INST01M1 WHERE A.BLNG_DPTCD = BLNG_DPTCD GROUP BY KOR_DPTNM) AS KOR_DPTNM
+		     , A.WKSC_CD   -- 건설공구코드
+             , (SELECT WKSC_NM FROM V_CPMB_SECT_INST01M1 WHERE A.WKSC_CD = WKSC_CD GROUP BY WKSC_NM) AS WKSC_NM
 		     , A.CNTRT_CRPR_NM      -- 계약업체명
 		     , B.DEPR_NM            -- 예금주
 		     , A.CNTRT_CD           -- 대금코드
-		     , A.CNTRT_NM			-- 대금명
+		     , A.MTRI_NM			-- 대금명
 		     , A.MNPB_ASK_YYMM      -- 대금청구년월
 		     , A.MNPB_ASK_SQNO      -- 대금청구순번
-             , A.MNPB_CLSS_CD       -- 대금구분코드
+             , A.MTRI_CLSS_CD       -- 대금구분코드
 		     , B.CORP_NM            -- 대금업체명
 		     , A.MNPB_RGSR_SEQ      -- 대금등록일련번호
 		     , TO_CHAR( NVL(A.ASK_AMT, 0), '999,999,999,999,999') AS ASK_AMT -- 청구액
+		     , A.MTRI_CUST_NO		-- 아이디
+		     , A.ETC_RMRK			-- 수정사유
+		     , B.RPRS_CRNO			-- 사업자등록번호
+		     , REGEXP_REPLACE(B.CUST_TELNO, '(.{3})(.*)(.{4})', '\1-\2-\3') CUST_TELNO --연락처
+             , B.RPPR_NM            -- 대표자명
+             , B.TR_BANK_NM         -- 은행명
+             , B.BANK_ACTNO         -- 계좌번호
 		 FROM T_MTRI_MNPB_01M1 A
 		    LEFT OUTER JOIN T_MTRI_CUST01M1 B
 		    ON A.MTRI_CUST_NO = B.MTRI_CUST_NO
-		    LEFT OUTER JOIN T_MTRI_CUST01D1 C
-		    ON B.MTRI_CUST_NO = C.MTRI_CUST_NO
 		    LEFT OUTER JOIN T_MTRI_ATTFL D
-		    ON A.ATTFL_SEQ = D.ATTFL_SEQ
+		    ON A.MTRI_ATTFL_SEQ = D.MTRI_ATTFL_SEQ
 		 WHERE 1 = 1
-		 AND A.MTRI_CUST_NO = #{mtriCustNo}
-		 AND A.MNPB_ASK_YYMM BETWEEN #{sMonth} AND #{eMonth}
-		 ORDER BY MNPB_ASK_YYMM DESC
+		 <if test='custAthrCd == "D"'>
+			 AND A.MTRI_CUST_NO = #{mtriCustNo}
+		 </if>
+			 AND A.MNPB_ASK_YYMM BETWEEN #{sMonth} AND #{eMonth}
+		 <choose>
+		 	<when test='checkM == "Y" and checkE == "N"'>
+		 		AND A.MTRI_CLSS_CD IN ('M')
+		 	</when>
+		 	<when test='checkM == "N" and checkE == "Y"'>
+		 		AND A.MTRI_CLSS_CD IN ('E')
+		 	</when>
+		 	<when test='checkM == "N" and checkE == "N"'>
+		 		AND A.MTRI_CLSS_CD NOT IN ('M', 'E')
+		 	</when>
+		 </choose>
+		 <if test='custAthrCd == "B" or custAthrCd == "C"'>
+			 AND A.BLNG_DPTCD = #{blngDptcd}
+             AND A.WKSC_CD = #{wkscCd}
+		 </if>
+		 <if test='sWkscNm != "" '>
+		 	AND (A.WKSC_CD IN (
+		 						SELECT WKSC_CD
+		 						 FROM V_CPMB_SECT_INST01M1 
+		 						  WHERE BIZ_PRGS_STAT_CD = 'C02'
+		 						  AND WKSC_SEQ IS NOT NULL
+		 						  AND WKSC_NM LIKE '%' || #{sWkscNm} || '%'
+		 					)
+		 		 OR
+		 			A.BLNG_DPTCD IN (
+		 							SELECT BLNG_DPTCD
+			 						 FROM V_CPMB_SECT_INST01M1 
+			 						  WHERE BIZ_PRGS_STAT_CD = 'C02'
+			 						  AND WKSC_SEQ IS NOT NULL
+			 						  AND KOR_DPTNM LIKE '%' || #{sWkscNm} || '%'
+			 						  GROUP BY BLNG_DPTCD, KOR_DPTNM
+		 							) 
+				)
+		 </if>
+		 ORDER BY A.MNPB_ASK_YYMM DESC, A.FSTTM_RGST_DTTM DESC
     </select>
     
     <select id="selectMainList" parameterType="map" resultMap="fileCommand">
     SELECT *
      FROM (	
-    	SELECT A.FILD_CLSS_CD       -- 현장구분코드
-		     , A.CNTC_WKSC_CD       -- 건설공구코드
+    	SELECT A.BLNG_DPTCD       -- 현장구분코드
+		     , (SELECT KOR_DPTNM FROM V_CPMB_SECT_INST01M1 WHERE A.BLNG_DPTCD = BLNG_DPTCD GROUP BY KOR_DPTNM) AS KOR_DPTNM
+		     , A.WKSC_CD   -- 건설공구코드
+             , (SELECT WKSC_NM FROM V_CPMB_SECT_INST01M1 WHERE A.WKSC_CD = WKSC_CD GROUP BY WKSC_NM) AS WKSC_NM
 		     , A.CNTRT_CRPR_NM      -- 계약업체명
 		     , B.DEPR_NM            -- 예금주
 		     , A.CNTRT_CD           -- 대금코드
-		     , A.CNTRT_NM			-- 대금명
+		     , A.MTRI_NM			-- 대금명
 		     , SUBSTR(A.MNPB_ASK_YYMM, 0, 4) || '.' || SUBSTR(A.MNPB_ASK_YYMM, 5,6) AS MNPB_ASK_YYMM
 		     , A.MNPB_ASK_SQNO -- 대금청구순번
 		     , TO_CHAR( NVL(A.ASK_AMT, 0), '999,999,999,999,999') AS ASK_AMT -- 청구액
 		     , B.CUST_NM			-- 회사명
              , B.CORP_NM            -- 대금업체명
              , COUNT(*) OVER (PARTITION BY 1) AS TOTAL	-- TOTAL 개수
-             , A.MNPB_CLSS_CD       -- 대금구분코드
+             , A.MTRI_CLSS_CD       -- 대금구분코드
+             , A.MTRI_CUST_NO
+             , A.ETC_RMRK
 		 FROM T_MTRI_MNPB_01M1 A
 		    LEFT OUTER JOIN T_MTRI_CUST01M1 B
 		    ON A.MTRI_CUST_NO = B.MTRI_CUST_NO
-		    LEFT OUTER JOIN T_MTRI_CUST01D1 C
-		    ON B.MTRI_CUST_NO = C.MTRI_CUST_NO
 		    LEFT OUTER JOIN T_MTRI_ATTFL D
-		    ON A.ATTFL_SEQ = D.ATTFL_SEQ
+		    ON A.MTRI_ATTFL_SEQ = D.MTRI_ATTFL_SEQ
 		 WHERE 1 = 1
-		 AND A.MTRI_CUST_NO = #{mtriCustNo}
-		 ORDER BY MNPB_ASK_YYMM DESC
+		 <if test='custAthrCd == "D"'>
+			 AND A.MTRI_CUST_NO = #{mtriCustNo}
+		 </if>
+		 <if test='custAthrCd == "B" or custAthrCd == "C"'>
+			 AND A.BLNG_DPTCD = #{blngDptcd}
+             AND A.WKSC_CD = #{wkscCd}
+		 </if>
+		 ORDER BY A.MNPB_ASK_YYMM DESC, A.FSTTM_RGST_DTTM DESC
 		 )
 	WHERE ROWNUM <![CDATA[ < ]]> 4
     </select>
     
     <select id="selectMaterDetail" parameterType="map" resultMap="fileCommand">
-    	SELECT A.FILD_CLSS_CD       -- 현장구분코드
-		     , A.CNTC_WKSC_CD   -- 건설공구코드
+    	SELECT A.BLNG_DPTCD       -- 현장구분코드
+    		 , (SELECT KOR_DPTNM FROM V_CPMB_SECT_INST01M1 WHERE A.BLNG_DPTCD = BLNG_DPTCD GROUP BY KOR_DPTNM) AS KOR_DPTNM
+		     , A.WKSC_CD   -- 건설공구코드
+             , (SELECT WKSC_NM FROM V_CPMB_SECT_INST01M1 WHERE A.WKSC_CD = WKSC_CD GROUP BY WKSC_NM) AS WKSC_NM
+		     , A.WKSC_CD   -- 건설공구코드
 		     , A.CNTRT_CRPR_NM  -- 계약업체명
+		     , A.CNTRT_CRPR_SEQ  -- 계약업체일련번호
 		     , B.DEPR_NM        -- 예금주
 		     , A.CNTRT_CD       -- 대금코드
-		     , A.CNTRT_NM	    -- 대금명
+		     , A.MTRI_NM	    -- 대금명
 		     , A.MNPB_ASK_YYMM  -- 자재대금청구년월
 		     , A.MNPB_ASK_SQNO  -- 자재대금청구순번
 		     , TO_CHAR( NVL(A.ASK_AMT, 0), '999,999,999,999,999') AS ASK_AMT -- 청구액
              , B.CORP_NM        -- 자재업체명
              , REGEXP_REPLACE(B.CUST_TELNO, '(.{3})(.*)(.{4})', '\1-\2-\3') CUST_TELNO
-             , A.MTRI_CUST_NO   -- 사업자번호
+             , A.MTRI_CUST_NO   -- 아이디
              , RPPR_NM          -- 대표자명
              , TR_BANK_NM       -- 은행명
              , BANK_ACTNO       -- 계좌번호
              , ASK_AMT          -- 청구금액
              , ATTFL_NM         -- 파일명
              , ATTFL_PATH       -- 파일경로
-             , A.MNPB_CLSS_CD	-- 대금구분코드
+             , A.MTRI_CLSS_CD	-- 대금구분코드
              , A.MNPB_RGSR_SEQ  -- 대금등록일련번호
              , A.MNPB_STAT_CD   -- 대금상태코드
-             , A.ATTFL_SEQ		-- 첨부파일일련번호
+             , A.MTRI_ATTFL_SEQ		-- 첨부파일일련번호
+             , B.RPRS_CRNO		-- 사업자번호
+             , A.ETC_RMRK		-- 비고(수정사유)
 		 FROM T_MTRI_MNPB_01M1 A
 		    LEFT OUTER JOIN T_MTRI_CUST01M1 B
 		    ON A.MTRI_CUST_NO = B.MTRI_CUST_NO
-		    LEFT OUTER JOIN T_MTRI_CUST01D1 C
-		    ON B.MTRI_CUST_NO = C.MTRI_CUST_NO
 		    LEFT OUTER JOIN T_MTRI_ATTFL D
-		    ON A.ATTFL_SEQ = D.ATTFL_SEQ
+		    ON A.MTRI_ATTFL_SEQ = D.MTRI_ATTFL_SEQ
 		 WHERE 1 = 1
 		 AND A.MNPB_ASK_YYMM = #{mnpbAskYYMM}
          AND A.MTRI_CUST_NO = #{mtriCustNo}
-         AND A.MNPB_CLSS_CD = #{mnpbClssCd}
+         AND A.MTRI_CLSS_CD = #{mnpbClssCd}
          AND A.MNPB_ASK_SQNO = #{mnpbAskSqno}
     </select>
     
     
     <update id="updateMaterList" parameterType="com.ex.mater.mater.FileCommand">
     	UPDATE T_MTRI_MNPB_01M1
-    	  SET FILD_CLSS_CD = #{fildClssCd}
-			, CNTC_WKSC_CD = #{cntcWkscCd}
+    	  SET BLNG_DPTCD = #{blngDptcd}
+			, WKSC_CD = #{wkscCd}
 			, CNTRT_CRPR_NM = #{cntrtCrprNm}
-			, CNTRT_CRPR_CD = #{cntrtCrprCd}
+			, CNTRT_CRPR_SEQ = #{cntrtCrprSeq}
 			, CNTRT_CNTC_NO = #{cntrtCntcNo}
-			, CNTRT_NM = #{cntrtNm}
+			, MTRI_NM = #{cntrtNm}
 			, CNTRT_CD = #{cntrtCd}
-			, DLGD_AMNT = #{dlgdAmnt}
-			, DLGD_UNPR = #{dlgdUnpr}
+			, MTRI_AMNT = #{dlgdAmnt}
+			, MTRI_UNPR = #{dlgdUnpr}
 			, ASK_AMT = #{askAmt}
-			, ATTFL_SEQ = #{attflSeq}
-			, LSTTM_MODFR_ID = #{mtriCustNo}
+			, MTRI_ATTFL_SEQ = #{attflSeq}
+			, LSTTM_MODFR_ID = #{lsttmModfrId}
 			, LSTTM_ALTR_DTTM = SYSDATE
 			, ETC_RMRK = #{etcRmrk}
 			, MNPB_RGSR_SEQ = #{mnpbRgsrSeq}
 		  WHERE MTRI_CUST_NO = #{mtriCustNo}
 		  AND MNPB_ASK_SQNO = #{mnpbAskSqno}
-		  AND MNPB_CLSS_CD = #{mnpbClssCd}
+		  AND MTRI_CLSS_CD = #{mnpbClssCd}
 		  AND MNPB_ASK_YYMM = #{mnpbAskYYMM}
     </update>
     
@@ -229,7 +290,7 @@
     	UPDATE T_MTRI_ATTFL 
     	SET ATTFL_NM = #{attflNm} 
     	  , ATTFL_PATH = #{attflPath}
-    	WHERE ATTFL_SEQ = #{attflSeq}
+    	WHERE MTRI_ATTFL_SEQ = #{attflSeq}
     	AND ATTFL_NM = #{etcFileName}
     </update>
     
@@ -237,7 +298,102 @@
     	DELETE FROM T_MTRI_MNPB_01M1
     	 WHERE MTRI_CUST_NO = #{mtriCustNo}
 		 AND MNPB_ASK_SQNO = #{mnpbAskSqno}
-		 AND MNPB_CLSS_CD = #{mnpbClssCd} 
+		 AND MTRI_CLSS_CD = #{mnpbClssCd} 
 		 AND MNPB_ASK_YYMM = #{mnpbAskYYMM}
     </delete>
+    
+    <select id="selectFildData" resultType="map">
+   	  SELECT BLNG_DPTCD
+       	   , KOR_DPTNM
+	   FROM V_CPMB_SECT_INST01M1
+	   WHERE BIZ_PRGS_STAT_CD = 'C02'
+	   AND WKSC_SEQ IS NOT NULL
+	   GROUP BY BLNG_DPTCD, KOR_DPTNM
+    </select>
+
+    <select id="selectWkscData" parameterType="map" resultType="map">
+      SELECT WKSC_CD
+	       , WKSC_NM
+	   FROM V_CPMB_SECT_INST01M1
+	   WHERE BIZ_PRGS_STAT_CD = 'C02'
+	   AND WKSC_SEQ IS NOT NULL
+	   AND BLNG_DPTCD = #{blngDptcd}
+    </select>
+    
+    <select id="selectCntrtCrprList" parameterType="map" resultType="map">
+      SELECT CNTRT_CRPR_SEQ
+	       , CNTRT_CRPR_NM
+	       , RPPR_NM
+	  FROM T_CPMB_CNTRT_CRPR01M1
+	  WHERE 1 = 1
+	  <if test='sCntrtCrprNm != "" and sCntrtCrprNm != null '>
+	  AND CNTRT_CRPR_NM LIKE '%' || #{sCntrtCrprNm} || '%'
+	  </if>
+    </select>
+    
+    <select id="selectAdminList" parameterType="map" resultMap="fileCommand">
+    	SELECT A.MTRI_CUST_NO
+		     ,CASE	WHEN USER_ATHR_CD = 'A' THEN '관리자'
+					WHEN USER_ATHR_CD = 'B' THEN '원도급'
+					WHEN USER_ATHR_CD = 'C' THEN '하도급사'
+					WHEN USER_ATHR_CD = 'D' THEN '자재/장비사'
+			 END AS USER_ATHR_CD
+		     , A.CUST_NM
+		     , A.BLNG_DPTCD       -- 현장구분코드
+    		 , (SELECT KOR_DPTNM FROM V_CPMB_SECT_INST01M1 WHERE A.BLNG_DPTCD = BLNG_DPTCD GROUP BY KOR_DPTNM) AS KOR_DPTNM
+		     , A.WKSC_CD   -- 건설공구코드
+             , (SELECT WKSC_NM FROM V_CPMB_SECT_INST01M1 WHERE A.WKSC_CD = WKSC_CD GROUP BY WKSC_NM) AS WKSC_NM
+		     , A.ACIT_LOCK_YN
+    	 FROM T_MTRI_CUST01M1 A
+    	 WHERE 1 = 1
+    	 AND A.USER_ATHR_CD IN ('A', 'B', 'C')
+    	 <if test='sWkscNm != "" '>
+		 	AND (A.WKSC_CD IN (
+		 						SELECT WKSC_CD
+		 						 FROM V_CPMB_SECT_INST01M1 
+		 						  WHERE BIZ_PRGS_STAT_CD = 'C02'
+		 						  AND WKSC_SEQ IS NOT NULL
+		 						  AND WKSC_NM LIKE '%' || #{sWkscNm} || '%'
+		 					)
+		 		 OR
+		 			A.BLNG_DPTCD IN (
+		 							SELECT BLNG_DPTCD
+			 						 FROM V_CPMB_SECT_INST01M1 
+			 						  WHERE BIZ_PRGS_STAT_CD = 'C02'
+			 						  AND WKSC_SEQ IS NOT NULL
+			 						  AND KOR_DPTNM LIKE '%' || #{sWkscNm} || '%'
+			 						  GROUP BY BLNG_DPTCD, KOR_DPTNM
+		 							) 
+				)
+		 </if>
+		 ORDER BY A.FSTTM_RGST_DTTM DESC
+    </select>
+    
+    <insert id="createAdmin" parameterType="map">
+    	INSERT INTO T_MTRI_CUST01M1 (
+    		  MTRI_CUST_NO
+			, USER_ATHR_CD
+			, CUST_NM
+			, BLNG_DPTCD
+			, WKSC_CD
+			, USER_PSWD
+			, ACIT_LOCK_YN
+			, FSTTM_RGSR_ID
+			, FSTTM_RGST_DTTM
+			, LSTTM_MODFR_ID
+			, LSTTM_ALTR_DTTM
+    	) VALUES (
+    		  #{newMtriCustNo}
+    		, #{custAthrCd}
+    		, #{custNm}
+            , #{blngDptcd}
+            , #{wkscCd}
+            , #{custPswd}
+            , 'N'
+            , #{mtriCustNo}
+            , SYSDATE
+            , #{mtriCustNo}
+            , SYSDATE	
+    	)
+    </insert>
 </mapper>

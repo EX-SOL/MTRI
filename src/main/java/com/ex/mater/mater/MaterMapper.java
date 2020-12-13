@@ -21,4 +21,13 @@ public interface MaterMapper {
 	public Integer updateMaterAttfl(FileCommand fileData);
 	
 	public Integer deleteMater(Map<String, Object> param);
+	
+	public List<Map<String, Object>> selectFildData();
+	public List<Map<String, Object>> selectWkscData(Map<String, Object> param);
+
+	public List<Map<String, Object>> selectCntrtCrprList(Map<String, Object> param);
+	
+	public List<FileCommand> selectAdminList (Map<String, Object> param);
+	
+	public Integer createAdmin(Map<String, Object> param);
 }

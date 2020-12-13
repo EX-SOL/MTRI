@@ -86,5 +86,9 @@
 	  color: #008fff; }
 	.searchFormBox .tableBox article.listTable table tfoot.sum td.sumTxt {
 	    text-align: right; }
+	#noticeTb tr{height: 45px;}    
 	#noticeTb th{font-size:14px;}
-	#noticeTb td{font-size:13px; height:30px;}
+	#noticeTb td{font-size:13px;}
+
+	
+	.searchFormBox .tableBox{height: 50vh;}

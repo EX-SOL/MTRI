@@ -45,14 +45,15 @@ public class MaterServiceImpl implements MaterService {
 
 	@Override
 	public Integer updateMaterList(FileCommand fileData) throws Exception {
+		System.out.println("impl ==> ");
 		// 기존 데이터가 비어있는 경우
-		if( fileData.getEtcFileName().length() < 1 || fileData.getEtcFileName() == "" || fileData.getEtcFileName() == null ) {
-			if( fileData.getAttflNm().length() > 1 || fileData.getAttflNm() != "" || fileData.getAttflNm() != null ) {
+		if( fileData.getEtcFileName() == null || fileData.getEtcFileName().length() < 1 || fileData.getEtcFileName() == "" ) {
+			if( fileData.getAttflNm() != null || fileData.getAttflNm().length() > 1 || fileData.getAttflNm() != "" ) {
 				// 처음 데이터가 들어오기떄문에 생성
 				materMapper.insertMaterAttfl(fileData);
 			}
 		} else {
-			if( fileData.getAttflNm().length() < 1 || fileData.getAttflNm() == "" || fileData.getAttflNm() == null ) {
+			if( fileData.getAttflNm() == null || fileData.getAttflNm().length() < 1 || fileData.getAttflNm() == "" ) {
 			}else {
 				// 기존에 데이터가 있고 새로운 데이터도 있음
 				if(!fileData.getAttflNm().equals(fileData.getEtcFileName())) {
@@ -67,6 +68,31 @@ public class MaterServiceImpl implements MaterService {
 	@Override
 	public Integer deleteMater(Map<String, Object> param) throws Exception {
 		return materMapper.deleteMater(param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectFildData() throws Exception {
+		return materMapper.selectFildData();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectWkscData(Map<String, Object> param) throws Exception {
+		return materMapper.selectWkscData(param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectCntrtCrprList(Map<String, Object> param) throws Exception {
+		return materMapper.selectCntrtCrprList(param);
+	}
+
+	@Override
+	public List<FileCommand> selectAdminList(Map<String, Object> param) throws Exception {
+		return materMapper.selectAdminList(param);
+	}
+
+	@Override
+	public Integer createAdmin(Map<String, Object> param) throws Exception {
+		return materMapper.createAdmin(param);
 	}
 	
 }

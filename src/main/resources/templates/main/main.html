@@ -18,7 +18,7 @@
 		<div class="headerWrap">
 
 			<h1 class="logo">
-				<a href="#none">
+				<a href="/mater/main/load-page?pageName=main/main">
 					<span class="txt">자재·장비대금 지킴이</span>
 				</a>
 			</h1>
@@ -35,11 +35,14 @@
 	</header>
 	<div class="wrapper main">
 		<input type="hidden" id="mtriCustNo" th:value="${session.mtriCustNo}">
+		<input type="hidden" id="custAthrCd" th:value="${session.custAthrCd}">
+		<input type="hidden" id="custNm" th:value="${session.custNm}">
+		<input type="hidden" id="blngDptcd" th:value="${session.blngDptcd}">
+		<input type="hidden" id="wkscCd" th:value="${session.wkscCd}">
 		<section class="main">
 			<ul class="mainList" id="mainList">
 
 			</ul>
-
 		</section>
 
 
@@ -50,13 +53,7 @@
 				<a href="javascript:f_goNotice();" class="moreBtn">더 보기</a>
 			</div>
 
-			<ul class="noticeList">
-				<li>
-					<a href="javascript:f_goNoticeDetail();">
-						<div class="subject">자재관리 관련 공지사항</div>
-						<div class="date">2020.10.30</div>
-					</a>
-				</li>
+			<ul class="noticeList" id="noticeList">
 			</ul>
 
 			<div class="archiveBox">

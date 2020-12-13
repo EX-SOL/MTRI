@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	  content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<head>
+	<meta charset="UTF-8">
+	<title>자재·장비대금 지킴이</title>
+	<script language='javascript'>
+	window.name ="Parent_window";
+	
+	
+	
+	function fnPopup(){
+		window.open('', 'popupChk', 'width=500, height=550, top=100, left=100, fullscreen=no, menubar=no, status=no, toolbar=no, titlebar=yes, location=no, scrollbar=no');
+		document.form_chk.action = "http://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb";
+		document.form_chk.target = "popupChk";
+		document.form_chk.submit();
+	}
+	</script>
+</head>
+
+
+<body>
+<div id="checkPlus" class="post-search-wrap popup-window check-plus" style="display:none;">
+	<div class="container bg" style="background-color:white;">
+		<header class="">
+			<div class="introWrap">
+				<div class="pageTitBox">개인정보제공동의 > <font style="color:#0100FF;">본인인증</font> > 사용자등록</div>
+			</div>
+		</header>
+		<div class="wrapper">
+			<iframe id="checkPlusiFrm" name="checkPlusiFrm" style="width:100%; height:100%;"></iframe>
+		</div>
+	</div>
+</div>
+	<!-- 본인인증 서비스 팝업을 호출하기 위해서는 다음과 같은 form이 필요합니다. -->
+	<form name="form_chk" method="post">
+		<input type="hidden" name="m" value="checkplusSerivce">						<!-- 필수 데이타로, 누락하시면 안됩니다. -->
+		<input type="hidden" name="EncodeData" th:value="${sEncData}">		<!-- 위에서 업체정보를 암호화 한 데이타입니다. -->
+	    
+		<a href="javascript:fnPopup();"> CheckPlus 안심본인인증 Click</a>
+	</form>
+</body>
+</html>

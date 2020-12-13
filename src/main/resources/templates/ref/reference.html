@@ -35,20 +35,10 @@
 				<div class="titBox"><span class="txt">제목/내용</span><input class="searchTbox" id="sTitleData"></div>
 			
 				<div class="titBox"><span class="txt">기간</span></div>
-				<div class="dateGroup">
-					<div class="dateBox">
-						<label>
-							<input class="date-picker" id="sDate" data-language="ko" data-position="bottom left">
-							<span class="calendar"></span>
-						</label>
-					</div>
-					<div class="unit">~</div>
-					<div class="dateBox">
-						<label>
-							<input class="date-picker" id="eDate" data-language="ko" data-position="bottom right">
-							<span class="calendar"></span>
-						</label>
-					</div>
+				<div>
+					<input type="month" class="dayMonth" id="sDate">
+					~
+					<input type="month" class="dayMonth" id="eDate">
 				</div>
 				<a href="javascript:f_selectReference();" class="searchBtn">조회</a>
 			</div>
@@ -74,7 +64,7 @@
 						</table>
 					</article>
 				</div>
-				<a href="javascript:f_goReferenceCreate();" class="searchBtn">등록</a>
+				<a href="javascript:f_goReferenceCreate();" class="searchBtn" th:if="${session.custAthrCd != 'D'}">등록</a>
 			</div>
 		</section>
 

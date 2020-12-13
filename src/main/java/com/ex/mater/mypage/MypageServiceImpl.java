@@ -21,7 +21,7 @@ public class MypageServiceImpl implements MypageService {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
-	public List<Mypage> selectMypage(Map<String, Object> paramMap) throws Exception {
+	public Mypage selectMypage(Map<String, Object> paramMap) throws Exception {
 
 		return myPageMapper.selectMypage(paramMap);
 	}
@@ -29,6 +29,16 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public Integer updateMypage(Map<String, Object> paramMap) throws Exception {
 		return myPageMapper.updateMypage(paramMap);
+	}
+
+	@Override
+	public Map<String, Object> selectMyPassword(Map<String, Object> paramMap) throws Exception {
+		return myPageMapper.selectMyPassword(paramMap);
+	}
+
+	@Override
+	public Integer deleteMypage(Map<String, Object> paramMap) throws Exception {
+		return myPageMapper.deleteMypage(paramMap);
 	}
 	
 }

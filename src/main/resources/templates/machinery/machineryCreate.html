@@ -33,6 +33,7 @@
 		<section class="edit">
 		<form name="materForm" id="materForm" enctype="multipart/form-data">
 			<input type="hidden" name="mnpbClssCd" value="E">
+			<input type="hidden" name="mtriCustNo" th:value="${session.mtriCustNo}">
 			<ul class="editList">
 				<li>
 					<div class="subject">
@@ -52,9 +53,7 @@
 					</div>
 					<div class="con">
 						<div class="selectBox" style="width: 100%;">
-							<select name="fildClssCd">
-								<option value="a">현장1</option>
-								<option value="b">현장2</option>
+							<select name="blngDptcd" onchange="javascript:f_wkscData();">
 							</select>
 						</div>
 					</div>
@@ -67,9 +66,7 @@
 					</div>
 					<div class="con">
 						<div class="selectBox" style="width: 100%;">
-							<select name="cntcWkscCd">
-								<option value="aa">공구1</option>
-								<option value="bb">공구2</option>
+							<select name="wkscCd">
 							</select>
 						</div>
 					</div>
@@ -81,7 +78,9 @@
 						<span class="txt">계약업체명</span>
 					</div>
 					<div class="con">
-						<input class="tbox" name="cntrtCrprNm">
+						<input type="hidden" id="cntrtCrprSeq" name="cntrtCrprSeq">
+						<input class="tbox" id="cntrtCrprNm" name="cntrtCrprNm" style="width:63%;" readonly>
+						<button type="button" onclick="javascript:f_cntrtCrprNmPopup();" class="btn-confirm btn-check"> 조회 </button>
 					</div>
 				</li>
 
@@ -97,7 +96,7 @@
 				<li>
 					<div class="subject">
 						<i class="ic ic_corp"></i>
-						<span class="txt">자재명</span>
+						<span class="txt">장비명</span>
 					</div>
 					<div class="con">
 						<input class="tbox" name="cntrtNm">
@@ -120,10 +119,10 @@
 						<span class="txt">사업자번호</span>
 					</div>
 					<div class="con">
-						<input class="tbox" name="mtriCustNo" th:value="${session.mtriCustNo}" readonly>
+						<input class="tbox" name="rprsCrno" th:value="${session.rprsCrno}" readonly>
 					</div>
 				</li>
-				<li>
+				<!-- <li>
 					<div class="subject">
 						<i class="ic ic_device"></i>
 						<span class="txt" style="font-size: 15px;">장비등록번호</span>
@@ -131,12 +130,10 @@
 					<div class="con">
 						<div class="selectBox" style="width: 100%;">
 							<select name="mnpbRgsrSeq">
-								<option value="M00000001">M00000001</option>
-								<option value="M00000002">M00000002</option>
 							</select>
 						</div>
 					</div>
-				</li>
+				</li> -->
 				<li>
 					<div class="subject">
 						<i class="ic ic_account"></i>
@@ -191,13 +188,13 @@
 
 				<li>
 					<div class="subject">
-						<i class="ic ic_date"></i>
+						<i class="ic ic_data"></i>
 						<span class="txt">세금계산서</span>
 					</div>
 					<div class="con">
 						<div class="fileBox">
 							<label for="flUpFileData" style="padding-left: 15px; padding-top: 12px;">
-								<input type="file" id="flUpFileData" style="display:none;" name="flUpFileData" onchange="javascript:f_imgChange();">
+								<input type="file" id="flUpFileData" style="display:none;" name="flUpFileData" onchange="javascript:f_imgChange('#fileName', '#flUpFileData');">
 								<span class="txt" id="fileName" style="font-size:15px;"></span>
 								<i class="ic ic_chain"></i>
 							</label>
@@ -218,6 +215,36 @@
 		</section>
 
 	</div>
+</div>
+<div id="crprNmPopup" class="searchModal_pw" style="display:none;">
+	<div class="search-modal-content-popup">
+		<div class="qbox-input">
+			<div class="fr hd-right">
+	            <a href="javascript:f_modalClose();"> <i class="fas fa-times"></i></a>
+	        </div>
+	   		<section class="materialPriceList">
+				<div class="searchFormBox">
+					<div class="titBox">
+						<span class="txt">업체명</span> 
+						<input class="tbox" id="sCntrtCrprNm" style="width: 65%; margin-left: 10px;">
+					</div>
+					<a href="javascript:f_crprNmData();" class="searchBtn" style="margin-top:0px;">조회</a>
+				</div>
+	
+				<div class="listFormBox" style="height:200px; overflow: auto;">
+					<div class="listGroup" id="materListData">
+						<ul class="itemList" id="cntrtCrprList">
+						</ul>
+					</div>
+				</div>
+				
+	
+			</section>
+	      	<div class="cb-btnwrap">
+               <button type="button" onclick="javascript:f_cntrtCheck();" class="btn-confirm">확 인</button>
+            </div>
+	    </div>
+    </div>
 </div>
 <div id="menuDiv"></div>
 <div class="progressDiv">

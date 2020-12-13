@@ -18,8 +18,10 @@ function f_modify(){
 
 //수정상태에서 취소 시 상세페이지 표출
 function f_modifyCancel(){
-	$("#modify-page").hide();
-	$("#detail-page").show();
+//	$("#modify-page").hide();
+//	$("#detail-page").show();
+	var rfrmrBlbnSeq = $("#rfrmrBlbnSeq").val();
+	f_goReferenceDetailPage(rfrmrBlbnSeq)
 }
 
 //수정 적용
@@ -71,10 +73,13 @@ function f_goModifySave(){
         data: frmData,
         success: function (response, textStatus, jqXHR) {
         	if (response.SUCCESS == true){
-        		f_showModal("수정되었습니다.");
-        		window.location = "/mater/ref/selectReferenceDetail?rfrmrBlbnSeq="+rfrmrBlbnSeq;
+        		f_showModal_func("수정되었습니다.", "f_goReferenceDetailPage('"+rfrmrBlbnSeq+"')");
         	}else {
-        		f_showModal("수정에 실패하였습니다.");
+        		if(response.resultMsg != null){
+        			f_showModal(response.resultMsg);
+        		}else{
+        			f_showModal("수정에 실패하였습니다.");
+        		}
         	}
         	$(".progressDiv").hide();
         },
@@ -105,8 +110,7 @@ function f_deleteReference(){
         success: function (response, textStatus, jqXHR) {
         	console.log(response);
         	if(response.SUCCESS == true){
-        		f_showModal("삭제되었습니다.");
-        		window.location = "/mater/main/load-page?pageName=ref/reference";
+        		f_showModal_func("삭제되었습니다.", "f_goReferencePage()");
         	}else{
         		f_showModal("삭제하는 중 오류가 발생하였습니다.");
         	}
@@ -118,4 +122,12 @@ function f_deleteReference(){
             f_showModal("삭제하는 중 오류가 발생하였습니다.");
         }
     });
+}
+
+function f_goReferencePage(){
+	window.location = "/mater/main/load-page?pageName=ref/reference";
+}
+
+function f_goReferenceDetailPage(rfrmrBlbnSeq){
+	window.location = "/mater/ref/selectReferenceDetail?rfrmrBlbnSeq="+rfrmrBlbnSeq;
 }

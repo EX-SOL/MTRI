@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	  content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<head>
+	<meta charset="UTF-8">
+	<title>자재·장비대금 지킴이</title>
+	<link type="text/css" rel="stylesheet" href="../assets/css/reset.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/datepicker.min.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/ui.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/style.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/core.css"/>
+</head>
+<body>
+
+<!-- 휴대폰 본인인증 팝업 -->
+<div id="checkPlus" class="post-search-wrap popup-window check-plus" style="display:none;">
+	<div class="popup-post">
+		<iframe id="checkPlusiFrm" name="checkPlusiFrm"></iframe>
+	</div>
+</div>
+<form id="form_chk" method="post" target="checkPlusiFrm" action="http://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb">
+	<input type="hidden" name="m" value="checkplusSerivce">					<!-- 필수 데이타로, 누락하시면 안됩니다. -->
+	<input type="hidden" name="EncodeData" th:value="${sEncData}">		<!-- 위에서 업체정보를 암호화 한 데이타입니다. -->
+</form>
+<!-- 휴대폰 본인인증 팝업 -->
+<div id="menuDiv"></div>
+<div class="progressDiv">
+	<img src="../assets/img/progress.gif"/>
+</div>
+
+<script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
+<script src="../assets/js/jquery-3.1.1.min.js"></script>
+<script src="../assets/js/jquery-ui-1.12.1.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/datepicker.min.js"></script>
+<script src="../assets/js/datepicker.ko.js"></script>
+<script src="../assets/js/login/registerCerti.js"></script>
+<script src="../assets/js/core.js"></script>
+</body>
+</html>

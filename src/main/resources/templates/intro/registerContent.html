@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	  content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<head>
+	<meta charset="UTF-8">
+	<title>자재·장비대금 지킴이</title>
+	<link type="text/css" rel="stylesheet" href="../assets/css/reset.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/datepicker.min.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/ui.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/style.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/core.css"/>
+</head>
+<body>
+<div class="container bg" style="background-color:white;">
+	<header class="">
+		<div class="introWrap">
+			<div class="pageTitBox">개인정보제공동의 > 본인인증 > <font style="color:#0100FF;">사용자등록</font></div>
+		</div>
+	</header>
+	<div class="wrapper">
+		<section class="edit">
+			<form id="userForm" name="userForm" enctype="multipart/form-data">
+				<ul class="editList">
+					<li>
+						<div class="subject">
+							<span class="txt">성명</span>
+						</div>
+						<div class="con">
+							<input class="tbox" th:value="${sName}" id="custNm" name="custNm" readonly>
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<span class="txt">사용자ID</span>
+						</div>
+						<div class="con">
+							<input type="hidden" id="mtriCustNoYn" value="N">
+							<input class="tbox" id="mtriCustNo" name="mtriCustNo" style="width:63%;">
+							<button type="button" onclick="javascript:f_idCheck();" class="btn-confirm btn-check"> 중복확인 </button>
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<span class="txt">비밀번호</span>
+						</div>
+						<div class="con">
+							<input type="password" class="tbox" id="custPswd" name="custPswd">
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<span class="txt">비밀번호 확인</span>
+						</div>
+						<div class="con">
+							<input type="password" class="tbox" id="custPswd2" name="custPswd2">
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<span class="txt">연락처</span>
+						</div>
+						<div class="con">
+							<input class="tbox" id="custTelno" name="custTelno" th:value="${sMobileNo}" readonly>
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<span class="txt">법인명</span>
+						</div>
+						<div class="con">
+							<input class="tbox" id="corpNm" name="corpNm">
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<span class="txt">대표자명</span>
+						</div>
+						<div class="con">
+							<input class="tbox" id="rpprNm" name="rpprNm">
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<span class="txt" style="font-size:15px;">사업자등록번호</span>
+						</div>
+						<div class="con">
+							<input class="tbox" id="rprsCrno" name="rprsCrno">
+<!-- 							<input type="hidden" id="rprsCrnoYn" value="N"> -->
+<!-- 							<input class="tbox" id="rprsCrno" name="rprsCrno" style="width:63%;"> -->
+<!-- 							<button type="button" onclick="javascript:f_rprsCrnoCheck();" class="btn-confirm btn-check"> 중복확인 </button> -->
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<i class="ic ic_data"></i>
+							<span class="txt" style="font-size:14px;">사업자등록증</span>
+						</div>
+						<div class="con">
+							<div class="fileBox">
+								<label for="flUpFileData" style="padding-left: 15px; padding-top: 12px;">
+									<input type="file" id="flUpFileData" style="display:none;" name="flUpFileData" onchange="javascript:f_imgChange('#fileName', '#flUpFileData');">
+									<span class="txt" id="fileName" style="font-size:15px;"></span>
+									<i class="ic ic_chain"></i>
+								</label>
+							</div>
+						</div>
+					</li>
+					<!-- <li>
+						<div class="subject">
+							<span class="txt" style="font-size:15px;">장비명</span>
+						</div>
+						<div class="con">
+							<input class="tbox" id="mtriEqpmClssNm" name="mtriEqpmClssNm">
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<span class="txt" style="font-size:15px;">장비등록번호</span>
+						</div>
+						<div class="con">
+							<input type="hidden" id="mnpbRgsrSeqYn" value="N">
+							<input class="tbox" id="mnpbRgsrSeq" name="mnpbRgsrSeq" style="width:63%;">
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<i class="ic ic_data"></i>
+							<span class="txt" style="font-size:14px;">장비등록증</span>
+						</div>
+						<div class="con">
+							<div class="fileBox">
+								<label for="flUpFileData2" style="padding-left: 15px; padding-top: 12px;">
+									<input type="file" id="flUpFileData2" style="display:none;" name="flUpFileData2" onchange="javascript:f_imgChange('#fileName2', '#flUpFileData2');">
+									<span class="txt" id="fileName2" style="font-size:15px;"></span>
+									<i class="ic ic_chain"></i>
+								</label>
+							</div>
+						<span style="color:red; font-size:13px;">* 추가 장비등록은 가입 후 마이페이지에서 가능합니다.</span>
+						</div>
+					</li> -->
+					<li>
+						<div class="subject">
+							<span class="txt">예금주</span>
+						</div>
+						<div class="con">
+							<input class="tbox" id="deprNm" name="deprNm">
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<span class="txt">은행명</span>
+						</div>
+						<div class="con">
+							<input class="tbox" id="trBankNm" name="trBankNm">
+						</div>
+					</li>
+	
+					<li>
+						<div class="subject">
+							<span class="txt">계좌번호</span>
+						</div>
+						<div class="con">
+							<input class="tbox" id="bankActno" name="bankActno">
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<i class="ic ic_data"></i>
+							<span class="txt">계약서</span>
+						</div>
+						<div class="con">
+							<div class="fileBox">
+								<label for="flUpFileData3" style="padding-left: 15px; padding-top: 12px;">
+									<input type="file" id="flUpFileData3" style="display:none;" name="flUpFileData3" onchange="javascript:f_imgChange('#fileName3', '#flUpFileData3');">
+									<span class="txt" id="fileName3" style="font-size:15px;"></span>
+									<i class="ic ic_chain"></i>
+								</label>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</form>
+			<div class="editMenuBox">
+	
+				<!-- <a href="#none" class="removeBtn">삭제</a> -->
+	
+				<div class="menuBox">
+					<a href="javascript:f_saveData();" class="menuBtn">등록</a>
+					<a href="javascript:f_resetData();" class="menuBtn">초기화</a>
+				</div>
+	
+	
+			</div>
+		</section>
+	</div>
+</div>
+
+<div id="menuDiv"></div>
+<div class="progressDiv">
+	<img src="../assets/img/progress.gif"/>
+</div>
+
+<script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
+<script src="../assets/js/jquery-3.1.1.min.js"></script>
+<script src="../assets/js/jquery-ui-1.12.1.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/datepicker.min.js"></script>
+<script src="../assets/js/datepicker.ko.js"></script>
+<script src="../assets/js/login/registerContent.js"></script>
+<script src="../assets/js/core.js"></script>
+</body>
+</html>

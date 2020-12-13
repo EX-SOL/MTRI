@@ -10,8 +10,16 @@ $(document).ready(function(){
 	$("#menuDiv").load('/mater/main/load-page?pageName=menu');
 	
 	// 처음 진입 시 한달 기간 세팅
-	f_dateSetting("#bltnStrtDates", "#bltnEndDates");
+	f_dateSettingPlus("#bltnStrtDates", "#bltnEndDates");
 })
+
+//처음 진입 시 한달 기간두기 +1달
+function f_dateSettingPlus(sDate, eDate){
+	var date = new Date();
+	$(sDate).val(getFormatDate(date));
+	date.setMonth(date.getMonth()+1);
+	$(eDate).val(getFormatDate(date));
+}
 
 // 자료실 저장
 function f_referenceSave(){
@@ -30,11 +38,6 @@ function f_referenceSave(){
 	if(bltnStrtDates > bltnEndDates){
 		$(".progressDiv").hide();
 		f_showModal("게시일을 다시 설정해주세요.");
-		return;
-	}
-	if(rfrmrBlbnTitlNm == "" || rfrmrBlbnTitlNm == null){
-		$(".progressDiv").hide();
-		f_showModal("제목을 입력해주세요.");
 		return;
 	}
 	if(rfrmrBlbnCtnt =="" || rfrmrBlbnCtnt == null){
@@ -62,11 +65,13 @@ function f_referenceSave(){
         data: frmData,
         success: function (response, textStatus, jqXHR) {
         	if (response.SUCCESS == true){
-        		f_showModal("등록되었습니다.");
-        		
-        		window.location = "/mater/main/load-page?pageName=ref/reference";
+        		f_showModal_func("등록되었습니다.", "f_goReferencePage()");
         	}else {
-        		f_showModal("등록에 실패하였습니다.");
+        		if(response.resultMsg != null){
+        			f_showModal(response.resultMsg);
+        		}else{
+        			f_showModal("등록에 실패하였습니다.");
+        		}
         	}
         	$(".progressDiv").hide();
         },
@@ -75,6 +80,9 @@ function f_referenceSave(){
         	f_showModal("등록에 실패하였습니다.");
         }
     });
-	
 }
 
+
+function f_goReferencePage(){
+	window.location = "/mater/main/load-page?pageName=ref/reference";
+}

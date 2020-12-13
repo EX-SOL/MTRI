@@ -3,65 +3,68 @@
 <mapper namespace="com.ex.mater.ref.ReferenceMapper">
 
 	<resultMap id="Reference" type="com.ex.mater.ref.Reference">
-		<result column="RFRMR_BLBN_SEQ" property="rfrmrBlbnSeq"/>
+		<result column="RFRMR_SEQ" property="rfrmrBlbnSeq"/>
 		<result column="RFRMR_BLBN_TITL_NM" property="rfrmrBlbnTitlNm"/>
 		<result column="RFRMR_BLBN_CTNT" property="rfrmrBlbnCtnt"/>
 		<result column="BLTN_STRT_DATES" property="bltnStrtDates"/>
 		<result column="BLTN_END_DATES" property="bltnEndDates"/>
 		<result column="RFRMR_BLBN_IMPT_YN" property="rfrmrBlbnImptYn"/>
-		<result column="ATTFL_SEQ" property="attflSeq"/>
+		<result column="MTRI_ATTFL_SEQ" property="attflSeq"/>
 		<result column="RFRMR_BLBN_BLTN_ATHR_CD" property="rfrmrBlbnBltnAthrCd"/>
 		<result column="FSTTM_RGSR_ID" property="fsttmRgsrId"/>
 		<result column="FSTTM_RGST_DTTM" property="fsttmRgstDttm"/>
 		<result column="LSTTM_MODFR_ID" property="lsttmModfrId"/>
 		<result column="LSTTM_ALTR_DTTM" property="lsttmAltrDttm"/>
-		<result column="RFRMR_BLBN_DEL_YN" property="rfrmrBlbnDelYn"/>
+		<result column="DEL_YN" property="rfrmrBlbnDelYn"/>
 		<result column="ATTFL_NM" property="attflNm"/>
 		<result column="ATTFL_PATH" property="attflPath"/>
 	</resultMap>
 	
     <select id="selectReferenceList" parameterType="com.ex.mater.ref.Reference" resultMap="Reference">
-    	 SELECT RFRMR_BLBN_SEQ
+    	 SELECT RFRMR_SEQ
               , RFRMR_BLBN_TITL_NM
               , RFRMR_BLBN_CTNT
               , BLTN_STRT_DATES
               , BLTN_END_DATES
               , RFRMR_BLBN_IMPT_YN
-              , A.ATTFL_SEQ
+              , A.MTRI_ATTFL_SEQ
               , RFRMR_BLBN_BLTN_ATHR_CD
               , A.FSTTM_RGSR_ID
               , TO_CHAR(A.FSTTM_RGST_DTTM, 'YYYY-MM-DD') FSTTM_RGST_DTTM
-              , RFRMR_BLBN_DEL_YN
+              , DEL_YN
               , B.ATTFL_NM
               , B.ATTFL_PATH
            FROM T_MTRI_RFRMR A
               LEFT OUTER JOIN
                 T_MTRI_ATTFL B
-            ON A.ATTFL_SEQ = B.ATTFL_SEQ
-            WHERE RFRMR_BLBN_DEL_YN = 'N'
+            ON A.MTRI_ATTFL_SEQ = B.MTRI_ATTFL_SEQ
+            WHERE DEL_YN = 'N'
             <if test='sTitleData != ""'>
             AND (RFRMR_BLBN_TITL_NM LIKE '%' || #{sTitleData} || '%' OR RFRMR_BLBN_CTNT LIKE '%' || #{sTitleData} || '%')
             </if>
-            <if test="sDate != '' and sDate != null and eDate != '' and eDate != null">
-            AND TO_DATE(BLTN_STRT_DATES, 'yyyy/MM/dd') BETWEEN TO_DATE(#{sDate}, 'yyyy/MM/dd') AND TO_DATE(#{eDate}, 'yyyy/MM/dd')
+            <if test="sDate != '' and sDate != null">
+		    AND TO_DATE(SUBSTR(BLTN_STRT_DATES,0,6), 'yyyy/MM') <![CDATA[ <= ]]> TO_DATE(${sDate}, 'yyyy/MM')
+            </if>
+			<if test="eDate != '' and eDate != null">
+		    AND TO_DATE(SUBSTR(BLTN_END_DATES,0,6), 'yyyy/MM') <![CDATA[ <= ]]> TO_DATE(${eDate}, 'yyyy/MM')
             </if>
           ORDER BY A.FSTTM_RGST_DTTM DESC
     </select>
     
     <insert id="insertReferenceAttfl" parameterType="com.ex.mater.ref.Reference">
     	<selectKey resultType="String" keyProperty="attflSeq" order="BEFORE">
-			SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ATTFL_SEQ, 9,6)))+1, 1),4, '0') as attflSeq 
+			SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MTRI_ATTFL_SEQ, 9,6)))+1, 1),4, '0') as attflSeq 
 			 FROM T_MTRI_ATTFL 
-			  WHERE ATTFL_SEQ LIKE TO_CHAR(SYSDATE, 'YYYYMMDD')||'%'
+			  WHERE MTRI_ATTFL_SEQ LIKE TO_CHAR(SYSDATE, 'YYYYMMDD')||'%'
 		</selectKey>
     	INSERT INTO T_MTRI_ATTFL (
-    		  ATTFL_SEQ
+    		  MTRI_ATTFL_SEQ
     		, ATTFL_SQNO
     		, ATTFL_NM
     		, ATTFL_PATH
     	) VALUES(
     		  #{attflSeq}
-    		, (SELECT NVL(MAX(ATTFL_SQNO)+1, 1) FROM T_MTRI_ATTFL WHERE ATTFL_SEQ = #{attflSeq})
+    		, (SELECT NVL(MAX(ATTFL_SQNO)+1, 1) FROM T_MTRI_ATTFL WHERE MTRI_ATTFL_SEQ = #{attflSeq})
     		, #{attflNm}
     		, #{attflPath}
     	)
@@ -69,21 +72,21 @@
 
     <insert id="insertReference" parameterType="com.ex.mater.ref.Reference">
     	INSERT INTO T_MTRI_RFRMR (
-			  RFRMR_BLBN_SEQ
+			  RFRMR_SEQ
 			, RFRMR_BLBN_TITL_NM
 			, RFRMR_BLBN_CTNT
 			, BLTN_STRT_DATES
 			, BLTN_END_DATES
 			, RFRMR_BLBN_IMPT_YN
-			, ATTFL_SEQ
+			, MTRI_ATTFL_SEQ
 			, RFRMR_BLBN_BLTN_ATHR_CD
 			, FSTTM_RGSR_ID
 			, FSTTM_RGST_DTTM
 			, LSTTM_MODFR_ID
 			, LSTTM_ALTR_DTTM
-			, RFRMR_BLBN_DEL_YN
+			, DEL_YN
 		) VALUES (
-			  (SELECT TO_CHAR(NVL(MAX(TO_NUMBER(RFRMR_BLBN_SEQ)), 0)+1) FROM T_MTRI_RFRMR)
+			  (SELECT TO_CHAR(NVL(MAX(TO_NUMBER(RFRMR_SEQ)), 0)+1) FROM T_MTRI_RFRMR)
 			, #{rfrmrBlbnTitlNm}
 			, #{rfrmrBlbnCtnt}
 			, #{bltnStrtDates}
@@ -100,23 +103,25 @@
     </insert>
     
     <select id="selectReferenceDetail" parameterType="String" resultMap="Reference">
-    	SELECT RFRMR_BLBN_SEQ
+    	SELECT RFRMR_SEQ
               , RFRMR_BLBN_TITL_NM
               , RFRMR_BLBN_CTNT
               , SUBSTR(A.BLTN_STRT_DATES, 0, 4) || '/' || SUBSTR(A.BLTN_STRT_DATES, 5, 2) || '/' || SUBSTR(A.BLTN_STRT_DATES, 7, 2) BLTN_STRT_DATES
               , SUBSTR(A.BLTN_END_DATES, 0, 4) || '/' || SUBSTR(A.BLTN_END_DATES, 5, 2) || '/' || SUBSTR(A.BLTN_END_DATES, 7, 2) BLTN_END_DATES
               , RFRMR_BLBN_IMPT_YN
-              , A.ATTFL_SEQ
+              , A.MTRI_ATTFL_SEQ
               , RFRMR_BLBN_BLTN_ATHR_CD
-              , RFRMR_BLBN_DEL_YN
+              , DEL_YN
               , B.ATTFL_NM
               , B.ATTFL_PATH
+              , A.FSTTM_RGSR_ID
+              , A.LSTTM_MODFR_ID
            FROM T_MTRI_RFRMR A
               LEFT OUTER JOIN
                 T_MTRI_ATTFL B
-            ON A.ATTFL_SEQ = B.ATTFL_SEQ
+            ON A.MTRI_ATTFL_SEQ = B.MTRI_ATTFL_SEQ
             WHERE 1 = 1
-            AND RFRMR_BLBN_SEQ = #{rfrmrBlbnSeq} 
+            AND RFRMR_SEQ = #{rfrmrBlbnSeq} 
     </select>
     
     <update id="updateReference" parameterType="com.ex.mater.ref.Reference">
@@ -125,25 +130,25 @@
 			, RFRMR_BLBN_CTNT = #{rfrmrBlbnCtnt}
 			, BLTN_STRT_DATES = #{bltnStrtDates}
 			, BLTN_END_DATES = #{bltnEndDates}
-			, ATTFL_SEQ = #{attflSeq}
+			, MTRI_ATTFL_SEQ = #{attflSeq}
 			, LSTTM_MODFR_ID = #{lsttmModfrId}
 			, LSTTM_ALTR_DTTM = SYSDATE
-		  WHERE RFRMR_BLBN_SEQ = #{rfrmrBlbnSeq}
+		  WHERE RFRMR_SEQ = #{rfrmrBlbnSeq}
     </update>
 
     <update id="updateReferenceAttfl" parameterType="com.ex.mater.ref.Reference">
     	UPDATE T_MTRI_ATTFL 
     	SET ATTFL_NM = #{attflNm} 
     	  , ATTFL_PATH = #{attflPath}
-    	WHERE ATTFL_SEQ = #{attflSeq}
+    	WHERE MTRI_ATTFL_SEQ = #{attflSeq}
     	AND ATTFL_NM = #{etcFileName}
     </update>
     
     <update id="deleteReference" parameterType="map">
     	UPDATE T_MTRI_RFRMR
-    	 SET RFRMR_BLBN_DEL_YN = 'Y'
+    	 SET DEL_YN = 'Y'
     	   , LSTTM_MODFR_ID = #{lsttmModfrId}
 		   , LSTTM_ALTR_DTTM = SYSDATE
-		 WHERE RFRMR_BLBN_SEQ = #{rfrmrBlbnSeq}
+		 WHERE RFRMR_SEQ = #{rfrmrBlbnSeq}
     </update>
 </mapper>

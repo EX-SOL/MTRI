@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ex.mater.notice.NoticeMapper">
 
-	<resultMap type="com.ex.mater.notice.Notice" id="NoticeMap">
+	<resultMap id="NoticeMap" type="com.ex.mater.notice.Notice">
 		<result column="NOTC_MTRI_SEQ" property="notcMtriSeq"/>
 		<result column="NOTC_MTRI_TITL_NM" property="notcMtriTitlNm"/>
 		<result column="NOTC_MTRI_CTNT" property="notcMtriCtnt"/>
 		<result column="BLTN_STRT_DATES" property="bltnStrtDates"/>
 		<result column="BLTN_END_DATES" property="bltnEndDates"/>
 		<result column="NOTC_MTRI_IMPT_YN" property="notcMtriImptYN"/>
-		<result column="ATTFL_SEQ" property="attflSeq"/>
+		<result column="MTRI_ATTFL_SEQ" property="attflSeq"/>
 		<result column="NOTC_MTRI_BLTN_ATHR_CD" property="notcMtriBltnAthrCd"/>
 		<result column="FSTTM_RGSR_ID" property="fsttmRgsrId"/>
 		<result column="FSTTM_RGST_DTTM" property="fsttmRgstDttm"/>
@@ -26,9 +26,10 @@
 			 T1.NOTC_MTRI_SEQ
 			,T1.NOTC_MTRI_TITL_NM
 			,T1.NOTC_MTRI_CTNT
-			,TO_CHAR(T1.BLTN_STRT_DATES, 'YYYY/MM/DD HH:MM') || '~' || TO_CHAR(T1.BLTN_END_DATES, 'YYYY/MM/DD HH:MM') AS BLTN_END_DATES 
-			,T1.NOTC_MTRI_IMPT_YN
-			,T1.ATTFL_SEQ
+			, SUBSTR(BLTN_STRT_DATES, 0, 4) || '/' || SUBSTR(BLTN_STRT_DATES, 5, 2) || '/' || SUBSTR(BLTN_STRT_DATES, 7, 2) BLTN_STRT_DATES
+            , SUBSTR(BLTN_END_DATES, 0, 4) || '/' || SUBSTR(BLTN_END_DATES, 5, 2) || '/' || SUBSTR(BLTN_END_DATES, 7, 2) BLTN_END_DATES
+            ,T1.NOTC_MTRI_IMPT_YN
+			,T1.MTRI_ATTFL_SEQ
 			,T1.NOTC_MTRI_BLTN_ATHR_CD
 			,T1.FSTTM_RGSR_ID
 			,T1.FSTTM_RGST_DTTM
@@ -38,38 +39,161 @@
 			,T2.ATTFL_NM
 			,T2.ATTFL_PATH
 		FROM	T_MTRI_NOTICE T1 LEFT OUTER JOIN T_MTRI_ATTFL T2
-					ON T1.ATTFL_SEQ = T2.ATTFL_SEQ
+					ON T1.MTRI_ATTFL_SEQ = T2.MTRI_ATTFL_SEQ
 		WHERE	1 = 1
 		AND		NOTC_MTRI_SEQ = #{notcMtriSeq}
 	</select>
 	<!-- 리스트 조회 -->
 	<select id="selectNotice" parameterType="map" resultMap="NoticeMap">
-		SELECT	
-			 NOTC_MTRI_SEQ
-			,NOTC_MTRI_TITL_NM
-			,NOTC_MTRI_CTNT
-			,BLTN_STRT_DATES
-			,BLTN_END_DATES
-			,NOTC_MTRI_IMPT_YN
-			,ATTFL_SEQ
-			,NOTC_MTRI_BLTN_ATHR_CD
-			,FSTTM_RGSR_ID
-			,FSTTM_RGST_DTTM
-			,LSTTM_MODFR_ID
-			,LSTTM_ALTR_DTTM
-			,NOTC_MTRI_DEL_YN
-		FROM	T_MTRI_NOTICE
-		WHERE	1 = 1
-		AND		NOTC_MTRI_DEL_YN = 'N'
-		<if test="notcMtriTitlNm != '' and notcMtriTitlNm != null">
-			AND (NOTC_MTRI_TITL_NM LIKE '%' || #{notcMtriTitlNm} || '%' OR NOTC_MTRI_CTNT LIKE '%' || #{notcMtriTitlNm} || '%')
-		</if>
-		<if test="bltnStrtDates != '' and bltnStrtDates != null">
-			AND TO_CHAR(FSTTM_RGST_DTTM, 'YYYYMMDD') BETWEEN #{bltnStrtDates} AND #{bltnEndDates}
-		</if>
-		<if test="notcMtriBltnAthrCd != '' and notcMtriBltnAthrCd != null">
+		SELECT NOTC_MTRI_SEQ
+		      , NOTC_MTRI_TITL_NM
+		      , NOTC_MTRI_CTNT
+		      , BLTN_STRT_DATES
+		      , BLTN_END_DATES
+		      , NOTC_MTRI_IMPT_YN
+		      , A.MTRI_ATTFL_SEQ
+		      , NOTC_MTRI_BLTN_ATHR_CD
+		      , A.FSTTM_RGSR_ID
+		      , TO_CHAR(A.FSTTM_RGST_DTTM, 'YYYY-MM-DD') FSTTM_RGST_DTTM
+		      , NOTC_MTRI_DEL_YN
+		      , B.ATTFL_NM
+		      , B.ATTFL_PATH
+		   FROM T_MTRI_NOTICE A
+		      LEFT OUTER JOIN
+		        T_MTRI_ATTFL B
+		    ON A.MTRI_ATTFL_SEQ = B.MTRI_ATTFL_SEQ
+		    WHERE NOTC_MTRI_DEL_YN = 'N'
+			<if test="sDate != '' and sDate != null">
+		    AND TO_DATE(SUBSTR(BLTN_STRT_DATES,0,6), 'yyyy/MM') <![CDATA[ <= ]]> TO_DATE(${sDate}, 'yyyy/MM')
+            </if>
+			<if test="eDate != '' and eDate != null">
+		    AND TO_DATE(SUBSTR(BLTN_END_DATES,0,6), 'yyyy/MM') <![CDATA[ <= ]]> TO_DATE(${eDate}, 'yyyy/MM')
+            </if>
+		    <if test='sTitleData != "" and sTitleData != null'>
+            AND (NOTC_MTRI_TITL_NM LIKE '%' || #{sTitleData} || '%' OR NOTC_MTRI_CTNT LIKE '%' || #{sTitleData} || '%')
+            </if>
+			<if test="notcMtriBltnAthrCd != '' and notcMtriBltnAthrCd != null">
 			AND NOTC_MTRI_BLTN_ATHR_CD like  '%' || #{notcMtriBltnAthrCd} || '%'
-		</if>
-		ORDER BY TO_NUMBER(NOTC_MTRI_SEQ) ASC
+			</if>
+		 ORDER BY FSTTM_RGST_DTTM DESC
 	</select>
+	
+	<insert id="insertNoticeAttfl" parameterType="com.ex.mater.notice.Notice">
+		<selectKey resultType="String" keyProperty="attflSeq" order="BEFORE">
+			SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MTRI_ATTFL_SEQ, 9,6)))+1, 1),4, '0') as attflSeq 
+			 FROM T_MTRI_ATTFL 
+			  WHERE MTRI_ATTFL_SEQ LIKE TO_CHAR(SYSDATE, 'YYYYMMDD')||'%'
+		</selectKey>
+    	INSERT INTO T_MTRI_ATTFL (
+    		  MTRI_ATTFL_SEQ
+    		, ATTFL_SQNO
+    		, ATTFL_NM
+    		, ATTFL_PATH
+    	) VALUES(
+    		  #{attflSeq}
+    		, (SELECT NVL(MAX(ATTFL_SQNO)+1, 1) FROM T_MTRI_ATTFL WHERE MTRI_ATTFL_SEQ = #{attflSeq})
+    		, #{attflNm}
+    		, #{attflPath}
+    	)
+	</insert>
+	
+	<insert id="insertNotice" parameterType="com.ex.mater.notice.Notice">
+    	INSERT INTO T_MTRI_NOTICE (
+			  NOTC_MTRI_SEQ
+			, NOTC_MTRI_TITL_NM
+			, NOTC_MTRI_CTNT
+			, BLTN_STRT_DATES
+			, BLTN_END_DATES
+			, NOTC_MTRI_IMPT_YN
+			, MTRI_ATTFL_SEQ
+			, NOTC_MTRI_BLTN_ATHR_CD
+			, FSTTM_RGSR_ID
+			, FSTTM_RGST_DTTM
+			, LSTTM_MODFR_ID
+			, LSTTM_ALTR_DTTM
+			, NOTC_MTRI_DEL_YN
+		) VALUES (
+			  (SELECT TO_CHAR(NVL(MAX(TO_NUMBER(NOTC_MTRI_SEQ)), 0)+1) FROM T_MTRI_NOTICE)
+			, #{notcMtriTitlNm}
+			, #{notcMtriCtnt}
+			, #{bltnStrtDates}
+			, #{bltnEndDates}
+			, NVL(#{notcMtriImptYN}, 'N')
+			, #{attflSeq}
+			, #{notcMtriBltnAthrCd}
+			, #{fsttmRgsrId}
+			, SYSDATE
+			, #{lsttmModfrId}
+			, SYSDATE
+			, 'N'
+		)
+    </insert>
+    
+    <update id="updateNotice" parameterType="com.ex.mater.notice.Notice">
+    	UPDATE T_MTRI_NOTICE
+    	SET NOTC_MTRI_TITL_NM = #{notcMtriTitlNm}
+		, NOTC_MTRI_CTNT = #{notcMtriCtnt}
+		, BLTN_STRT_DATES = #{bltnStrtDates}
+		, BLTN_END_DATES = #{bltnEndDates}
+		, MTRI_ATTFL_SEQ = #{attflSeq}
+		, LSTTM_MODFR_ID = #{lsttmModfrId}
+		, LSTTM_ALTR_DTTM = SYSDATE
+    	WHERE NOTC_MTRI_SEQ = #{notcMtriSeq}
+    </update>
+    
+    <update id="updateNoticeAttfl" parameterType="com.ex.mater.notice.Notice">
+    	UPDATE T_MTRI_ATTFL 
+    	SET ATTFL_NM = #{attflNm} 
+    	  , ATTFL_PATH = #{attflPath}
+    	WHERE MTRI_ATTFL_SEQ = #{attflSeq}
+    	AND ATTFL_NM = #{etcFileName}
+    </update>
+    
+    <update id="deleteNotice" parameterType="map">
+    	UPDATE T_MTRI_NOTICE
+    	 SET NOTC_MTRI_DEL_YN = 'Y'
+    	   , LSTTM_MODFR_ID = #{lsttmModfrId}
+		   , LSTTM_ALTR_DTTM = SYSDATE
+		 WHERE NOTC_MTRI_SEQ = #{notcMtriSeq}
+    </update>
+    
+    <select id="selectNoticeMainList" parameterType="map" resultMap="NoticeMap">
+    	SELECT NOTC_MTRI_SEQ
+		      , NOTC_MTRI_TITL_NM
+		      , NOTC_MTRI_CTNT
+		      , BLTN_STRT_DATES
+		      , BLTN_END_DATES
+		      , NOTC_MTRI_IMPT_YN
+		      , MTRI_ATTFL_SEQ
+		      , NOTC_MTRI_BLTN_ATHR_CD
+		      , FSTTM_RGSR_ID
+		      , FSTTM_RGST_DTTM
+		      , NOTC_MTRI_DEL_YN
+		      , ATTFL_NM
+		      , ATTFL_PATH
+		  FROM (
+		  		SELECT NOTC_MTRI_SEQ
+				      , NOTC_MTRI_TITL_NM
+				      , NOTC_MTRI_CTNT
+				      , BLTN_STRT_DATES
+				      , BLTN_END_DATES
+				      , NOTC_MTRI_IMPT_YN
+				      , A.MTRI_ATTFL_SEQ
+				      , NOTC_MTRI_BLTN_ATHR_CD
+				      , A.FSTTM_RGSR_ID
+				      , TO_CHAR(A.FSTTM_RGST_DTTM, 'YYYY-MM-DD') FSTTM_RGST_DTTM
+				      , NOTC_MTRI_DEL_YN
+				      , B.ATTFL_NM
+				      , B.ATTFL_PATH
+				   FROM T_MTRI_NOTICE A
+				      LEFT OUTER JOIN
+				        T_MTRI_ATTFL B
+				    ON A.MTRI_ATTFL_SEQ = B.MTRI_ATTFL_SEQ
+				    WHERE NOTC_MTRI_DEL_YN = 'N'
+				 ORDER BY FSTTM_RGST_DTTM DESC
+		  )
+		  WHERE ROWNUM <![CDATA[ < ]]> 5
+		  
+    	
+    </select>
 </mapper>

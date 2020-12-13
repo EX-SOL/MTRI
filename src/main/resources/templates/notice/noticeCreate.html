@@ -31,66 +31,85 @@
 	<div class="wrapper">
 
 		<section class="edit">
-
-			<ul class="editList">
-				<li>
-					<div class="subject">
-						<i class="ic ic_spot"></i>
-						<span class="txt">제목</span>
-					</div>
-					<div class="con">
-						<input class="tbox">
-					</div>
-				</li>
-
-				<li>
-					<div class="dateBox">
-						<label>
-							<input class="date-picker" id="sDate" data-language="ko" data-position="bottom left">
-							<span class="calendar"></span>
-						</label>
-					</div>
-					
-				</li>
-				<li>
-					<div class="subject">
-						<i class="ic ic_device"></i>
-						<span class="txt">게시종료일</span>
-					</div>
-					<div class="dateBox">
-						<label>
-							<input class="date-picker" id="eDate" data-language="ko" data-position="bottom left" value="2020-09-16">
-							<span class="calendar"></span>
-						</label>
-					</div>
-				</li>
-
-				<li>
-					<div class="subject">
-						<i class="ic ic_corp"></i>
-						<span class="txt">내용</span>
-					</div>
-					<div class="con">
-						<input class="tbox" style="height: 300px;">
-					</div>
-				</li>
-			</ul>
-
+			<form name="noticeForm" id="noticeForm" enctype="multipart/form-data">
+				<input type="hidden" name="mtriCustNo" th:value="${session.mtriCustNo}">
+				<ul class="editList">
+					<li>
+						<div class="subject">
+							<i class="ic ic_charge_term"></i>
+							<span class="txt">제목</span>
+						</div>
+						<div class="con">
+							<input class="tbox" name="notcMtriTitlNm" id="notcMtriTitlNm">
+						</div>
+					</li>
+	
+					<li>
+						<div class="subject">
+							<i class="ic ic_date"></i>
+							<span class="txt">게시시작일</span>
+						</div>
+						<div class="con">
+							<div class="dateBox">
+								<label>
+									<input class="date-picker" name="bltnStrtDates" id="bltnStrtDates" data-language="ko" data-position="bottom left">
+									<span class="calendar"></span>
+								</label>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<i class="ic ic_date"></i>
+							<span class="txt">게시종료일</span>
+						</div>
+						<div class="con">
+							<div class="dateBox">
+								<label>
+									<input class="date-picker" name="bltnEndDates" id="bltnEndDates" data-language="ko" data-position="bottom left">
+									<span class="calendar"></span>
+								</label>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<i class="ic ic_charge_term"></i>
+							<span class="txt">내용</span>
+						</div>
+						<div class="con">
+							<input class="tbox" id="notcMtriCtnt" name="notcMtriCtnt" style="height: 300px;">
+						</div>
+					</li>
+					<li>
+						<div class="subject">
+							<i class="ic ic_data"></i>
+							<span class="txt">첨부파일</span>
+						</div>
+						<div class="con">
+							<div class="fileBox">
+								<label for="flUpFileData" style="padding-left: 15px; padding-top: 12px;">
+									<input type="file" id="flUpFileData" style="display:none;" name="flUpFileData" onchange="javascript:f_imgChange('#fileName', '#flUpFileData');">
+									<span class="txt" id="fileName" style="font-size:15px;"></span>
+									<i class="ic ic_chain"></i>
+								</label>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</form>
 			<div class="editMenuBox">
 
 				<div class="menuBox">
 					<a href="javascript:f_noticeSave();" class="menuBtn">저장</a>
 					<a href="javascript:history.go(-1);" class="menuBtn">취소</a>
 				</div>
-
-
 			</div>
 		</section>
-
 	</div>
 </div>
-<div id="menuDiv" style="display:none;"></div>
-<div class = "progressDiv" style="display:none;">
+<div id="menuDiv"></div>
+<div class="progressDiv">
 	<img src="../assets/img/progress.gif"/>
 </div>
 

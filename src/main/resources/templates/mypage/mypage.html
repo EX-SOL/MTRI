@@ -29,35 +29,25 @@
 		</div>
 	</header>
 	<div class="wrapper">
-
-		<section class="edit">
-
+		<section class="edit" id="detail-page">
+			<input type="hidden" id="s_mtriCustNo" th:value="${session.mtriCustNo}">
+			<input type="hidden" id="s_custAthrCd" th:value="${session.custAthrCd}">
 			<ul class="editList">
-
 				<li>
 					<div class="subject">
 						<span class="txt">사용자 유형</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="직원" readonly id="custAthrNm">
+						<input class="tbox" id="custAthrNm" readonly>
 					</div>
 				</li>
 
 				<li>
 					<div class="subject">
-						<span class="txt">성명(업체명)</span>
+						<span class="txt">성명</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="김도공(아와소프트)" readonly id=custNm>
-					</div>
-				</li>
-
-				<li>
-					<div class="subject">
-						<span class="txt">본인식별번호</span>
-					</div>
-					<div class="con">
-						<input class="tbox" value="111111111111" readonly>
+						<input class="tbox" id="custNm" readonly>
 					</div>
 				</li>
 
@@ -66,34 +56,7 @@
 						<span class="txt">사용자 ID</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="awa0001" readonly id="mtriCustNo">
-					</div>
-				</li>
-
-
-				<li>
-					<div class="subject">
-						<span class="txt">비밀번호</span>
-					</div>
-					<div class="con">
-						<input class="tbox" type="password" id="custPswd">
-					</div>
-				</li>
-				<li>
-					<div class="subject">
-						<span class="txt">비밀번호 확인</span>
-					</div>
-					<div class="con">
-						<input class="tbox" type="password" id="custPswdCnfm">
-					</div>
-				</li>
-
-				<li>
-					<div class="subject">
-						<span class="txt">이메일</span>
-					</div>
-					<div class="con">
-						<input class="tbox" id="custEmailAddr">
+						<input class="tbox" id="mtriCustNo" readonly>
 					</div>
 				</li>
 
@@ -102,16 +65,77 @@
 						<span class="txt">연락처</span>
 					</div>
 					<div class="con">
-						<input class="tbox" id="custTelno">
+						<input class="tbox" id="custTelno" readonly>
+					</div>
+				</li>
+				<!-- 관리자일 경우  -->
+				<li th:if="${session.custAthrCd == 'B' or session.custAthrCd == 'C'}">
+					<div class="subject">
+						<span class="txt">현장명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" id="korDptnm" readonly>
+					</div>
+				</li>
+				<li th:if="${session.custAthrCd == 'B' or session.custAthrCd == 'C'}">
+					<div class="subject">
+						<span class="txt">공구명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" id="wkscNm" readonly>
+					</div>
+				</li>
+				
+				<!-- 일반직원일 경우  -->
+				<li th:if="${session.custAthrCd == 'D'}">
+					<div class="subject">
+						<span class="txt">법인명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" id="corpNm" readonly>
 					</div>
 				</li>
 
-				<li>
+				<li th:if="${session.custAthrCd == 'D'}">
 					<div class="subject">
-						<span class="txt">가입일자</span>
+						<span class="txt">대표자명</span>
 					</div>
 					<div class="con">
-						<input class="tbox" value="2020-01-03" readonly id="fsttmRgstDttm">
+						<input class="tbox" id="rpprNm" readonly>
+					</div>
+				</li>
+
+				<li th:if="${session.custAthrCd == 'D'}">
+					<div class="subject">
+						<span class="txt" style="font-size:15px;">사업자등록번호</span>
+					</div>
+					<div class="con">
+						<input class="tbox" id="rprsCrno" readonly>
+					</div>
+				</li>
+
+				<li th:if="${session.custAthrCd == 'D'}">
+					<div class="subject">
+						<span class="txt">예금주</span>
+					</div>
+					<div class="con">
+						<input class="tbox" id="deprNm" readonly>
+					</div>
+				</li>
+				<li th:if="${session.custAthrCd == 'D'}">
+					<div class="subject">
+						<span class="txt">은행명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" id="trBankNm" readonly>
+					</div>
+				</li>
+				<li th:if="${session.custAthrCd == 'D'}">
+					<div class="subject">
+						<span class="txt">계좌번호</span>
+					</div>
+					<div class="con">
+						<input class="tbox" id="bankActno" readonly>
 					</div>
 				</li>
 			</ul>
@@ -121,21 +145,176 @@
 				<!-- <a href="#none" class="removeBtn">삭제</a> -->
 
 				<div class="menuBox">
-					<a href="javascript:UpdateMyPage();" class="menuBtn">수정</a>
-					<!-- <a href="#none" class="menuBtn">취소</a> -->
+					<a href="javascript:f_goModify();" class="menuBtn">수정</a>
+					<a href="javascript:history.go(-1);" class="menuBtn">취소</a>
 				</div>
+			</div>
+		</section>
+		<section class="edit" id="modify-page" style="display:none;">
+			<ul class="editList">
+				<li>
+					<div class="subject">
+						<span class="txt">사용자 유형</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="custAthrNm" readonly>
+					</div>
+				</li>
 
+				<li>
+					<div class="subject">
+						<span class="txt">성명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="custNm" readonly>
+					</div>
+				</li>
 
+				<li>
+					<div class="subject">
+						<span class="txt">사용자 ID</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="mtriCustNo" readonly>
+					</div>
+				</li>
+				<li>
+					<div class="subject">
+						<span class="txt">비밀번호</span>
+					</div>
+					<div class="con">
+						<input class="tbox" type="password" name="oldPswd">
+					</div>
+				</li>
+				<li>
+					<div class="subject">
+						<span class="txt">비밀번호 확인</span>
+					</div>
+					<div class="con">
+						<input class="tbox" type="password" name="newPswd">
+					</div>
+				</li>
+				<li>
+					<div class="subject">
+						<span class="txt">연락처</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="custTelno">
+					</div>
+				</li>
+
+				<!-- 관리자일 경우  -->
+				<li th:if="${session.custAthrCd == 'B' or session.custAthrCd == 'C'}">
+					<div class="subject">
+						<span class="txt">현장명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="korDptnm" readonly>
+					</div>
+				</li>
+				<li th:if="${session.custAthrCd == 'B' or session.custAthrCd == 'C'}">
+					<div class="subject">
+						<span class="txt">공구명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="wkscNm" readonly>
+					</div>
+				</li>
+				
+				<!-- 일반직원일 경우  -->
+				<li th:if="${session.custAthrCd == 'D'}">
+					<div class="subject">
+						<span class="txt">법인명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="corpNm" readonly>
+					</div>
+				</li>
+
+				<li th:if="${session.custAthrCd == 'D'}">
+					<div class="subject">
+						<span class="txt">대표자명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="rpprNm">
+					</div>
+				</li>
+
+				<li th:if="${session.custAthrCd == 'D'}">
+					<div class="subject">
+						<span class="txt" style="font-size:15px;">사업자등록번호</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="rprsCrno" readonly>
+					</div>
+				</li>
+
+				<li th:if="${session.custAthrCd == 'D'}">
+					<div class="subject">
+						<span class="txt">예금주</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="deprNm">
+					</div>
+				</li>
+				<li th:if="${session.custAthrCd == 'D'}">
+					<div class="subject">
+						<span class="txt">은행명</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="trBankNm">
+					</div>
+				</li>
+				<li th:if="${session.custAthrCd == 'D'}">
+					<div class="subject">
+						<span class="txt">계좌번호</span>
+					</div>
+					<div class="con">
+						<input class="tbox" name="bankActno">
+					</div>
+				</li>
+
+			</ul>
+
+			<div class="editMenuBox">
+
+				<a href="javascript:f_remove();" class="removeBtn">탈퇴</a>
+
+				<div class="menuBox">
+					<a href="javascript:f_modifySave();" class="menuBtn">저장</a>
+					<a href="javascript:f_goBack();" class="menuBtn">취소</a>
+				</div>
 			</div>
 		</section>
 
 	</div>
 </div>
-<div id="menuDiv" style="display:none;"></div>
-<div class = "progressDiv" style="display:none;">
+<div id="menuDiv"></div>
+<div class="progressDiv">
 	<img src="../assets/img/progress.gif"/>
 </div>
-
+<div id="pwCheckModal" class="searchModal_pw" style="display:none;">
+	<div class="search-modal-content">
+		<div class="qbox-input">
+			<div class="fr hd-right">
+	            <a href="javascript:f_modalClose();"> <i class="fas fa-times"></i></a>
+	        </div>
+	   		<table class="userTb">
+		        <tbody>
+		        	<tr style="height:50px;">
+		            	<th><i class="fas fa-unlock-alt"></i> 비밀번호 확인</th>
+		        	</tr>
+		        	<tr style="height:35px;">
+		            	<td><input type="password" class="tbox" id="pswd" style="width:100%;"></td>
+		        	</tr>
+		        </tbody>
+	      	</table>
+	      	<div class="cb-btnwrap">
+               <button type="button" onclick="javascript:f_pswdCheck();" class="btn-confirm">확 인</button>
+            </div>
+	    </div>
+    </div>
+</div>
 <script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
 <script src="../assets/js/jquery-3.1.1.min.js"></script>
 <script src="../assets/js/jquery-ui-1.12.1.js"></script>

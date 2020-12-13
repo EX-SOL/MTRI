@@ -9,6 +9,8 @@ $(document).ready(function(){
 	
 	$("#menuDiv").load('/mater/main/load-page?pageName=menu');
 	
+	f_fildData();	//현장데이터
+    f_wkscData();	//공구데이터
 })
 
 

@@ -10,10 +10,18 @@ $(document).ready(function(){
 	$("#menuDiv").load('/mater/main/load-page?pageName=menu');
 	$(".progressDiv").show();
 	
-	// 처음 진입 시 한달 기간 세팅
-	f_dateSetting("#sDate", "#eDate");
+	// 초기 데이터 설정
+    f_monthSetting("#sDate", "#eDate");
 	f_selectReference();
 })
+
+//처음 진입 시 한달 기간두기 +1달
+function f_dateSettingPlus(sDate, eDate){
+	var date = new Date();
+	$(sDate).val(getFormatDate(date));
+	date.setMonth(date.getMonth()+1);
+	$(eDate).val(getFormatDate(date));
+}
 
 // 자료실 조회
 function f_selectReference(){
@@ -22,8 +30,8 @@ function f_selectReference(){
 	var eDate = $("#eDate").val();
 	var sTitleData = $("#sTitleData").val();
 	
-	sDate = sDate.replace(/\//gi, '');
-	eDate = eDate.replace(/\//gi, '');
+	sDate = sDate.replace(/-/gi, '');
+	eDate = eDate.replace(/-/gi, '');
 	var param = {"sDate":sDate, "eDate":eDate, "sTitleData":sTitleData};
 	
 	$.ajax({

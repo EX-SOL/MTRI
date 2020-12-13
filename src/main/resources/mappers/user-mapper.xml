@@ -4,28 +4,175 @@
 
 	<resultMap id="User" type="com.ex.mater.user.model.User">
 		<result column="MTRI_CUST_NO" property="mtriCustNo"/>
-		<result column="CUST_PSWD" property="custPswd"/>
-		<result column="CUST_ATHR_CD" property="custAthrCd"/>
+		<result column="USER_PSWD" property="custPswd"/>
+		<result column="USER_ATHR_CD" property="custAthrCd"/>
 		<result column="CUST_TELNO" property="custTelno"/>
 		<result column="RPPR_NM" property="rpprNm"/>
 		<result column="DEPR_NM" property="deprNm"/>
 		<result column="BANK_ACTNO" property="bankActno"/>
 		<result column="TR_BANK_NM" property="trBankNm"/>
 		<result column="CORP_NM" property="corpNm"/>
+		<result column="CUST_NM" property="custNm"/>
+		<result column="RPRS_CRNO" property="rprsCrno"/>
+		<result column="BLNG_DPTCD" property="blngDptcd"/>
+		<result column="WKSC_CD" property="wkscCd"/>
 	</resultMap>
 	
     <select id="selectLogin" parameterType="map" resultMap="User">
     	SELECT MTRI_CUST_NO
-    	     , CUST_ATHR_CD
-			 , CUST_PSWD
+    	     , USER_ATHR_CD
+			 , USER_PSWD
 			 , REGEXP_REPLACE(CUST_TELNO, '(.{3})(.*)(.{4})', '\1-\2-\3') CUST_TELNO
 			 , RPPR_NM
 			 , DEPR_NM
 			 , BANK_ACTNO
 			 , TR_BANK_NM
 			 , CUST_NM
+			 , CORP_NM
+			 , RPRS_CRNO
+			 , BLNG_DPTCD
+			 , WKSC_CD
     	 FROM T_MTRI_CUST01M1
     	 WHERE MTRI_CUST_NO = #{mtriCustNo}
     	 AND ACIT_LOCK_YN = 'N'
     </select>
+    
+    <select id="selectIdCheck" parameterType="map" resultType="map">
+    	SELECT COUNT(*) AS CNT
+    	 FROM T_MTRI_CUST01M1
+    	 WHERE MTRI_CUST_NO = #{mtriCustNo}
+    </select>
+
+    <select id="selectRprsCrnoCheck" parameterType="map" resultType="map">
+    	SELECT COUNT(*) AS CNT
+    	 FROM T_MTRI_CUST01M1
+    	 WHERE RPRS_CRNO = #{rprsCrno}
+    	 AND ACIT_LOCK_YN = 'N'
+    </select>
+    
+    <insert id="insertUserAttfl" parameterType="com.ex.mater.user.model.User">
+    	<selectKey resultType="String" keyProperty="rprsCrnoAttflSeq" order="BEFORE">
+			SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MTRI_ATTFL_SEQ, 9,6)))+1, 1),4, '0') as attflSeq 
+			 FROM T_MTRI_ATTFL 
+			  WHERE MTRI_ATTFL_SEQ LIKE TO_CHAR(SYSDATE, 'YYYYMMDD')||'%'
+		</selectKey>
+    	INSERT INTO T_MTRI_ATTFL (
+    		  MTRI_ATTFL_SEQ
+    		, ATTFL_SQNO
+    		, ATTFL_NM
+    		, ATTFL_PATH
+    	) VALUES(
+    		<choose>
+    			<when test='attflSeq != null and attflSeq != "" '>
+    			#{attflSeq}
+    			</when>
+    			<otherwise>
+    			#{rprsCrnoAttflSeq}
+    			</otherwise>
+    		</choose>
+    		, (SELECT NVL(MAX(ATTFL_SQNO)+1, 1) 
+    			FROM T_MTRI_ATTFL 
+    			WHERE 1 = 1
+    			<choose>
+	    			<when test='attflSeq != null and attflSeq != "" '>
+	    			AND MTRI_ATTFL_SEQ = #{attflSeq}
+	    			</when>
+	    			<otherwise>
+	    			AND MTRI_ATTFL_SEQ = #{rprsCrnoAttflSeq}
+	    			</otherwise>
+	    		</choose>
+    		   )
+    		, #{attflNm}
+    		, #{attflPath}
+    	)
+    </insert>
+    
+    <insert id="insertUserDetailAttfl" parameterType="com.ex.mater.user.model.User">
+    	<selectKey resultType="String" keyProperty="mnpbRgsrSeqAttflSeq" order="BEFORE">
+			SELECT TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(MTRI_ATTFL_SEQ, 9,6)))+1, 1),4, '0') as attflSeq 
+			 FROM T_MTRI_ATTFL 
+			  WHERE MTRI_ATTFL_SEQ LIKE TO_CHAR(SYSDATE, 'YYYYMMDD')||'%'
+		</selectKey>
+    	INSERT INTO T_MTRI_ATTFL (
+    		  MTRI_ATTFL_SEQ
+    		, ATTFL_SQNO
+    		, ATTFL_NM
+    		, ATTFL_PATH
+    	) VALUES(
+    		<choose>
+    			<when test='attflSeq != null and attflSeq != "" '>
+    			#{attflSeq}
+    			</when>
+    			<otherwise>
+    			#{mnpbRgsrSeqAttflSeq}
+    			</otherwise>
+    		</choose>
+    		, (SELECT NVL(MAX(ATTFL_SQNO)+1, 1) 
+    			FROM T_MTRI_ATTFL 
+    			WHERE 1 = 1
+    			<choose>
+	    			<when test='attflSeq != null and attflSeq != "" '>
+	    			AND MTRI_ATTFL_SEQ = #{attflSeq}
+	    			</when>
+	    			<otherwise>
+	    			AND MTRI_ATTFL_SEQ = #{mnpbRgsrSeqAttflSeq}
+	    			</otherwise>
+	    		</choose>
+    			)
+    		, #{attflNm}
+    		, #{attflPath}
+    	)
+    </insert>
+    
+    <insert id="insertRegister" parameterType="com.ex.mater.user.model.User">
+    	INSERT INTO T_MTRI_CUST01M1(
+             MTRI_CUST_NO
+           , USER_ATHR_CD
+           , CUST_NM
+           , RPPR_NM
+           , TR_BANK_NM
+           , DEPR_NM
+           , BANK_ACTNO
+           , MTRI_ATTFL_SEQ
+           , CUST_TELNO
+           , USER_PSWD
+           , ACIT_LOCK_YN
+           , FSTTM_RGSR_ID
+           , FSTTM_RGST_DTTM
+           , LSTTM_MODFR_ID
+           , LSTTM_ALTR_DTTM
+           , CORP_NM
+           , RPRS_CRNO
+           , FRST_PRSN_INFO_OFER_AGRM_YN
+		   , SCND_PRSN_INFO_GTHR_AGRM_YN
+		   , THRD_PRSN_INFO_GTHR_AGRM_YN
+		   , FORTH_PRSN_INFO_GTHR_AGRM_YN
+        )VALUES(
+             #{mtriCustNo}
+           , 'D'
+           , #{custNm}
+           , #{rpprNm}
+           , #{trBankNm}
+           , #{deprNm}
+           , #{bankActno}
+           , #{attflSeq}
+           , #{custTelno}
+           , #{custPswd}
+           , 'N'
+           , #{mtriCustNo}
+           , SYSDATE
+           , #{mtriCustNo}
+           , SYSDATE
+           , #{corpNm}
+           , #{rprsCrno}
+           , #{check1}
+           , #{check2}
+           , #{check3}
+           , #{check4}
+          )
+    </insert>
+    
+    <delete id="deleteRegister" parameterType="com.ex.mater.user.model.User">
+    	DELETE FROM T_MTRI_CUST01M1 WHERE MTRI_CUST_NO = #{mtriCustNo}
+    </delete>
 </mapper>

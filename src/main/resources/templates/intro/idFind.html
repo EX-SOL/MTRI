@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	  content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<head>
+	<meta charset="UTF-8">
+	<title>자재·장비대금 지킴이</title>
+	<link type="text/css" rel="stylesheet" href="../assets/css/reset.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/ui.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/style.css"/>
+	<link type="text/css" rel="stylesheet" href="../assets/css/core.css"/>
+</head>
+<body>
+<div class="container full" id="body-div">
+	<header class="">
+		<div class="headerWrap">
+
+			<a href="javascript:f_goBackMain();" class="backBtn"></a>
+
+			<div class="pageTitBox">아이디 찾기</div>
+
+		</div>
+	</header>
+	<section class="find">
+		<div class="loginInputBox" id="idBody-page">
+			<div class="row">
+				<div class="subject">이름</div>
+				<div class="con">
+					<input type="text" name="userNm" id="userNm" th:value="${session.userNm}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="subject">전화번호</div>
+				<div class="con">
+					<input type="text" name="userPhoneNo" id="userPhoneNo" th:value="${session.userPhoneNo}">
+					<input type="hidden" id="sName" th:value="${sName}">
+					<input type="hidden" id="sMobileNo" th:value="${sMobileNo}">
+				</div>
+			</div>
+			<a href="javascript:f_goCertiPopup();" class="loginBtnBox">
+				<span class="loginBtn">본인인증</span>
+			</a>
+		</div>
+		
+		<div class="loginInputBox" id="showId-page" style="display:none;">
+			<div id="idList">
+			</div>
+			<a href="javascript:f_goBackMain();" class="loginBtnBox">
+				<span class="loginBtn">로그인하러가기</span>
+			</a>
+		</div>
+
+	</section>
+</div>
+
+<script src="../assets/js/jquery-3.1.1.min.js"></script>
+<script src="../assets/js/jquery-ui-1.12.1.js"></script>
+<script src="../assets/js/slick.min.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/login/idFind.js"></script>
+<script src="../assets/js/core.js"></script>
+</body>
+</html>
