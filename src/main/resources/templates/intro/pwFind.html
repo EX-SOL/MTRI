@@ -40,7 +40,7 @@
 			<div class="row">
 				<div class="subject">전화번호</div>
 				<div class="con">
-					<input type="text" name="userPhoneNo" id="userPhoneNo" th:value="${session.userPhoneNo}">
+					<input type="number" pattern="\d*" name="userPhoneNo" id="userPhoneNo" th:value="${session.userPhoneNo}">
 					<input type="hidden" id="sName" th:value="${sName}">
 					<input type="hidden" id="sMobileNo" th:value="${sMobileNo}">
 				</div>

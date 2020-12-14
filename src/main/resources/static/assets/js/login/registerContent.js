@@ -130,7 +130,12 @@ function f_saveData(){
 //		$("#rprsCrno").focus();
 		$(".progressDiv").hide();
 		return;
+	}else if(rprsCrno.length>10){
+		f_showModal("사업자등록번호가 10자리를 초과했습니다.");
+		$(".progressDiv").hide();
+		return;
 	}
+	
 	var file1 = $("#fileName").text();
 	if(file1 == "" || file1 == null){
 		f_showModal("사업자등록증 첨부파일은 필수입니다.");

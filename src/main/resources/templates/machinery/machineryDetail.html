@@ -168,7 +168,7 @@
 					</div>
 					<div class="con">
 						<div class="inputBox">
-							<input class="tbox money" th:value="${askAmt}" readonly>
+							<input class="tbox money beforeMoney" th:value="${askAmt}" readonly>
 							<span class="unit">원</span>
 						</div>
 					</div>
@@ -359,7 +359,7 @@
 					</div>
 					<div class="con">
 						<div class="inputBox">
-							<input class="tbox money" name="askAmt" th:value="${askAmt}" numberonly>
+							<input class="tbox money afterMoney" type="number" pattern="\d*" name="askAmt" th:value="${askAmt}" numberonly>
 							<span class="unit">원</span>
 						</div>
 					</div>

@@ -29,6 +29,12 @@ function f_modify(){
 //	var mnpbRgsrSeq = $("#mnpbRgsrSeq").val();
 //	$("select[name='mnpbRgsrSeq']").val(mnpbRgsrSeq).attr("selected", "selected");
 	
+	// 청구금액
+	var beforeMoney = $(".beforeMoney").val();
+	var afterMoney = beforeMoney.replaceAll(",","");
+	afterMoney*=1; // number type으로 파싱
+	$(".afterMoney").val(afterMoney);
+	
 }
 
 //수정상태에서 취소 시 상세페이지 표출
