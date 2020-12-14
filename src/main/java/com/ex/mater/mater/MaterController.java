@@ -84,51 +84,66 @@ public class MaterController {
 		String newFileName = fileData.getMtriCustNo() + "_" +today.format(System.currentTimeMillis()) +"(1)";
     	String ext = fileData.getFlUpFileData().getOriginalFilename().substring(fileData.getFlUpFileData().getOriginalFilename().lastIndexOf(".") + 1);
     	// jpg png jpeg pdf일 경우에만 등록
-    	if ( imageExt(ext.trim())) {
-    		try {
-                // TODO: 파일경로(filePath) 유효성 처리 추가 - 필요시
-                if (!file.exists()) {
-                	fileData.getFlUpFileData().transferTo(file);
-                	
-                	File newFile = new File(materFilePath+"/"+newFileName+"."+ext);
-            		boolean isRename = file.renameTo(newFile);
-            		if(isRename) {
-            			paramMap.put("SUCCESS", true);
-            			fileData.setAttflNm(newFileName+"."+ext);
-        				fileData.setAttflPath(materFilePath);
-            		} else {
-            			paramMap.put("SUCCESS", false);
-            		}
-                }
-            } catch (Exception e) {
-            	paramMap.put("SUCCESS", false);
-            	throw e;
-            } 
-    		//----------------------파일업로드----------------------------------------------
-    		
-    		if(paramMap.get("SUCCESS").equals(true)) {
-    			if(fileData.getFlUpFileData() == null && fileData.getFlUpFileData().getOriginalFilename().equals("") ) {
-    				fileData.setAttflNm("");
-    				fileData.setAttflPath("");
-    			}
-    			
-    	    	int result = materService.insertMaterList(fileData);
-    			
-    			try {
-    				if ( result > 0 ) {
-    					paramMap.put("SUCCESS", true);
-    				}else {
-    					paramMap.put("SUCCESS", false);
-    				}
-    				
-    			} catch (Exception e) {
-    				throw e;
-    			}
-    		}
-    	}else {
-    		paramMap.put("SUCCESS", false);
-    		paramMap.put("resultMsg", "이미지 또는 pdf파일만 업로드가능합니다.");
-    	}
+    	if(fileData.getFlUpFileData() == null || fileData.getFlUpFileData().getOriginalFilename().equals("") ) {
+			fileData.setAttflNm("");
+			fileData.setAttflPath("");
+			
+			int result = materService.insertMaterList(fileData);
+			
+			try {
+				if ( result > 0 ) {
+					paramMap.put("SUCCESS", true);
+				}else {
+					paramMap.put("SUCCESS", false);
+				}
+				
+			} catch (Exception e) {
+				throw e;
+			}
+		} else {
+			if ( imageExt(ext.trim())) {
+	    		try {
+	                // TODO: 파일경로(filePath) 유효성 처리 추가 - 필요시
+	                if (!file.exists()) {
+	                	fileData.getFlUpFileData().transferTo(file);
+	                	
+	                	File newFile = new File(materFilePath+"/"+newFileName+"."+ext);
+	            		boolean isRename = file.renameTo(newFile);
+	            		if(isRename) {
+	            			paramMap.put("SUCCESS", true);
+	            			fileData.setAttflNm(newFileName+"."+ext);
+	        				fileData.setAttflPath(materFilePath);
+	            		} else {
+	            			paramMap.put("SUCCESS", false);
+	            		}
+	                }
+	            } catch (Exception e) {
+	            	paramMap.put("SUCCESS", false);
+	            	throw e;
+	            } 
+	    		//----------------------파일업로드----------------------------------------------
+	    		
+	    		if(paramMap.get("SUCCESS").equals(true)) {
+	    			
+	    	    	int result = materService.insertMaterList(fileData);
+	    			
+	    			try {
+	    				if ( result > 0 ) {
+	    					paramMap.put("SUCCESS", true);
+	    				}else {
+	    					paramMap.put("SUCCESS", false);
+	    				}
+	    				
+	    			} catch (Exception e) {
+	    				throw e;
+	    			}
+	    		}
+	    	}else {
+	    		paramMap.put("SUCCESS", false);
+	    		paramMap.put("resultMsg", "이미지 또는 pdf파일만 업로드가능합니다.");
+	    	}
+		}
+    	
 		
 		
 		return paramMap;
@@ -298,58 +313,75 @@ public class MaterController {
 			dir3.setWritable(true, false);
 		}
 		String ext = fileData.getFlUpFileData().getOriginalFilename().substring(fileData.getFlUpFileData().getOriginalFilename().lastIndexOf(".") + 1);
-		if ( imageExt(ext.trim())) {
-			File file = Paths.get(materFilePath, fileData.getFlUpFileData().getOriginalFilename()).toFile();
-		    System.out.println("file : " + file);
-			String newFileName = fileData.getMtriCustNo() + "_" +today.format(System.currentTimeMillis()) +"(1)";
-			try {
-	            // TODO: 파일경로(filePath) 유효성 처리 추가 - 필요시
-	            if (!file.exists()) {
-	            	fileData.getFlUpFileData().transferTo(file);
-	            	
-	            	File newFile = new File(materFilePath+"/"+newFileName+"."+ext);
-	        		boolean isRename = file.renameTo(newFile);
-	        		if(isRename) {
-	        			paramMap.put("SUCCESS", true);
-	        			fileData.setAttflNm(newFileName+"."+ext);
-	    				fileData.setAttflPath(materFilePath);
-	        		} else {
-	        			paramMap.put("SUCCESS", false);
-	        		}
-	            }
-	        } catch (IOException e) {
-	        	paramMap.put("SUCCESS", false);
-	        	e.printStackTrace();
-	        } catch (IllegalStateException ie) {
-	        	paramMap.put("SUCCESS", false);
-	        	ie.printStackTrace();
-	        }
-			//----------------------파일업로드----------------------------------------------
+		System.out.println("ext : '" + ext +"'");
+		System.out.println("ext : " + ext.trim());
+		System.out.println("fileData.getFlUpFileData() " + fileData.getFlUpFileData());
+		System.out.println("fileData.getFlUpFileData().getOriginalFilename() : " + fileData.getFlUpFileData().getOriginalFilename());
+		
+		if(fileData.getFlUpFileData() == null || fileData.getFlUpFileData().getOriginalFilename().equals("") ) {
+			fileData.setAttflNm("");
+			fileData.setAttflPath("");
+			int result = materService.updateMaterList(fileData);
 			
-			System.out.println("SUCCESS > " + paramMap.get("SUCCESS"));
-			if(paramMap.get("SUCCESS").equals(true)) {
-				if(fileData.getFlUpFileData() == null && fileData.getFlUpFileData().getOriginalFilename().equals("") ) {
-					fileData.setAttflNm("");
-					fileData.setAttflPath("");
+			try {
+				if ( result > 0 ) {
+					paramMap.put("SUCCESS", true);
+				}else {
+					paramMap.put("SUCCESS", false);
 				}
-		    	int result = materService.updateMaterList(fileData);
 				
-				try {
-					if ( result > 0 ) {
-						paramMap.put("SUCCESS", true);
-					}else {
-						paramMap.put("SUCCESS", false);
-					}
-					
-				} catch (Exception e) {
-					throw e;
-				}
+			} catch (Exception e) {
+				throw e;
 			}
 		} else {
-			paramMap.put("SUCCESS", false);
-    		paramMap.put("resultMsg", "이미지 또는 pdf파일만 업로드가능합니다.");
+			if ( imageExt(ext.trim())) {
+				File file = Paths.get(materFilePath, fileData.getFlUpFileData().getOriginalFilename()).toFile();
+			    System.out.println("file : " + file);
+				String newFileName = fileData.getMtriCustNo() + "_" +today.format(System.currentTimeMillis()) +"(1)";
+				try {
+		            // TODO: 파일경로(filePath) 유효성 처리 추가 - 필요시
+		            if (!file.exists()) {
+		            	fileData.getFlUpFileData().transferTo(file);
+		            	
+		            	File newFile = new File(materFilePath+"/"+newFileName+"."+ext);
+		        		boolean isRename = file.renameTo(newFile);
+		        		if(isRename) {
+		        			paramMap.put("SUCCESS", true);
+		        			fileData.setAttflNm(newFileName+"."+ext);
+		    				fileData.setAttflPath(materFilePath);
+		        		} else {
+		        			paramMap.put("SUCCESS", false);
+		        		}
+		            }
+		        } catch (IOException e) {
+		        	paramMap.put("SUCCESS", false);
+		        	e.printStackTrace();
+		        } catch (IllegalStateException ie) {
+		        	paramMap.put("SUCCESS", false);
+		        	ie.printStackTrace();
+		        }
+				//----------------------파일업로드----------------------------------------------
+				
+				System.out.println("SUCCESS > " + paramMap.get("SUCCESS"));
+				if(paramMap.get("SUCCESS").equals(true)) {
+			    	int result = materService.updateMaterList(fileData);
+					
+					try {
+						if ( result > 0 ) {
+							paramMap.put("SUCCESS", true);
+						}else {
+							paramMap.put("SUCCESS", false);
+						}
+						
+					} catch (Exception e) {
+						throw e;
+					}
+				}
+			} else {
+				paramMap.put("SUCCESS", false);
+	    		paramMap.put("resultMsg", "이미지 또는 pdf파일만 업로드가능합니다.");
+			}
 		}
-		
 		
 		return paramMap;
     }

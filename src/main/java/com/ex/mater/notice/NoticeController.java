@@ -86,65 +86,78 @@ public class NoticeController {
 		}
 		
     	String ext = noti.getFlUpFileData().getOriginalFilename().substring(noti.getFlUpFileData().getOriginalFilename().lastIndexOf(".") + 1);
-    	if ( imageExt(ext.trim())) {
-    		if(noti.getFlUpFileData() == null || noti.getFlUpFileData().getOriginalFilename().equals("") ) {
-				noti.setAttflNm("");
-				noti.setAttflPath("");
-				
-				paramMap.put("SUCCESS", true);
-			} else {
-				File file = new File(materFilePath+"/"+noti.getFlUpFileData().getOriginalFilename());
-				
-				String newFileName = noti.getMtriCustNo() + "_" +today.format(System.currentTimeMillis()) + "(1)";
-				try {
-		            // TODO: 파일경로(filePath) 유효성 처리 추가 - 필요시
-		            if (!file.exists()) {
-		            	noti.getFlUpFileData().transferTo(file);
-		            	
-		            	File newFile = new File(materFilePath+"/"+newFileName+"."+ext);
-		        		boolean isRename = file.renameTo(newFile);
-		        		if(isRename) {
-		        			paramMap.put("SUCCESS", true);
-		        			noti.setAttflNm(newFileName+"."+ext);
-		    				noti.setAttflPath(materFilePath);
-		        		} else {
-		        			paramMap.put("SUCCESS", false);
-		        		}
-		            }
-		        } catch (IOException e) {
-		        	paramMap.put("SUCCESS", false);
-		        	e.printStackTrace();
-		        } catch (IllegalStateException ie) {
-		        	paramMap.put("SUCCESS", false);
-		        	ie.printStackTrace();
-		        }
-			}
+    	
+    	if(noti.getFlUpFileData() == null || noti.getFlUpFileData().getOriginalFilename().equals("") ) {
+    		noti.setAttflNm("");
+			noti.setAttflPath("");
+			noti.setFsttmRgsrId(noti.getMtriCustNo());
+			noti.setLsttmModfrId(noti.getMtriCustNo());
 			
-			//----------------------파일업로드----------------------------------------------
+	    	int result = noticeService.insertNotice(noti);
 			
-			if(paramMap.get("SUCCESS").equals(true)) {
-				noti.setFsttmRgsrId(noti.getMtriCustNo());
-				noti.setLsttmModfrId(noti.getMtriCustNo());
-				
-		    	int result = noticeService.insertNotice(noti);
-				
-				try {
-					if ( result > 0 ) {
-						paramMap.put("SUCCESS", true);
-					}else {
-						paramMap.put("SUCCESS", false);
-					}
-					
-				} catch (Exception e) {
-					throw e;
+			try {
+				if ( result > 0 ) {
+					paramMap.put("SUCCESS", true);
+				}else {
+					paramMap.put("SUCCESS", false);
 				}
+				
+			} catch (Exception e) {
+				throw e;
 			}
-			
-		} else {
-			paramMap.put("SUCCESS", false);
-    		paramMap.put("resultMsg", "이미지 또는 pdf파일만 업로드가능합니다.");
-		}
-		
+    	} else {
+    		if ( imageExt(ext.trim())) {
+    			File file = new File(materFilePath+"/"+noti.getFlUpFileData().getOriginalFilename());
+    			
+    			String newFileName = noti.getMtriCustNo() + "_" +today.format(System.currentTimeMillis()) + "(1)";
+    			try {
+    	            // TODO: 파일경로(filePath) 유효성 처리 추가 - 필요시
+    	            if (!file.exists()) {
+    	            	noti.getFlUpFileData().transferTo(file);
+    	            	
+    	            	File newFile = new File(materFilePath+"/"+newFileName+"."+ext);
+    	        		boolean isRename = file.renameTo(newFile);
+    	        		if(isRename) {
+    	        			paramMap.put("SUCCESS", true);
+    	        			noti.setAttflNm(newFileName+"."+ext);
+    	    				noti.setAttflPath(materFilePath);
+    	        		} else {
+    	        			paramMap.put("SUCCESS", false);
+    	        		}
+    	            }
+    	        } catch (IOException e) {
+    	        	paramMap.put("SUCCESS", false);
+    	        	e.printStackTrace();
+    	        } catch (IllegalStateException ie) {
+    	        	paramMap.put("SUCCESS", false);
+    	        	ie.printStackTrace();
+    	        }
+    			
+    			//----------------------파일업로드----------------------------------------------
+    			
+    			if(paramMap.get("SUCCESS").equals(true)) {
+    				noti.setFsttmRgsrId(noti.getMtriCustNo());
+    				noti.setLsttmModfrId(noti.getMtriCustNo());
+    				
+    		    	int result = noticeService.insertNotice(noti);
+    				
+    				try {
+    					if ( result > 0 ) {
+    						paramMap.put("SUCCESS", true);
+    					}else {
+    						paramMap.put("SUCCESS", false);
+    					}
+    					
+    				} catch (Exception e) {
+    					throw e;
+    				}
+    			}
+    			
+    		} else {
+    			paramMap.put("SUCCESS", false);
+        		paramMap.put("resultMsg", "이미지 또는 pdf파일만 업로드가능합니다.");
+    		}
+    	}
 		
     	return paramMap;
     }
@@ -214,67 +227,79 @@ public class NoticeController {
 		
     	String ext = noti.getFlUpFileData().getOriginalFilename().substring(noti.getFlUpFileData().getOriginalFilename().lastIndexOf(".") + 1);
 		
-    	if ( imageExt(ext.trim())) {
-    		if(noti.getFlUpFileData() == null || noti.getFlUpFileData().getOriginalFilename().equals("") ) {
-				noti.setAttflNm("");
-				noti.setAttflPath("");
-				
-				paramMap.put("SUCCESS", true);
-			} else {
-				
-				File file = new File(materFilePath+"/"+noti.getFlUpFileData().getOriginalFilename());
-				
-				String newFileName = noti.getMtriCustNo() + "_" +today.format(System.currentTimeMillis()) + "(1)";
-				try {
-		            // TODO: 파일경로(filePath) 유효성 처리 추가 - 필요시
-		            if (!file.exists()) {
-		            	noti.getFlUpFileData().transferTo(file);
-		            	
-		            	File newFile = new File(materFilePath+"/"+newFileName+"."+ext);
-		        		boolean isRename = file.renameTo(newFile);
-		        		if(isRename) {
-		        			paramMap.put("SUCCESS", true);
-		        			noti.setAttflNm(newFileName+"."+ext);
-		    				noti.setAttflPath(materFilePath);
-		        		} else {
-		        			paramMap.put("SUCCESS", false);
-		        		}
-		            }
-		        } catch (IOException e) {
-		        	paramMap.put("SUCCESS", false);
-		        	e.printStackTrace();
-		        } catch (IllegalStateException ie) {
-		        	paramMap.put("SUCCESS", false);
-		        	ie.printStackTrace();
-		        }
-			}
+    	if(noti.getFlUpFileData() == null || noti.getFlUpFileData().getOriginalFilename().equals("") ) {
+    		noti.setAttflNm("");
+			noti.setAttflPath("");
+			noti.setFsttmRgsrId(noti.getMtriCustNo());
+			noti.setLsttmModfrId(noti.getMtriCustNo());
 			
-			//----------------------파일업로드----------------------------------------------
-		    
-			if(paramMap.get("SUCCESS").equals(true)) {
-				noti.setFsttmRgsrId(noti.getMtriCustNo());
-				noti.setLsttmModfrId(noti.getMtriCustNo());
-				
-		    	int result = noticeService.updateNotice(noti);
-				
-				try {
-					if ( result > 0 ) {
-						paramMap.put("SUCCESS", true);
-					}else {
-						paramMap.put("SUCCESS", false);
-					}
-					
-				} catch (Exception e) {
-					throw e;
+	    	int result = noticeService.updateNotice(noti);
+			
+			try {
+				if ( result > 0 ) {
+					paramMap.put("SUCCESS", true);
+				}else {
+					paramMap.put("SUCCESS", false);
 				}
+				
+			} catch (Exception e) {
+				throw e;
 			}
-			
-		} else {
-			paramMap.put("SUCCESS", false);
-    		paramMap.put("resultMsg", "이미지 또는 pdf파일만 업로드가능합니다.");
-		}
-		
-		
+    	} else {
+        	if ( imageExt(ext.trim())) {
+        		
+    			File file = new File(materFilePath+"/"+noti.getFlUpFileData().getOriginalFilename());
+    			
+    			String newFileName = noti.getMtriCustNo() + "_" +today.format(System.currentTimeMillis()) + "(1)";
+    			try {
+    	            // TODO: 파일경로(filePath) 유효성 처리 추가 - 필요시
+    	            if (!file.exists()) {
+    	            	noti.getFlUpFileData().transferTo(file);
+    	            	
+    	            	File newFile = new File(materFilePath+"/"+newFileName+"."+ext);
+    	        		boolean isRename = file.renameTo(newFile);
+    	        		if(isRename) {
+    	        			paramMap.put("SUCCESS", true);
+    	        			noti.setAttflNm(newFileName+"."+ext);
+    	    				noti.setAttflPath(materFilePath);
+    	        		} else {
+    	        			paramMap.put("SUCCESS", false);
+    	        		}
+    	            }
+    	        } catch (IOException e) {
+    	        	paramMap.put("SUCCESS", false);
+    	        	e.printStackTrace();
+    	        } catch (IllegalStateException ie) {
+    	        	paramMap.put("SUCCESS", false);
+    	        	ie.printStackTrace();
+    	        }
+    			
+    			//----------------------파일업로드----------------------------------------------
+    		    
+    			if(paramMap.get("SUCCESS").equals(true)) {
+    				noti.setFsttmRgsrId(noti.getMtriCustNo());
+    				noti.setLsttmModfrId(noti.getMtriCustNo());
+    				
+    		    	int result = noticeService.updateNotice(noti);
+    				
+    				try {
+    					if ( result > 0 ) {
+    						paramMap.put("SUCCESS", true);
+    					}else {
+    						paramMap.put("SUCCESS", false);
+    					}
+    					
+    				} catch (Exception e) {
+    					throw e;
+    				}
+    			}
+    			
+    		} else {
+    			paramMap.put("SUCCESS", false);
+        		paramMap.put("resultMsg", "이미지 또는 pdf파일만 업로드가능합니다.");
+    		}
+
+    	}
 		
     	return paramMap;
     }
